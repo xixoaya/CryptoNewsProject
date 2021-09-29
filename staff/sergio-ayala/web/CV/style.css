@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+.title {
+    font-family: ubuntu;
+    text-align: center;
+}
+.header {
+    background-color: lightsalmon;
+    padding-bottom: 20px;
+    border-bottom: red solid 2px;
+    margin: 2px 1px 2px 1px;
+}
+.profile__photo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    background-color: lightsalmons;
+}
+.personal-data__table {
+    background-color: lightgray;
+    display: inline-block;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: gray;
+    padding: 5px;
+}
+.table__headers {
+    text-align: left;
+    padding-right: 5px;
+}
+.personal-data {
+    background-color: lightgreen;
+    border-bottom: darkgreen solid 2px;
+    border-top: darkgreen solid 2px;
+    margin: 2px 1px 2px 1px;
+}
+.profesional-experience {
+    background-color: turquoise;
+    border-top: darkblue solid 2px;
+    border-bottom: darkblue solid 2px;
+    margin: 2px 1px 2px 1px;
+}
+.education {
+    background-color: violet;
+    border-top: darkviolet solid 2px;
+    border-bottom: darkviolet solid 2px;
+    margin: 2px 1px 2px 1px;
+}
+.video-area {
+    background-color: yellow;
+    border-top: darkorange solid 2px;
+    border-bottom: darkorange solid 2px;
+    margin: 2px 1px 2px 1px;
+}
+.video__presentation {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:70%;
+    padding-bottom: 30px;
+}
+.background {
+    background-color: blue;
+}
