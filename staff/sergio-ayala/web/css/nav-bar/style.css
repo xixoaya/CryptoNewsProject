@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap');
+
+/* resets */
+
+body {
+    margin: 0;
+}
+
+/* nav-bar */
+
+.nav-bar {
+    box-sizing: border-box;
+    padding: .5rem;
+    background-color: white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.nav-bar--sticky {
+    position: sticky;
+    top: 0;
+}
+
+.nav-bar--top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.nav-bar--bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.nav-bar--dark {
+    background-color: black;
+    color: white;
+}
+
+.nav-bar--center {
+    text-align: center;
+}
+
+.nav-bar--right {
+    text-align: right;
+}
+
+.nav-bar__item {
+    font-family: 'Gemunu Libre';
+    text-decoration: none;
+}
+
+.nav-bar__item:link {
+    color: black;
+}
+
+.nav-bar--dark > .nav-bar__item:link {
+    color: white;
+}
+
+.nav-bar__item:visited {
+    color: black;
+}
+
+.nav-bar--dark > .nav-bar__item:visited {
+    color: white;
+}
+
+.nav-bar__item:hover {
+    color: black;
+}
+
+.nav-bar--dark > .nav-bar__item:hover {
+    color: white;
+}
+
+.nav-bar__item--active {
+    text-shadow: 0px 0px 10px yellow, 0px 0px 10px yellow, 0px 0px 10px yellow;
+}
+
+.nav-bar--dark > .nav-bar__item--active {
+    text-shadow: 0px 0px 10px yellow, 0px 0px 10px yellow, 0px 0px 10px yellow;
+}
+
+/* other */
+
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gemunu Libre';
+    color: lightgray;
+    height: 500px;
+}

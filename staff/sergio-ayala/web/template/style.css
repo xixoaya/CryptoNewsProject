@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
+/* reusable */
+.panel {
+    display: inline-block;
+    align-content: center;
+    margin: 2px;
+    border: black;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+    align-content: center;
+    font-family: roboto condensed;
+    background-color: lightgray;
+}
+.panel__title {
+    text-align: center;
+}
+.btn {
+    border-radius: 10px;
+    background-color: lightgreen;
+    border-color: green;
+    border-width: 3px;
+    margin: 10px 0px 0px 0px;
+}
+.panel__field {
+    border-radius: 15px;
+    border-style: solid;
+    border-color: darkgray;
+    margin: 2.5px 0px 2.5px 10px;
+}
+
+.area-panel {
+    border-radius: 10px;
+    display: block;
+    background-color: lightpink;
+    padding: 10px 10px 40px 10px;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    box-shadow: 20px 20px 30px grey;
+}
+.title {
+    font-family: birthstone;
+    text-align: center;
+}
+.text {
+        
+    display: inline-block;
+}
+.content {
+    font-family: roboto condensed;
+}
+.menu__button {
+    background-color: black;
+    border-color: white;
+    color: white;
+    margin: 0px 10px 0px 10px;
+}
+.menu {
+    background-color: lightskyblue;
+    padding: 10px;
+    text-align: center;
+    margin: 0px;
+}
+.p-content {
+    float: left;
+    width: 65%;
+    font-family: roboto condensed;
+}
+.r-column {
+    text-align: center;
+    background-color: grey;
+    float: right;
+    width: 30%;
+    padding: 10px;
+    height: 500px;
+}
+
+/* custom */
+.register {
+    font-family: oswald;
+    background-color: orange;
+    border-color: red;
+}
+.login {
+    background-color: red;
+    border-color: orange;
+}
+.links {
+    padding-top: 20px;
+    text-decoration: none;
+}
+.area-panel__register {
+    background-color: lightblue;
+}
+.p-content__video {
+    margin: 0 auto;
+    display: block;
+    padding: 20px 0px 0px 0px ;
+}
