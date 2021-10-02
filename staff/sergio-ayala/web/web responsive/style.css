@@ -1,0 +1,121 @@
+/* resets */
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    border: 0.5px dotted black;
+    font-family: 'Stick No Bills';
+}
+
+html, body {
+    height: 100%;
+}
+
+/* Generics */
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Nav Bar */
+
+.nav-bar {
+    display: flex;
+    border-bottom: 0.2rem solid grey;
+    border-top: 0.2rem solid grey;
+    padding: 1rem;
+    align-items: center;
+    justify-content: start;
+    position: sticky;
+    top: 0;
+}
+
+.nav-bar__logo {
+    align-self: flex-start;
+}
+
+.nav-bar__burger {
+    margin-left: auto;
+}
+
+/* MAIN CONTENT */
+
+.grid-area {
+    border: 0.5px solid black;
+    display: grid;
+    height: 80%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 10% 5% 10% 5% 15% 10% 5% ;
+    grid-template-areas:
+    "head"
+    "product1"
+    "product1descrip"
+    "product2"
+    "product2descrip"
+    "banner1"
+    "product3"
+    "product3descrip"
+}
+
+.grid-area__header {
+    grid-area: head;
+}
+.grid-area__product1 {
+    grid-area: product1;
+}
+.grid-area__product1-description {
+    grid-area: product1descrip;
+}
+.grid-area__product2 {
+    grid-area: product2;
+}
+.grid-area__product2-description {
+    grid-area: product2descrip;
+}
+.grid-area__product3 {
+    grid-area: product3;
+}
+.grid-area__product3-description {
+    grid-area: product3descrip;
+}
+.grid-area__banner-1 {
+    grid-area: banner1;
+}
+
+
+@media screen and (min-width: 512px) {
+    .grid-area {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 40% 30% 10% 20%;
+        grid-template-areas:
+        "head head head"
+        "product1 product2 product3"
+        "product1descrip product2descrip product3descrip"
+        "banner1 banner1 banner1"
+        ;        
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .grid-area {
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 40% 30% 10% 20%;
+        grid-template-areas:
+        "head head head"
+        "product1 product2 product3"
+        "product1descrip product2descrip product3descrip"
+        "banner1 banner1 banner1"
+        ;        
+    }
+}
+
+/* footer */
+
+.footer {
+    height: 20%;
+}
