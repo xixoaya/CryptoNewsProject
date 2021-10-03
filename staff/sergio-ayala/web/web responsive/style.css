@@ -114,6 +114,51 @@ html, body {
     }
 }
 
+css menu manu empieza aquí */
+
+.menu__button-label {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-left: 50px solid red;
+    border-bottom: 25px solid transparent;
+    transition: all .5s ease;
+}
+
+.menu__button-checkbox {
+    visibility: hidden;
+}
+
+.menu__items {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    /* padding: 1rem; */
+    width: 100%;
+    position: relative;
+    top: -10rem;
+    z-index: -1;
+    transition: left 1s;
+    /* text-decoration: none;
+    color: #e7e5df;
+    font-family: oswald; */
+}
+
+.menu__button-checkbox:checked ~ label {
+    transform: rotateZ(90deg);
+}
+
+.menu__button-checkbox:checked ~ .menu__items {
+    background-color: grey;
+    top: 3rem;
+}
+
+/* css menu manu acaba aquí
+
+
 /* footer */
 
 .footer {
