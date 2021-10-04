@@ -19,7 +19,15 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.font {
     font-family: 'Courier New', Courier, monospace;
+}
+
+.font--header {
+    font-size: 2rem;
+    color: whitesmoke;
 }
 
 /* Nav Bar */
@@ -30,9 +38,10 @@ html, body {
     border-top: 0.2rem solid grey;
     padding: 1rem;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     position: sticky;
     top: 0;
+    background-color: whitesmoke;
 }
 
 .nav-bar__logo {
@@ -40,16 +49,71 @@ html, body {
 }
 
 .nav-bar__burger {
-    margin-left: auto;
+    align-self: flex-end;
 }
+
+.menu-mobile {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    display: none;
+}
+
+.menu-mobile a {
+    margin: 0.5rem 0rem 0.5rem 1rem ;
+}
+
+/* css menu manu empieza aquí  */
+
+/* .menu__button-label {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-top: 22.5px solid transparent;
+    border-left: 40px solid red;
+    border-bottom: 22.5px solid transparent;
+    transition: all .5s ease;
+} */
+
+/* .menu__button-checkbox {
+    visibility: hidden;
+} */
+
+/* .menu__items {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    padding: 1rem;
+    width: 100%;
+    position: relative;
+    top: -10rem;
+    z-index: -1;
+    transition: left 1s;
+    text-decoration: none;
+    color: #e7e5df;
+    font-family: oswald;
+}
+.menu__button-checkbox:checked ~ label {
+    transform: rotateZ(90deg);
+}
+
+.menu__button-checkbox:checked ~ .menu__items {
+    background-color: grey;
+    top: 2rem;
+} */
+
+/* css menu manu acaba aquí
 
 /* MAIN CONTENT */
 
 .grid-area {
     border: 0.5px solid black;
-    display: grid;
-    height: 80%;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    /* grid-template-columns: 1fr;
     grid-template-rows: auto 10% 5% 10% 5% 15% 10% 5% ;
     grid-template-areas:
     "head"
@@ -59,105 +123,104 @@ html, body {
     "product2descrip"
     "banner1"
     "product3"
-    "product3descrip"
+    "product3descrip" */
 }
 
 .grid-area__header {
     grid-area: head;
+    flex-basis: 400px ;
+    background-image: url("https://escueladesurflasdunas.com/wp-content/uploads/2016/03/ola3.jpg");
 }
 .grid-area__product1 {
     grid-area: product1;
+    flex-basis: 20vh;
 }
 .grid-area__product1-description {
     grid-area: product1descrip;
+    flex-basis: 5vh;
 }
 .grid-area__product2 {
     grid-area: product2;
+    flex-basis: 20vh;
 }
 .grid-area__product2-description {
     grid-area: product2descrip;
+    flex-basis: 5vh;
 }
 .grid-area__product3 {
     grid-area: product3;
+    flex-basis: 20vh;
 }
 .grid-area__product3-description {
     grid-area: product3descrip;
+    flex-basis: 5vh;
 }
 .grid-area__banner-1 {
     grid-area: banner1;
+    flex-basis: 20vh;
 }
+.grid-area__product4 {
+    grid-area: product4;
+    flex-basis: 20vh;
+}
+.grid-area__product4-description {
+    grid-area: product4descrip;
+    flex-basis: 5vh;
+}
+.grid-area__banner-2 {
+    grid-area: banner2;
+    display: none;
+}
+
 
 
 @media screen and (min-width: 512px) {
     .grid-area {
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 40% 30% 10% 20%;
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        grid-template-rows: 40% 15% 5% 20% 15% 5%;
         grid-template-areas:
-        "head head head"
-        "product1 product2 product3"
-        "product1descrip product2descrip product3descrip"
-        "banner1 banner1 banner1"
+        "head head"
+        "product1 product2"
+        "product1descrip product2descrip"
+        "banner1 banner1"
+        "product3 product4"
+        "product3descrip product4descrip"
         ;        
     }
 }
 
 @media screen and (min-width: 960px) {
     .grid-area {
-        grid-template-columns: 1fr 3fr 1fr;
+        display: grid;
+        grid-template-columns:  1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 40% 30% 10% 20%;
         grid-template-areas:
-        "head head head"
-        "product1 product2 product3"
-        "product1descrip product2descrip product3descrip"
-        "banner1 banner1 banner1"
+        "head head head head head"
+        "product1 product2 product3 product4 banner2"
+        "product1descrip product2descrip product3descrip product4descrip banner2"
+        "banner1 banner1 banner1 banner1 banner2"
         ;        
     }
+    .grid-area__product4 {
+        grid-area: product4;
+        display: flex;
+    }
+    .grid-area__product4-description {
+        grid-area: product4descrip;
+        display: flex;
+    }
+    .grid-area__banner-2 {
+        grid-area: banner2;
+        display: flex;
+    }
+
+    .center--display-block {
+        margin: auto 0;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
 }
-
-css menu manu empieza aquí */
-
-.menu__button-label {
-    cursor: pointer;
-    position: absolute;
-    z-index: 1;
-    width: 0;
-    height: 0;
-    border-top: 25px solid transparent;
-    border-left: 50px solid red;
-    border-bottom: 25px solid transparent;
-    transition: all .5s ease;
-}
-
-.menu__button-checkbox {
-    visibility: hidden;
-}
-
-.menu__items {
-    display: inline-flex;
-    flex-direction: column;
-    background-color: aquamarine;
-    /* padding: 1rem; */
-    width: 100%;
-    position: relative;
-    top: -10rem;
-    z-index: -1;
-    transition: left 1s;
-    /* text-decoration: none;
-    color: #e7e5df;
-    font-family: oswald; */
-}
-
-.menu__button-checkbox:checked ~ label {
-    transform: rotateZ(90deg);
-}
-
-.menu__button-checkbox:checked ~ .menu__items {
-    background-color: grey;
-    top: 3rem;
-}
-
-/* css menu manu acaba aquí
-
 
 /* footer */
 
