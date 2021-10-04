@@ -30,6 +30,10 @@ html, body {
     color: whitesmoke;
 }
 
+.pointer:hover {
+    cursor: pointer;
+}
+
 /* Nav Bar */
 
 .nav-bar {
@@ -48,19 +52,23 @@ html, body {
     align-self: flex-start;
 }
 
-.nav-bar__burger {
-    align-self: flex-end;
+.menu__button {
+width: fit-content;
+align-self: flex-end;
 }
-
-.menu-mobile {
-    display: flex;
-    flex-direction: column;
-    padding-top: 1rem;
+.menu__list--mobile {
     display: none;
 }
-
-.menu-mobile a {
-    margin: 0.5rem 0rem 0.5rem 1rem ;
+.menu__list--on {
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.menu__list-item {
+    margin: 0.2rem;
 }
 
 /* css menu manu empieza aquí  */
@@ -112,7 +120,7 @@ html, body {
     border: 0.5px solid black;
     display: flex;
     flex-direction: column;
-    height: fit-content;
+    height: 80%;
     /* grid-template-columns: 1fr;
     grid-template-rows: auto 10% 5% 10% 5% 15% 10% 5% ;
     grid-template-areas:
@@ -130,6 +138,9 @@ html, body {
     grid-area: head;
     flex-basis: 400px ;
     background-image: url("https://escueladesurflasdunas.com/wp-content/uploads/2016/03/ola3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
 }
 .grid-area__product1 {
     grid-area: product1;
