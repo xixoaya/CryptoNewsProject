@@ -1,0 +1,16 @@
+.table__header {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.table__body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.table__footer {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.table {
+    justify-content: center;
+    align-items: center;
+}
