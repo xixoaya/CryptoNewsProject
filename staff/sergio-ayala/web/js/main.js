@@ -156,19 +156,32 @@ var calzoncillos = {
 
 var ropa = [camisetas, pantalones, calcetines, calzoncillos]
 
+var createTag = function(tag, value) {
+    return '<' + tag + '>' + value + '</' + tag + '>'
+}
+
 var createRows = function (arr) {
-    rows = '';
+    var rows = '';
 
     for (let i = 0; i < arr.length; i++) {
-        var row = '<tr>'
-        '<td>' + array[i].name + '</td>' +
-        '<td>' + array[i].quality + '</td>' +
-        '<td>' + array[i].quantity + '</td>' +
-        '<td>' + array[i].price + '</td>' +
-        '<td>' + '<strong>' + array[i].price * array[i].quantity + '</strong>' + '</td>' +
+        var row = '<tr>' +
+        
+        '<td>' + arr[i].name + '</td>' +
+        '<td>' + arr[i].quality + '</td>' +
+        '<td>' + arr[i].quantity + '</td>' +
+        '<td>' + arr[i].price + '</td>' +
+        '<td>' + '<strong>' + arr[i].price * arr[i].quantity + '</strong>' + '</td>' +
         '</tr>'
         ;
-        rows = rows + row;
+// intentar añadir create rows function pero de momento no va
+        // createRows('td', arr[i].name) +
+        // createRows('td', arr[i].quality) +
+        // createRows('td', arr[i].quantity) +
+        // createRows('td', arr[i].price) +
+        // createRows('td', createRows('<strong>', arr[i].price * arr[i].quantity)) +
+        // '</tr>'
+        // ;
+        rows += row;
     }
      return '<tbody class="table__body">' + rows + '</tbody>';
 }
@@ -179,7 +192,7 @@ var title =
  '<th>Nombre</th>' +
  '<th>Calidad</th>' + 
  '<th>Cantidad</th>' + 
- '<th>Precio/th>' + 
+ '<th>Precio</th>' + 
  '<th>Total por producto</th>' + 
 '</tr>' +
 '</thead>';
@@ -194,9 +207,11 @@ var createFooter = function(arr) {
     return (
         '<tfoot class="table__footer">' + 
         '<tr>' + 
-          '<td>total: ' + totalPrice + 'euros</td>' +
+          '<td colspan="3">total: </td><td colspan="2">' + totalPrice + 'euros</td>' +
         '</tr>' +
         '</tfoot>'
     )
 }
+
+document.write('<table class="table">'+title+createRows(ropa)+createFooter(ropa)+'</table>');
 

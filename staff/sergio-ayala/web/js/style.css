@@ -8,9 +8,11 @@
 
 .table__footer {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: end;
 }
 
 .table {
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
