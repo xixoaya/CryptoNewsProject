@@ -6,7 +6,7 @@ function numbers(array) { // values es de tipo array
     for (let i = 0; i < array.length; i++) {
         const numeros = array[i];
 
-        if (numeros > 0) {
+        if (numeros >= 0) {
             totalPositives = totalPositives + numeros
         } else {
             totalNegatives = totalNegatives + numeros
