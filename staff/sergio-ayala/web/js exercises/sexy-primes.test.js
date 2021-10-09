@@ -1,28 +1,50 @@
 // Implementar los tests que consideréis necesarios
-console.log('TEST SEXY PRIMES')
+describe('TEST SEXY PRIMES')
 
 // CASE 1
 
 var res = sexyPrimes(1, 5)
 
-console.log(res)
 
-if (res instanceof Boolean
+if ( typeof res === 'boolean' 
     && res === false
-    ) { console.log('TEST OK')
-} else { console.error('TEST FAILED!!')
+    ) { success('TEST OK')
+} else { fail('TEST FAILED!!')
     
 }
 
 // CASE 2
 
-var res = sexyPrimes(1, 7)
+var res = sexyPrimes(11, 5)
 
-console.log(res)
 
-if (res instanceof Boolean
+if ( typeof res === 'boolean'
     && res === true
-    ) { console.log('TEST OK')
-} else { console.error('TEST FAILED!!')
+    ) { success('TEST OK')
+} else { fail('TEST FAILED!!')
+    
+}
+
+// CASE 3
+
+var res = sexyPrimes(5,11)
+
+if ( typeof res === 'boolean'
+    && res === true
+    ) { success('TEST OK')
+} else { fail('TEST FAILED!!')
+    
+}
+
+// CASE 4
+
+var res = sexyPrimes(10, 16)
+
+// console.log(res)
+
+if ( typeof res === 'boolean' 
+    && res === false
+    ) { success('TEST OK')
+} else { fail('TEST FAILED!!')
     
 }

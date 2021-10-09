@@ -1,14 +1,46 @@
 // Los primos sexy son pares de dos primos que están
 // separados por 6
+    function test_prime(n)
+        {
+
+        if (n===1)
+        {
+            return false;
+        }
+        else if(n === 2)
+        {
+            return true;
+        }else
+        {
+            for(var x = 2; x < n; x++)
+            {
+            if(n % x === 0)
+            {
+                return false;
+            }
+            }
+            return true;  
+        }
+}
+
+    // console.log(test_prime(16))
+
+    var difference = function (a, b) { return Math.abs(a - b); }
+
+    // console.log(difference(11, 5))
+
+
 function sexyPrimes(a, b) {
 
-    // Implementa tu código aquí
-
-    if (b-a === 6) { return (true)
+    if (difference(a, b) !== 6) {
         
-    } else { return (false)
+        result = false
         
-    }
+    } else if (test_prime(a) === true && test_prime(b) === true ) {
 
-    return null // Debe devolver un true o false
+        result = true
+        
+    } else { result = false}
+
+    return result // Debe devolver un true o false
 }
