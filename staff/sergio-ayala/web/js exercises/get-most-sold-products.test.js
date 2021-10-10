@@ -1,4 +1,4 @@
-console.log('TEST getMostSoldProducts')
+describe('TEST getMostSoldProducts')
 
 // CASE 1
 
@@ -18,9 +18,9 @@ if (res instanceof Array
     && res.length === 2
     && res[0] === 'kiwi'
     && res[1] === 'melon')
-    console.log('test ok')
+    success('TEST OK')
 else
-    console.error('test failed')
+    fail('TEST FAILED!!')
 
 // CASE 2
 
@@ -37,9 +37,9 @@ var res = getMostSoldProducts(soldProducts)
 if (res instanceof Array
     && res.length === 1
     && res[0] === 'renault')
-    console.log('test ok')
+    success('TEST OK')
 else
-    console.error('test failed')
+    fail('TEST FAILED!!')   
 
 // CASE 3
 
@@ -58,6 +58,6 @@ if (res instanceof Array
     && res[0] === 'socks'
     && res[1] === 't-shirt'
     && res[2] === 'shoes')
-    console.log('test ok')
+    success('TEST OK')
 else
-    console.error('test failed')
+    fail('TEST FAILED!!')

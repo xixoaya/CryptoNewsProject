@@ -17,9 +17,12 @@
             if(n % x === 0)
             {
                 return false;
+            } else {
+                
             }
-            }
+            } 
             return true;  
+            // isPrime
         }
 }
 
