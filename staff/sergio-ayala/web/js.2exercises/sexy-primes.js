@@ -2,8 +2,8 @@
 // separados por 6
     function test_prime(n)
         {
-
-        if (n===1)
+        
+       if (n <= 1)
         {
             return false;
         }
@@ -12,16 +12,16 @@
             return true;
         }else
         {
-            for(var x = 2; x < n; x++)
+            for(var x = 2; x < n/2; x++)
             {
             if(n % x === 0)
             {
                 return false;
             } else {
-                
+                return true; 
             }
             } 
-            return true;  
+             
             // isPrime
         }
 }

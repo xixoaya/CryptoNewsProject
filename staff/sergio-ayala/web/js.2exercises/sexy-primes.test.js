@@ -48,3 +48,14 @@ if ( typeof res === 'boolean'
 } else { fail('TEST FAILED!!')
     
 }
+
+// CASE 5
+
+var res = sexyPrimes(-5, -11)
+
+if ( typeof res === 'boolean'
+    && res === false
+    ) { success('TEST OK')
+} else { fail('TEST FAILED!!')
+    
+}
