@@ -17,8 +17,6 @@ function indexOf(array, searchElement, index) {
 
     if (arguments.length < 3) { i = 0}
 
-    if (i >= array.length) { position = -1}
-
     if (i < 0) { i = array.length + i}
     if (i < 0) { i = 0}
 
@@ -29,9 +27,7 @@ function indexOf(array, searchElement, index) {
         }
     }
 
-    if (position === '') { position = -1
-        
-    }
+    if (position === '' || i >= array.length) { position = -1}
 
 
     return position
