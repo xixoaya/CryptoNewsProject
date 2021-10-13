@@ -57,3 +57,31 @@ if (typeof res === 'number'
 ) { success('TEST OK')
     
 } else { fail('TEST FAILED')}
+
+//CASE 5
+
+var string = 'cuñi como estás?'
+
+var res = indexOf(string, 'co')
+
+// console.log(res)
+
+if (typeof res === 'number'
+    && res === 5
+) { success('TEST OK')
+    
+} else { fail('TEST FAILED')}
+
+//CASE 6
+
+var string = 'cuñi como estás?'
+
+var res = indexOf(string, 'l')
+
+// console.log(res)
+
+if (typeof res === 'number'
+    && res === -1
+) { success('TEST OK')
+    
+} else { fail('TEST FAILED')}

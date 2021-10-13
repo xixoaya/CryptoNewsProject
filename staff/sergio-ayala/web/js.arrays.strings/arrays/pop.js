@@ -7,14 +7,13 @@
 function pop(array) {
 
     var result = undefined
-    var copyArray = array
 
     if (array.length !== 0) {
-        
-        result = array[array.length-1]
 
-       copyArray.length = array.length -1 
+        result = array[array.length - 1]
+
+        array.length-- //lo mismo que hacer array.length = array.length -1
     }
-    array = copyArray
+   
     return result
 }

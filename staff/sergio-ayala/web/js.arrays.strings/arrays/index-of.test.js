@@ -71,3 +71,17 @@ if (typeof res === 'number'
 } else { fail('TEST FAILED')
     
 }
+
+// CASE 6
+
+var res = indexOf([2, 3, 6, 7, 2], 2, -6)
+
+// console.log(res)
+
+if (typeof res === 'number'
+    && res === 0
+    ) { success('TES OK')
+    
+} else { fail('TEST FAILED')
+    
+}

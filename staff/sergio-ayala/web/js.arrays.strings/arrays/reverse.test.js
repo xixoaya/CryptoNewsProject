@@ -1,4 +1,4 @@
-describe('TEST reverse')
+describe('TEST REVERSE')
 
 // CASE 1
 

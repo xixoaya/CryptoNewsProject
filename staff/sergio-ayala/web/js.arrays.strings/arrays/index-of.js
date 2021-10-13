@@ -12,10 +12,10 @@
 
 function indexOf(array, searchElement, index) {
 
-    var i = index;
+    var i = index? index : 0;
     var position = '';
 
-    if (arguments.length < 3) { i = 0}
+    // if (arguments.length < 3) { i = 0}
 
     if (i < 0) { i = array.length + i}
     if (i < 0) { i = 0}
@@ -23,7 +23,7 @@ function indexOf(array, searchElement, index) {
     for (let j = i; j < array.length; j++) {
         const element = array[j];
         if (element === searchElement) { position = j
-            
+            return position
         }
     }
 
