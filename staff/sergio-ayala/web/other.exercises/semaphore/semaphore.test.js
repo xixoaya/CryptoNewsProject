@@ -6,7 +6,7 @@ var res = semaphore("cross", "green", "pass");
 
 if (
     typeof res === "boolean"
-    && res === true
+    && res === false
     )
     success('test ok')
 else
@@ -32,7 +32,7 @@ var res = semaphore("cross", "red", "wait");
 
 if (
     typeof res === "boolean"
-    && res === false
+    && res === true
     )
     success('test ok')
 else
