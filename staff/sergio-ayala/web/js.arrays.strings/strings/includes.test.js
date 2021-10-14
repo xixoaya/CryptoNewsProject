@@ -20,7 +20,7 @@ describe('case 2')
 var sentence = 'The quick brown fox jumps over the lazy dog.'
 var res = includes(sentence, 'foxj')
 
-console.log(res)
+// console.log(res)
 
 if (typeof res === 'boolean'
     && res === false

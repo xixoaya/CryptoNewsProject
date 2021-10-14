@@ -1,6 +1,6 @@
-function charAt(string, position) {
-   var position = position? position : 0; 
-   if (position < 0 || position > string.length - 1) { position = 0}
+function charAt(string, position = 0) {
+   var res = ''
+   if (position >= 0 && position <= string.length - 1) { res = string[position]}
 
-   return string[position]
+   return res
 }
