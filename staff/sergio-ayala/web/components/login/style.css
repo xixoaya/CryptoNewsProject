@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
+
+/* RESETS */
+
+* {
+    box-sizing: content-box;
+    border: 1px dashed black; 
+}
+
+/* GENERAL */
+
+html, body {
+    height: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+/* REUSABLE */
+
+.btn {
+    border-radius: 25%;
+    background-color: white;
+    border-color: #44bba4;
+    border-width: 4px;
+    margin: 10px;
+    padding: 5px;
+    color:#44bba4;
+    font-style: initial;
+}
+
+/* LANDINGS */
+
+.body-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.panel__title {
+    text-align: center;
+}
+
+.panel__field {
+    border-radius: 15px;
+    border-style: solid;
+    border-color: darkgray;
+    margin: 2.5px 0px 5px 10px;
+}
+
+.area-panel {
+    border-radius: 10px;
+    display: block;
+    padding: 10px 10px 40px 10px;
+    text-align: center;
+    width: max-content;
+    margin: 0 auto;
+    box-shadow: 20px 20px 30px grey;
+}
+
+.panel {
+    margin: 2px;
+    border: black;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px 30px 10px 30px;
+    align-content: center;
+    font-family: roboto condensed;
+    background-color: lightgray;
+    text-align: left;
+}
+
+/* HOME WEB */
+
+.title-home {
+    font-family: birthstone;
+    text-align: left;
+    margin-left: 15%;
+    font-size: 70px;
+}
+
+.menu {
+    background-color: #393E41;
+    padding: 10px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+.links--menu {
+    text-decoration: none;
+    margin: 10px 20px 10px 20px;
+    color: #e7e5df;
+    font-family: oswald;
+    font-size: 18px;
+}
+.links--menu:hover{
+    text-shadow: 2px 2px 8px lightcyan;
+}
+.columns {
+    display: flex;
+    padding-bottom: 30px;
+}
+.columns__left {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 65%;
+    margin: 0px 10px 0px 0px;
+}
+.columns__right {
+    text-align: center;
+    background-color: white;
+    width: fit-content;
+    padding: 10px 20px 10px 20px;
+    height: fit-content;
+    margin: 0px 0px 0px 0px;
+    flex-basis: 10%;
+    height: fit-content;
+}
+.columns__social-panels {
+    margin: 20px 5px 0px 5px;
+    padding: 20px 10px 20px 10px;
+    background-color: white;
+    border-radius: 5px;
+    font-family: oswald;
+    font-size: 21px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 10px grey;
+    height: 150px;
+    width: 200px;
+}
+
+.social-panels__title {
+    flex-basis: 80%;
+}
+
+.social-panels__button {
+    flex-basis: 10%;
+    align-self: flex-end;
+}
+
+.columns__social-panels:hover {
+    box-shadow: 5px 5px 10px lightcoral;
+}
+
+.links {
+    padding-top: 20px;
+    text-decoration: none;
+}
+
+/* custom */
+
+.columns__left-video {
+    margin: 20px 0px 20px 0px ;
+    padding: 0px 0px 0px 0px ;
+    align-self: center;
+    flex-basis: 40%;
+}
+
+.columns__left-text {
+    flex-basis: 20%;
+    padding: 10px 30px 10px 30px;
+    font-family: Oswald;
+    text-align: justify;
+    word-spacing: 5px;
+}
+
+.footer {
+height: 200px;
+background-color: lightgray;
+padding: 50px 0px 0px 50px;
+margin-top: 30px;
+border-top: 2px solid grey;
+}
+
+.footer__list {
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+align-items: stretch;
+list-style: none;
+margin-left: 10%;
+padding: 0;
+height: 150px;
+}
+
+.footer__list-item {
+display: inline;
+text-decoration: none;
+color: black;
+font-family: oswald;
+font-size: 15px;
+}
+
+.footer__list-item:hover {
+    text-shadow: 2px 2px 8px lightcyan;
+}
+
+.pruebas {
+    display: flex;
+    width: fit-content;
+    margin: 0;
+}
+
+/* .social-media__logo {
+    align-self: center;
+    flex-basis: 10%;
+}
+
+.social-media-text {
+    flex-basis: 60%;
+}
+
+.social-media__cta {
+    align-self: flex-start;
+    background: linear-gradient(to right, #82008F, #FF5341);
+    padding: 0.5rem;
+    border-top-left-radius: 15%;
+    border-top-right-radius: 15%;
+    margin: 0;
+}
+
+.social-media__user {
+    align-self: flex-end;
+    background-color: lightgray;
+    border-bottom-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    padding: 0.5rem;
+    margin: 0;
+} */
