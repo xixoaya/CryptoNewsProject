@@ -17,7 +17,7 @@ UsersCollection.prototype.signIn = function(_user) {
     var user = this.collection.find(function(element) {
         return (
             element.email === _user.email &&
-            element.psswd === _user.psswd
+            element.password === _user.password
         );
     })
     return user || {};

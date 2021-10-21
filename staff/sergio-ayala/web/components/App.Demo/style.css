@@ -7,11 +7,92 @@
 
 /* GENERAL */
 
+@import url('https://lorempixel.com/400/850/abstract/');
+
 html, body {
     height: 100%;
-    padding: 0.7rem;
+    padding: 0;
     border: 0;
     margin: 0;
+}
+
+.body-bg {
+    background-image: url(https://i2.wp.com/www.csscodelab.com/wp-content/uploads/2019/11/stripe-hero-background-effect-html-css.png?fit=1062%2C631&ssl=1);
+}
+
+.pagelayout {
+    margin-top: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout__subtitle{
+    margin-top: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: white;
+    font-size: 18px;
+}
+
+
+.landing__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 170px;
+}
+
+.thank-you__buttons {
+    margin-top: 165px;
+} 
+
+.home__buttons {
+    margin-top: 300px;
+} 
+
+#p-link{
+    text-align: end;
+    color: white;
+}
+.link:hover {
+    color: orange;
+}
+
+.sign-in__inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 130px;
+}
+
+.sign-up__inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 37px;
+}
+
+.sign-in__form{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-up__form{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* REUSABLE */
@@ -19,3 +100,47 @@ html, body {
 .container--hide {
     display: none;
 } 
+
+.title {
+    font-family:'Rubik Mono One', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 30px;
+    color: #000000;
+    mix-blend-mode: normal;
+    text-align: center;
+}
+
+.title--font-height{
+    line-height: 80px;
+}
+
+.button {
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(72, 212, 255);
+    font-size: 1rem;
+    width: 150px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    
+}
+
+.input {
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    padding: 10px;
+    background-color: white;
+    font-size: 1rem;
+    width: 230px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.button--medium {
+    min-width: 50px;
+}

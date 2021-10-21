@@ -1,6 +1,8 @@
 // data
 
-var users = []
+var arrUsers = []
+
+var myCollection = new UsersCollection
 
 // views
 
@@ -41,6 +43,31 @@ signInLinkSignUp.onclick = function (event) {
     signUp.classList.remove('container--hide')
 }
 
+var signInForm = signIn.querySelector('.sign-in__form')
+
+signInForm.onsubmit = function (event) {
+    event.preventDefault()
+
+    var inputs = signInForm.querySelectorAll('input')
+
+    var email = inputs[0].value
+    var password = inputs[1].value
+
+    if (!email.length) return alert('email is empty')
+    if (!password.length) return alert('password is empty')
+
+    var user = new User('', email, '', password)
+    var userLogIn = myCollection.signIn(user);
+    
+    if(userLogIn.name === undefined) alert("Este usuario no está registrado");
+    else {
+        signIn.classList.add('container--hide')
+        home.classList.remove('container--hide')
+    }
+    signInForm.reset();
+
+}
+
 // PAGINA SIGN UP
 // BOTONES SIGN UP
 
@@ -71,21 +98,31 @@ signUpForm.onsubmit = function (event) {
     if (!email.length) return alert('email is empty')
     if (!username.length) return alert('username is empty')
     if (!password.length) return alert('password is empty')
-    if (!checkbox.checked) return alert('password is empty')
+    if (!checkbox.checked) return alert('you have to accept terms')
 
-    var user = {
-        name: name,
-        email: email,
-        username: username,
-        password: password,
+    var user = new User(name, email, username, password) 
+
+    var userSignUp = myCollection.signUp(user);
+    if(userSignUp.name === undefined) alert("Ya existe un Usuario con este email");
+    else {
+        signUp.classList.add('container--hide')
+        thankYou.classList.remove('container--hide')
     }
+    signUpForm.reset();
 
-    users.push(user)
+    // var user = {
+    //     name: name,
+    //     email: email,
+    //     username: username,
+    //     password: password,
+    // }
 
-    signUpForm.reset()
+    // users.push(user)
 
-    signUp.classList.add('container--hide')
-    thankYou.classList.remove('container--hide')
+    // signUpForm.reset()
+
+    // signUp.classList.add('container--hide')
+    // thankYou.classList.remove('container--hide')
 }
 
 

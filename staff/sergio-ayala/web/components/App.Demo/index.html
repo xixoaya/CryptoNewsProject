@@ -6,16 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App Demo</title>
+    <script src="user.prototype.js"></script>
+    <script src="users-collection.prototype.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body class='body-bg'>
-    <div class="landing">
-        <div class="landing__title">
+
+     <!-- Empieza ahora la página LANDING -->
+
+    <div class="landing pagelayout">
+        <div class="landing__title title">
             <h1>WELCOME</h1>
         </div>
-        <div class="landing__subtitle">
+        <div class="landing__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
                 repellat velit ipsum sapiente corrupti natus aspernatur, deserunt eveniet. Eveniet, nesciunt deleniti
                 assumenda sequi nobis neque?</p>
@@ -28,33 +33,33 @@
 
     <!-- Empieza ahora la página SIGN IN -->
 
-    <div class="sign-in container--hide">
-        <div class="sign-in__title">
+    <div class="sign-in pagelayout container--hide">
+        <div class="sign-in__title title">
             <h1>SIGN IN</h1>
         </div>
-        <div class="sign-in__subtitle">
+        <div class="sign-in__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
             </p>
         </div>
         <form action="" class="sign-in__form">
             <div class="sign-in__inputs">
-                <input type="text" class="input" name="username" placeholder="Username">
+                <input type="email" class="input" name="email" placeholder="E-mail">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
             <div class="sign-in__buttons">
                 <button type="submit" class='button'>SIGN IN</button>
-                <p>Go to <a class="link">Sign Up</a></p>
+                <p id="p-link">Go to <a class="link">Sign Up</a></p>
             </div>
         </form>
     </div>
 
     <!-- Empieza ahora la página SIGN UP -->
 
-    <div class="sign-up container--hide">
-        <div class="sign-up__title">
+    <div class="sign-up pagelayout container--hide">
+        <div class="sign-up__title title">
             <h1>SIGN UP</h1>
         </div>
-        <div class="sign-up__subtitle">
+        <div class="sign-up__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
             </p>
         </div>
@@ -71,18 +76,18 @@
             </div>
             <div class="sign-up__buttons">
                 <button type="submit" class='button'>SIGN UP</button>
-                <p>Go to <a class="link">Sign IN</a></p>
+                <p id="p-link">Go to <a class="link">Sign IN</a></p>
             </div>
         </form>
     </div>
 
     <!-- Empieza ahora la página THANK YOU -->
 
-    <div class="thank-you container--hide">
-        <div class="thank-you__title">
+    <div class="thank-you pagelayout container--hide">
+        <div class="thank-you__title title title--font-height">
             <h1>Gracias Por Registrarte</h1>
         </div>
-        <div class="thank-you__subtitle">
+        <div class="thank-you__subtitle layout__subtitle">
             <p>Ve a SIGN IN para acceder a la home con tus credenciales.
             </p>
         </div>
@@ -96,11 +101,11 @@
 
     <!-- Empieza ahora la página HOME -->
 
-    <div class="home container--hide">
-        <div class="home__title">
+    <div class="home pagelayout container--hide">
+        <div class="home__title title">
             <h1>RELAX</h1>
         </div>
-        <div class="home__subtitle">
+        <div class="home__subtitle layout__subtitle">
             <p>YOU ARE AT HOME
             </p>
         </div>

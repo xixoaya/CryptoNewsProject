@@ -1,8 +1,15 @@
-function User(alias, email, psswd) {
-    this.alias = alias;
+// function User(alias, email, psswd) {
+//     this.alias = alias;
+//     this.email = email;
+//     this.psswd = psswd;
+// }
+function User(name, email, username, password) {
+    this.name = name;
     this.email = email;
-    this.psswd = psswd;
+    this.username = username;
+    this.password = password;
 }
+
 
 User.prototype.getAlias = function() {
     return this.alias;
