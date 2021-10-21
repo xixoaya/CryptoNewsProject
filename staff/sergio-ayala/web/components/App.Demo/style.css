@@ -1,0 +1,21 @@
+/* RESETS */
+
+* {
+    box-sizing: content-box;
+    /* border: 1px dashed black;  */
+}
+
+/* GENERAL */
+
+html, body {
+    height: 100%;
+    padding: 0.7rem;
+    border: 0;
+    margin: 0;
+}
+
+/* REUSABLE */
+
+.container--hide {
+    display: none;
+} 
