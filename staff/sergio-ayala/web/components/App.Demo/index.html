@@ -14,7 +14,7 @@
 
 <body class='body-bg'>
 
-     <!-- Empieza ahora la página LANDING -->
+    <!-- Empieza ahora la página LANDING -->
 
     <div class="landing pagelayout">
         <div class="landing__title title">
@@ -43,7 +43,7 @@
         </div>
         <form action="" class="sign-in__form">
             <div class="sign-in__inputs">
-                <input type="email" class="input" name="email" placeholder="E-mail">
+                <input type="text" class="input" name="username" placeholder="Username">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
             <div class="sign-in__buttons">
@@ -66,7 +66,7 @@
         <form action="" class="sign-up__form">
             <div class="sign-up__inputs">
                 <input type="text" class="input" name="name" placeholder="Name">
-                <input type="email" class="input" name="email" placeholder="Email">
+                <input type="text" class="input" name="surname" placeholder="Surname">
                 <input type="text" class="input" name="username" placeholder="Username">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
@@ -106,13 +106,63 @@
             <h1>RELAX</h1>
         </div>
         <div class="home__subtitle layout__subtitle">
-            <p>YOU ARE AT HOME
+            <p><strong class="name">Name</strong> YOU ARE AT HOME
             </p>
         </div>
-        <form action="" class="home__form">
-
-            <div class="home__buttons">
+        <div class="home-buttons buttons-layout">
+            <div class="home__upButtons buttons-layout">
+                <button class='button'>UPDATE PROFILE</button>
+                <button class='button'>CHANGE PASSWORD</button>
+            </div>
+            <div class="home__lowButtons buttons-layout">
                 <button class='button'>SIGN OUT</button>
+                <button class='button'>DELETE ACCOUNT</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Empieza ahora la página CHANGE PASSWORD -->
+
+    <div class="change-pswd pagelayout container--hide">
+        <div class="change-pswd__title title title--font-height">
+            <h1>Change Password</h1>
+        </div>
+        <div class="change-pswd__subtitle layout__subtitle">
+            <p><strong class="name">Name</strong>, to update your Password, you need to know your
+                Old Password
+            </p>
+        </div>
+        <form action="" class="change-pswd__form">
+            <div class="change-pswd__inputs sign-in-layout">
+                <input type="password" class="input" name="oldPassword" placeholder="Old Password">
+                <input type="password" class="input" name="newPassword" placeholder="New Password">
+            </div>
+            <div class="change-pswd__buttons buttons-layout">
+                <button type="submit" class='button'>UPDATE</button>
+                <button class='button'>BACK HOME</button>
+            </div>
+        </form>
+    </div>
+
+        <!-- Empieza ahora la página DELETE ACCOUNT -->
+
+    <div class="delete-account pagelayout container--hide">
+        <div class="delete-account__title title">
+            <h1>Delete Account</h1>
+        </div>
+        <div class="delete-account__subtitle layout__subtitle">
+            <p><strong class="name">Name</strong>, to delete yout account, you need to know your
+                Password
+            </p>
+        </div>
+        <form action="" class="delete-account__form">
+            <div class="delete-account__inputs sign-in-layout">
+                <input type="password" class="input" name="password" placeholder="Password">
+            </div>
+            <div class="delete-account__buttons buttons-layout">
+                <button type="submit" class='button'>DELETE</button>
+                <button class='button'>BACK HOME</button>
             </div>
         </form>
     </div>

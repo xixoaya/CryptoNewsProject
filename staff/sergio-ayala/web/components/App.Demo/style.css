@@ -21,7 +21,7 @@ html, body {
 }
 
 .pagelayout {
-    margin-top: 180px;
+    /* margin-top: 180px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,6 +95,27 @@ html, body {
     align-items: center;
 }
 
+.buttons-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;}
+
+ .sign-in-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+        }
+
+.home-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 170px;
+}
+
 /* REUSABLE */
 
 .container--hide {
@@ -113,7 +134,7 @@ html, body {
 }
 
 .title--font-height{
-    line-height: 80px;
+    line-height: 60px;
 }
 
 .button {
@@ -124,7 +145,7 @@ html, body {
     padding: 10px;
     background-color: rgb(72, 212, 255);
     font-size: 1rem;
-    width: 150px;
+    width: 200px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     
 }
@@ -137,7 +158,7 @@ html, body {
     padding: 10px;
     background-color: white;
     font-size: 1rem;
-    width: 230px;
+    width: 300px;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 

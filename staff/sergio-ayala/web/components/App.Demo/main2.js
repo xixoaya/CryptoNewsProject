@@ -161,6 +161,8 @@ signUpForm.onsubmit = function (event) {
 
             thankYou.classList.remove('container--hide')
         }
+
+
     }
 
     xhr.open('POST', 'https://b00tc4mp.herokuapp.com/api/v2/users')
@@ -168,6 +170,20 @@ signUpForm.onsubmit = function (event) {
     xhr.setRequestHeader('Content-Type', 'application/json')
 
     xhr.send(JSON.stringify(user))
+
+    // var user = {
+    //     name: name,
+    //     email: email,
+    //     username: username,
+    //     password: password,
+    // }
+
+    // users.push(user)
+
+    // signUpForm.reset()
+
+    // signUp.classList.add('container--hide')
+    // thankYou.classList.remove('container--hide')
 }
 
 
@@ -187,6 +203,9 @@ thankYouButon.onclick = function (event) {
 // PAGINA HOME
 // BOTONES HOME
 var homeButtons = home.querySelectorAll('button')
+// var homeUpButons = homeButtons.querySelector('.home__upButtons')
+// var homeLowButons = homeButtons.querySelector('.home__lowButtons')
+//problemas para encontrar los botones que quiero.
 var homeUpadateButton = homeButtons[0]
 var homeChangePasswordButton = homeButtons[1]
 var homeSignOutButton = homeButtons[2]
