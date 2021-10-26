@@ -7,10 +7,11 @@ var thankYou = document.querySelector('.thank-you')
 var home = document.querySelector('.home')
 var changePassword = document.querySelector('.change-pswd')
 var deleteAccount = document.querySelector('.delete-account')
+var viewProfile = document.querySelector('.view-profile')
 
 var token
-
 var webName
+
 
 // PAGINA LANDING
 // BOTONES LANDING
@@ -45,66 +46,39 @@ signInLinkSignUp.onclick = function (event) {
 
 var signInForm = signIn.querySelector('.sign-in__form')
 
+
 signInForm.onsubmit = function (event) {
     event.preventDefault()
 
     var inputs = signInForm.querySelectorAll('input')
 
-    var username_ = inputs[0].value
-    var password_ = inputs[1].value
+    var username = inputs[0].value
+    var password = inputs[1].value
 
-    var user = {
-        username: username_,
-        password: password_
-    }
+    try {
+        signInUser(username, password, function (error, _token) {
+            if (error) { return alert(error.message) }
 
-    if (!username_.length) return alert('username is empty')
-    if (!password_.length) return alert('password is empty')
+            token = _token
+            signInForm.reset()
 
-    var xhr = new XMLHttpRequest
+            try {
+                retrieveUser(token, function (error, user) {
+                    if (error) { return alert(error.message) }
 
-    xhr.onload = function () {
-        var status = xhr.status
+                    webName = user.name
+                    signIn.classList.add('container--hide')
 
-        if (status === 401) return alert('wrong credentials')
+                    var nameSpan = home.querySelector('.name')
 
-        if (status === 200) {
-            var response = xhr.responseText
+                    nameSpan.innerText = webName
 
-            token = response.slice(10, -2)
+                    home.classList.remove('container--hide')
 
-            var xhr2 = new XMLHttpRequest
-
-            xhr2.onload = function () {
-                var response = xhr2.responseText
-
-                webName = response.slice(9, response.indexOf(',') - 1)
-
-                signInForm.reset()
-
-                signIn.classList.add('container--hide')
-
-                var nameSpan = home.querySelector('.name')
-
-                nameSpan.innerText = webName
-
-                home.classList.remove('container--hide')
-            }
-
-            xhr2.open('GET', 'https://b00tc4mp.herokuapp.com/api/v2/users')
-
-            xhr2.setRequestHeader('Authorization', 'Bearer ' + token)
-
-            xhr2.send()
-        }
-    }
-
-    xhr.open('POST', 'https://b00tc4mp.herokuapp.com/api/v2/users/auth')
-
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    xhr.send(JSON.stringify(user))
-
+                })
+            } catch (error) { alert(error.message) }
+        })
+    } catch (error) { alert(error.message) }
 }
 
 // PAGINA SIGN UP
@@ -127,47 +101,26 @@ signUpForm.onsubmit = function (event) {
 
     var inputs = signUpForm.querySelectorAll('input')
 
-    var name_ = inputs[0].value
-    var lastName_ = inputs[1].value
-    var username_ = inputs[2].value
-    var password_ = inputs[3].value
-    var checkbox_ = inputs[4]
+    var name = inputs[0].value
+    var lastName = inputs[1].value
+    var username = inputs[2].value
+    var password = inputs[3].value
+    var checkbox = inputs[4]
 
-    if (!name_.length) return alert('name is empty')
-    if (!lastName_.length) return alert('Last name is empty')
-    if (!username_.length) return alert('username is empty')
-    if (!password_.length) return alert('password is empty')
-    if (!checkbox_.checked) return alert('you have to accept terms')
+    try {
+        signUpUser(name, lastName, username, password, checkbox, function (error) {
+            if (error) { return alert(error.message) }
 
-    var user = {
-        name: name_,
-        lastName: lastName_,
-        username: username_,
-        password: password_,
-        termsAccepted: true
-    }
-
-    var xhr = new XMLHttpRequest
-
-    xhr.onload = function () {
-        var status = xhr.status
-
-        if (status === 409) return alert('user already exists')
-
-        if (status === 201) {
             signUpForm.reset()
 
             signUp.classList.add('container--hide')
 
             thankYou.classList.remove('container--hide')
-        }
+
+        })
+    } catch (error) {
+        alert(error.message)
     }
-
-    xhr.open('POST', 'https://b00tc4mp.herokuapp.com/api/v2/users')
-
-    xhr.setRequestHeader('Content-Type', 'application/json')
-
-    xhr.send(JSON.stringify(user))
 }
 
 
@@ -187,10 +140,11 @@ thankYouButon.onclick = function (event) {
 // PAGINA HOME
 // BOTONES HOME
 var homeButtons = home.querySelectorAll('button')
-var homeUpadateButton = homeButtons[0]
-var homeChangePasswordButton = homeButtons[1]
-var homeSignOutButton = homeButtons[2]
-var homeDeleteAccountButton = homeButtons[3]
+var homeViewButton = homeButtons[0]
+var homeUpadateButton = homeButtons[1]
+var homeChangePasswordButton = homeButtons[2]
+var homeSignOutButton = homeButtons[3]
+var homeDeleteAccountButton = homeButtons[4]
 
 homeSignOutButton.onclick = function () {
 
@@ -201,25 +155,25 @@ homeSignOutButton.onclick = function () {
 homeChangePasswordButton.onclick = function () {
 
     home.classList.add('container--hide')
-
     var nameSpan = changePassword.querySelector('.name')
-
     nameSpan.innerText = webName
-
     changePassword.classList.remove('container--hide')
-
 }
 
 homeDeleteAccountButton.onclick = function () {
 
     home.classList.add('container--hide')
-
     var nameSpan = deleteAccount.querySelector('.name')
-
     nameSpan.innerText = webName
-
     deleteAccount.classList.remove('container--hide')
+}
 
+homeViewButton.onclick = function () {
+
+    home.classList.add('container--hide')
+    var nameSpan = viewProfile.querySelector('.name')
+    nameSpan.innerText = webName
+    viewProfile.classList.remove('container--hide')
 }
 
 // PAGINA CHANGE PASSWORD
@@ -245,37 +199,20 @@ changePasswordForm.onsubmit = function (event) {
 
     var inputs = changePasswordForm.querySelectorAll('input')
 
-    var oldPassword_ = inputs[0].value
-    var newPassword_ = inputs[1].value
+    var oldPassword = inputs[0].value
+    var newPassword = inputs[1].value
 
-    if (!oldPassword_.length) return alert('Old password is empty')
-    if (!newPassword_.length) return alert('New password is empty')
+    try {
+        updatePassword(oldPassword, newPassword, function (error) {
+            if (error) { return alert(error.message) }
 
-    var user = {
-        oldPassword: oldPassword_,
-        password: newPassword_
-    }
-
-    var xhr = new XMLHttpRequest
-
-    xhr.onload = function () {
-        var status = xhr.status
-
-        if (status === 400 || status === 401) {
-            var response = xhr.responseText
-            var message = response.slice(10, -2)
-            return alert(message)
-        }
-        if (status === 204) {
             changePassword.classList.add('container--hide')
             changePasswordForm.reset()
             home.classList.remove('container--hide')
-        }
+        })
+    } catch (error) {
+        return alert(error.message)
     }
-    xhr.open('PATCH', 'https://b00tc4mp.herokuapp.com/api/v2/users')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.send(JSON.stringify(user))
 }
 
 // PAGINA DELETE ACCOUNT
@@ -298,33 +235,30 @@ deleteAccountForm.onsubmit = function (event) {
     event.preventDefault()
 
     var passwordInput = deleteAccountForm.querySelector('input')
-    var Password_ = passwordInput.value
+    var Password = passwordInput.value
 
-    if (!Password_.length) return alert('Password is empty')
-
-    var user = {
-        password : Password_
-    }
-
-    xhr = new XMLHttpRequest
-
-    xhr.onload = function () {
-        var status = xhr.status
-
-        if (status === 400 || status === 401) {
-            var response = xhr.responseText
-            var message = response.slice(10, -2)
-            return alert(message)
-        }
-        if (status === 204) {
+    try {
+        unregisterUser(Password, function (error) {
+            if (error) { return alert(error.message) }
             deleteAccount.classList.add('container--hide')
             deleteAccountForm.reset()
             landing.classList.remove('container--hide')
-        }
+        })
+    } catch (error) {
+        return alert(error.message)
     }
-    xhr.open('DELETE', 'https://b00tc4mp.herokuapp.com/api/v2/users')
-    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.send(JSON.stringify(user))
-
 }
+
+// PAGINA VIEW PROFILE
+// BOTONES VIEW PROFILE
+
+var viewProfileButtons = viewProfile.querySelectorAll('button')
+var viewProfileEditButton = viewProfileButtons[0]
+var viewProfileBackButton = viewProfileButtons[1]
+
+viewProfileBackButton.onclick = function () {
+    viewProfile.classList.add('container--hide')
+    home.classList.remove('container--hide')
+}
+
+

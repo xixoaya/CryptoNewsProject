@@ -29,7 +29,6 @@ html, body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    min-height: 90vh;
 }
 
 .layout__subtitle{
@@ -49,27 +48,20 @@ html, body {
     margin-top: 170px;
 }
 
-/* .thank-you__buttons {
+.thank-you__buttons {
     margin-top: 165px;
 } 
 
 .home__buttons {
     margin-top: 300px;
-}  */
+} 
 
 #p-link{
     text-align: end;
     color: white;
-    font-size: 1.1rem;
-}
-.link {
-    color: orange;
-    font-size: 1.2rem;
 }
 .link:hover {
-    color: rgb(246, 2, 145);
-    /* box-shadow: 0px 4px 4px orange; */
-    
+    color: orange;
 }
 
 .sign-in__inputs{
@@ -99,7 +91,7 @@ html, body {
 }
 
 .sign-up__form{
-    /* margin-top: 10px; */
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;

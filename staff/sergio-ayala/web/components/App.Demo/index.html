@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App Demo</title>
-    <script src="user.prototype.js"></script>
-    <script src="users-collection.prototype.js"></script>
+    <!-- <script src="user.prototype.js"></script>
+    <script src="users-collection.prototype.js"></script> -->
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body class='body-bg'>
@@ -111,6 +112,7 @@
         </div>
         <div class="home-buttons buttons-layout">
             <div class="home__upButtons buttons-layout">
+                <button class='button'>VIEW PROFILE</button>
                 <button class='button'>UPDATE PROFILE</button>
                 <button class='button'>CHANGE PASSWORD</button>
             </div>
@@ -145,14 +147,14 @@
         </form>
     </div>
 
-        <!-- Empieza ahora la página DELETE ACCOUNT -->
+    <!-- Empieza ahora la página DELETE ACCOUNT -->
 
     <div class="delete-account pagelayout container--hide">
         <div class="delete-account__title title">
             <h1>Delete Account</h1>
         </div>
         <div class="delete-account__subtitle layout__subtitle">
-            <p><strong class="name">Name</strong>, to delete yout account, you need to know your
+            <p><strong class="name">Name</strong>, to delete your account, you need to know your
                 Password
             </p>
         </div>
@@ -167,6 +169,27 @@
         </form>
     </div>
 
+    <!-- Empieza ahora la página VIEW PROFILE -->
+
+    <div class="view-profile pagelayout container--hide">
+        <div class="view-profile__title title">
+            <h1>YOUR PROFILE</h1>
+        </div>
+        <div class="view-profile__subtitle layout__subtitle">
+            <p>Hello <strong class="name">Name</strong>, this is the information you have provide us.
+            </p>
+        </div>
+        <div class="view-profile__content">
+            <div class="view-profile__inputs sign-in-layout">
+                <input type="password" class="input" name="password" placeholder="Password">
+            </div>
+            <div class="view-profile__buttons buttons-layout">
+                <button type="submit" class='button'>EDIT PROFILE</button>
+                <button class='button'>BACK HOME</button>
+            </div>
+        </div>
+    </div>
+    <script src="logics.js"></script>
     <script src="main.js"></script>
 </body>
 
