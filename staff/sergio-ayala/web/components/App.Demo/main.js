@@ -8,9 +8,36 @@ var home = document.querySelector('.home')
 var changePassword = document.querySelector('.change-pswd')
 var deleteAccount = document.querySelector('.delete-account')
 var viewProfile = document.querySelector('.view-profile')
+var spinner = document.querySelector('.spinner')
 
-var token
 var webName
+if (!sessionStorage.token) {
+    spinner.classList.add('container--hide')
+    landing.classList.remove('container--hide')
+
+} else {
+    try {
+        retrieveUser(sessionStorage.token, function (error, user) {
+            if (error) {  alert(error.message) 
+                spinner.classList.add('container--hide')
+                landing.classList.remove('container--hide')
+                return
+            }
+
+            webName = user.name
+            spinner.classList.add('container--hide')
+
+            var nameSpan = home.querySelector('.name')
+
+            nameSpan.innerText = webName
+
+            home.classList.remove('container--hide')
+
+        })
+    } catch (error) { alert(error.message) 
+        spinner.classList.add('container--hide')
+        landing.classList.remove('container--hide')}
+}
 
 
 // PAGINA LANDING
@@ -46,7 +73,6 @@ signInLinkSignUp.onclick = function (event) {
 
 var signInForm = signIn.querySelector('.sign-in__form')
 
-
 signInForm.onsubmit = function (event) {
     event.preventDefault()
 
@@ -55,19 +81,32 @@ signInForm.onsubmit = function (event) {
     var username = inputs[0].value
     var password = inputs[1].value
 
-    try {
-        signInUser(username, password, function (error, _token) {
-            if (error) { return alert(error.message) }
+    signIn.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
 
-            token = _token
+    try {
+        signInUser(username, password, function (error, token) {
+            if (error) {
+                alert(error.message)
+                spinner.classList.add('container--hide')
+                signIn.classList.remove('container--hide')
+                return
+            }
+
+            sessionStorage.token = token
             signInForm.reset()
 
             try {
-                retrieveUser(token, function (error, user) {
-                    if (error) { return alert(error.message) }
+                retrieveUser(sessionStorage.token, function (error, user) {
+                    if (error) {
+                        alert(error.message)
+                        spinner.classList.add('container--hide')
+                        signIn.classList.remove('container--hide')
+                        return
+                    }
 
                     webName = user.name
-                    signIn.classList.add('container--hide')
+                    spinner.classList.add('container--hide')
 
                     var nameSpan = home.querySelector('.name')
 
@@ -76,9 +115,17 @@ signInForm.onsubmit = function (event) {
                     home.classList.remove('container--hide')
 
                 })
-            } catch (error) { alert(error.message) }
+            } catch (error) {
+                alert(error.message)
+                spinner.classList.add('container--hide')
+                signIn.classList.remove('container--hide')
+            }
         })
-    } catch (error) { alert(error.message) }
+    } catch (error) {
+        alert(error.message)
+        spinner.classList.add('container--hide')
+        signIn.classList.remove('container--hide')
+    }
 }
 
 // PAGINA SIGN UP
@@ -107,19 +154,26 @@ signUpForm.onsubmit = function (event) {
     var password = inputs[3].value
     var checkbox = inputs[4]
 
+    signUp.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
+
     try {
         signUpUser(name, lastName, username, password, checkbox, function (error) {
-            if (error) { return alert(error.message) }
+            if (error) { alert(error.message) 
+                spinner.classList.add('container--hide')
+                signUp.classList.remove('container--hide')
+                return
+            }
 
             signUpForm.reset()
-
-            signUp.classList.add('container--hide')
-
+            spinner.classList.add('container--hide')
             thankYou.classList.remove('container--hide')
 
         })
     } catch (error) {
         alert(error.message)
+        spinner.classList.add('container--hide')
+        signUp.classList.remove('container--hide')
     }
 }
 
@@ -147,7 +201,7 @@ var homeSignOutButton = homeButtons[3]
 var homeDeleteAccountButton = homeButtons[4]
 
 homeSignOutButton.onclick = function () {
-
+    delete sessionStorage.token
     home.classList.add('container--hide')
     signIn.classList.remove('container--hide')
 }
@@ -202,16 +256,25 @@ changePasswordForm.onsubmit = function (event) {
     var oldPassword = inputs[0].value
     var newPassword = inputs[1].value
 
-    try {
-        updatePassword(oldPassword, newPassword, function (error) {
-            if (error) { return alert(error.message) }
+    changePassword.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
 
-            changePassword.classList.add('container--hide')
+    try {
+        updatePassword(sessionStorage.token, oldPassword, newPassword, function (error) {
+            if (error) { alert(error.message) 
+                spinner.classList.add('container--hide')
+                changePassword.classList.remove('container--hide')
+                return 
+            }
+
+            spinner.classList.add('container--hide')
             changePasswordForm.reset()
             home.classList.remove('container--hide')
         })
     } catch (error) {
-        return alert(error.message)
+        alert(error.message)
+        spinner.classList.add('container--hide')
+        changePassword.classList.remove('container--hide')
     }
 }
 
@@ -237,15 +300,25 @@ deleteAccountForm.onsubmit = function (event) {
     var passwordInput = deleteAccountForm.querySelector('input')
     var Password = passwordInput.value
 
+    deleteAccount.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
+
     try {
-        unregisterUser(Password, function (error) {
-            if (error) { return alert(error.message) }
-            deleteAccount.classList.add('container--hide')
+        unregisterUser(sessionStorage.token, Password, function (error) {
+            if (error) { alert(error.message) 
+                spinner.classList.add('container--hide')
+                deleteAccount.classList.remove('container--hide')
+                return
+            }
+            spinner.classList.add('container--hide')
             deleteAccountForm.reset()
+            delete sessionStorage.token
             landing.classList.remove('container--hide')
         })
     } catch (error) {
-        return alert(error.message)
+        alert(error.message)
+        spinner.classList.add('container--hide')
+        deleteAccount.classList.remove('container--hide')
     }
 }
 

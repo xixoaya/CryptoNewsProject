@@ -130,7 +130,7 @@ html, body {
 /* REUSABLE */
 
 .container--hide {
-    display: none;
+    display: none!important;
 } 
 
 .title {
@@ -175,4 +175,16 @@ html, body {
 
 .button--medium {
     min-width: 50px;
+}
+.spinner__layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.spinner__image {
+    width: 25vw;
+    height: 25vw;
 }
