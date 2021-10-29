@@ -22,14 +22,18 @@ html, body {
 }
 
 
-
 .pagelayout {
     /* margin-top: 180px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    min-height: 90vh;
+    min-height: 95vh;
+}
+
+.layout__title{
+text-align: center;
+margin-top: 20px;
 }
 
 .layout__subtitle{
@@ -38,24 +42,37 @@ html, body {
     padding-right: 50px;
     color: white;
     font-size: 18px;
+    align-self: center;
+    text-align: center;
 }
 
-
-.landing__buttons {
+.layout__main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 170px;
 }
 
-/* .thank-you__buttons {
-    margin-top: 165px;
-} 
+.layout__inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.layout__inputs--check{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 7px;
+}
 
-.home__buttons {
-    margin-top: 300px;
-}  */
+.layout__buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 #p-link{
     text-align: end;
@@ -67,71 +84,18 @@ html, body {
     font-size: 1.2rem;
 }
 .link:hover {
-    color: rgb(246, 2, 145);
-    /* box-shadow: 0px 4px 4px orange; */
-    
+    color: rgb(246, 2, 145);  
 }
-
-.sign-in__inputs{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 130px;
-}
-
-.sign-up__inputs{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 37px;
-}
-
-.sign-in__form{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.sign-up__form{
-    /* margin-top: 10px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.buttons-layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;}
-
- .sign-in-layout{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-        }
-
-.home-buttons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 170px;
-}
-
-/* REUSABLE */
 
 .container--hide {
     display: none!important;
 } 
+
+.name {
+    color: orange;
+    font-size: 1.5rem;
+    font-family: fantasy;
+}
 
 .title {
     font-family:'Rubik Mono One', sans-serif;
@@ -149,12 +113,12 @@ html, body {
 }
 
 .button {
-    border-radius: 25px;
+    border-radius: 10px;
     border-style: solid;
     border-width: 1px;
     margin: 5px;
     padding: 10px;
-    background-color: rgb(72, 212, 255);
+    background-color: rgb(250, 250, 250);
     font-size: 1rem;
     width: 200px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -173,9 +137,6 @@ html, body {
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.button--medium {
-    min-width: 50px;
-}
 .spinner__layout {
     display: flex;
     align-items: center;
@@ -187,4 +148,45 @@ html, body {
 .spinner__image {
     width: 25vw;
     height: 25vw;
+}
+
+/* ----------- PAGES ----------- */
+
+/* ----------- HOME ----------- */
+
+.layout__buttons--home-low {
+    margin-top: 90px;
+}
+
+.layout__buttons--home-hi {
+   gap: 15px;
+}
+
+.home-results-list{
+list-style: none;
+}
+/* .home__result {
+
+} */
+/* .home__detail{
+    width: 20vw;
+    height: 20vh;
+} */
+
+.home-results-list {
+    width: 350px; 
+    height: 200px; 
+    overflow: auto
+}
+
+/* ----------- DELETE ACCOUNT ----------- */
+
+.layout__buttons--delete-account {
+    margin-top: 90px;
+}
+
+/* ----------- CHANGE PASSWORD ----------- */
+
+.layout__buttons--change-pswd {
+    margin-top: 90px;
 }

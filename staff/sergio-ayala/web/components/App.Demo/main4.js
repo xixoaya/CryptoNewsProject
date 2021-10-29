@@ -18,8 +18,7 @@ if (!sessionStorage.token) {
 } else {
     try {
         retrieveUser(sessionStorage.token, function (error, user) {
-            if (error) {
-                delete sessionStorage.token
+            if (error) {  alert(error.message) 
                 spinner.classList.add('container--hide')
                 landing.classList.remove('container--hide')
                 return
@@ -35,11 +34,9 @@ if (!sessionStorage.token) {
             home.classList.remove('container--hide')
 
         })
-    } catch (error) {
-        alert(error.message)
+    } catch (error) { alert(error.message) 
         spinner.classList.add('container--hide')
-        landing.classList.remove('container--hide')
-    }
+        landing.classList.remove('container--hide')}
 }
 
 
@@ -162,8 +159,7 @@ signUpForm.onsubmit = function (event) {
 
     try {
         signUpUser(name, lastName, username, password, checkbox, function (error) {
-            if (error) {
-                alert(error.message)
+            if (error) { alert(error.message) 
                 spinner.classList.add('container--hide')
                 signUp.classList.remove('container--hide')
                 return
@@ -199,15 +195,12 @@ thankYouButon.onclick = function (event) {
 // BOTONES HOME
 var homeButtons = home.querySelectorAll('button')
 var homesearchButton = homeButtons[0]
-var homeBackDetailButton = homeButtons[1]
-var homeViewButton = homeButtons[2]
-var homeUpadateButton = homeButtons[3]
-var homeChangePasswordButton = homeButtons[4]
-var homeSignOutButton = homeButtons[5]
-var homeDeleteAccountButton = homeButtons[6]
-var homeSearchForm = home.querySelector('.home__search-panel')
-var homeResultList = home.querySelector('.home-results-list')
-var homeDetail = home.querySelector('.home__detail')
+var homeViewButton = homeButtons[1]
+var homeUpadateButton = homeButtons[2]
+var homeChangePasswordButton = homeButtons[3]
+var homeSignOutButton = homeButtons[4]
+var homeDeleteAccountButton = homeButtons[5]
+var homeSearchForm = homeButtons('form')
 
 homeSignOutButton.onclick = function () {
     delete sessionStorage.token
@@ -240,178 +233,116 @@ homeViewButton.onclick = function () {
 }
 
 homeSearchForm.onsubmit = function (event) {
-    // debugger
     event.preventDefault()
 
-    var queryInput = home.querySelector('input')
-    var query = queryInput.value
-    try {   
-    searchVehicles(query, function (error, vehicles){
-        if (error) { return alert(error.message)}
-        homeDetail.classList.add('container--hide')
-        homeResultList.classList.remove('container--hide')
-        homeResultList.innerHTML = ''
+    var query = home.querySelector('#query').value
 
-        vehicles.forEach(function (vehicle){
-            var item = document.createElement('li')
-            var title = document.createElement('h2')
-            title.innerText = vehicle.name
-            var image = document.createElement('img')
-            image.src = vehicle.thumbnail
-            var price = document.createElement('span')
-            price.innerText = vehicle.price + ' $'
-
-            item.append(title, image, price)
-            item.classList.add('home__result')
-            
-            item.onclick = function () {
-                try {
-                    retrieveVehicle (vehicle.id, function (error, vehicle) {
-                        if (error) { return alert(error.message)}
-                        
-                        homeResultList.classList.add('container--hide')
-                        
-                        var title = homeDetail.querySelector('h2')
-                        title.innerText = vehicle.name
-                        var image = homeDetail.querySelector('img')
-                        image.src = vehicle.image
-                        var description = homeDetail.querySelector('p')
-                        description.innerText = vehicle.description
-                        var year = homeDetail.querySelector('time')
-                        year.innerText = vehicle.year
-
-                        var other = homeDetail.querySelectorAll('span')
-                        other[0].innerText = vehicle.price
-                        other[1].innerText = vehicle.color
-                        other[2].innerText = vehicle.style
-                        other[3].innerText = vehicle.collection
-                        other[4].innerText = vehicle.maker
-
-                        var link = homeDetail.querySelector('a')
-                        link.src = vehicle.url
-                        
-                        homeDetail.classList.remove('container--hide')
-                        
-                    })
-                } catch (error) {
-                    alert(error.message)
-                }
-            }   
-            homeResultList.append(item)
-        })
-
-    })} catch (error) {
-        alert(error.message)}
-
+    
+    
 }
-
-
-
 
 // PAGINA CHANGE PASSWORD
 // BOTONES CHANGE PASSWORD
 
 var changePasswordButtons = changePassword.querySelectorAll('button')
 
-    var changePasswordUpdateButton = changePasswordButtons[0]
-    var changePasswordBackButton = changePasswordButtons[1]
+var changePasswordUpdateButton = changePasswordButtons[0]
+var changePasswordBackButton = changePasswordButtons[1]
 
-    changePasswordBackButton.onclick = function (event) {
-        event.preventDefault()
+changePasswordBackButton.onclick = function (event) {
+    event.preventDefault()
 
-        changePassword.classList.add('container--hide')
-        changePasswordForm.reset()
-        home.classList.remove('container--hide')
-    }
+    changePassword.classList.add('container--hide')
+    changePasswordForm.reset()
+    home.classList.remove('container--hide')
+}
 
-    var changePasswordForm = changePassword.querySelector('form')
+var changePasswordForm = changePassword.querySelector('form')
 
-    changePasswordForm.onsubmit = function (event) {
-        event.preventDefault()
+changePasswordForm.onsubmit = function (event) {
+    event.preventDefault()
 
-        var inputs = changePasswordForm.querySelectorAll('input')
+    var inputs = changePasswordForm.querySelectorAll('input')
 
-        var oldPassword = inputs[0].value
-        var newPassword = inputs[1].value
+    var oldPassword = inputs[0].value
+    var newPassword = inputs[1].value
 
-        changePassword.classList.add('container--hide')
-        spinner.classList.remove('container--hide')
+    changePassword.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
 
-        try {
-            updatePassword(sessionStorage.token, oldPassword, newPassword, function (error) {
-                if (error) {
-                    alert(error.message)
-                    spinner.classList.add('container--hide')
-                    changePassword.classList.remove('container--hide')
-                    return
-                }
-
+    try {
+        updatePassword(sessionStorage.token, oldPassword, newPassword, function (error) {
+            if (error) { alert(error.message) 
                 spinner.classList.add('container--hide')
-                changePasswordForm.reset()
-                home.classList.remove('container--hide')
-            })
-        } catch (error) {
-            alert(error.message)
+                changePassword.classList.remove('container--hide')
+                return 
+            }
+
             spinner.classList.add('container--hide')
-            changePassword.classList.remove('container--hide')
-        }
+            changePasswordForm.reset()
+            home.classList.remove('container--hide')
+        })
+    } catch (error) {
+        alert(error.message)
+        spinner.classList.add('container--hide')
+        changePassword.classList.remove('container--hide')
     }
+}
 
-    // PAGINA DELETE ACCOUNT
-    // BOTONES DELETE ACCOUNT
+// PAGINA DELETE ACCOUNT
+// BOTONES DELETE ACCOUNT
 
-    var deleteAccountButtons = deleteAccount.querySelectorAll('button')
-    var deleteAccountDeleteButton = deleteAccountButtons[0]
-    var deleteAccountBackButton = deleteAccountButtons[1]
-    var deleteAccountForm = deleteAccount.querySelector('.delete-account__form')
+var deleteAccountButtons = deleteAccount.querySelectorAll('button')
+var deleteAccountDeleteButton = deleteAccountButtons[0]
+var deleteAccountBackButton = deleteAccountButtons[1]
+var deleteAccountForm = deleteAccount.querySelector('.delete-account__form')
 
-    deleteAccountBackButton.onclick = function (event) {
-        event.preventDefault()
+deleteAccountBackButton.onclick = function (event) {
+    event.preventDefault()
 
-        deleteAccount.classList.add('container--hide')
-        deleteAccountForm.reset()
-        home.classList.remove('container--hide')
-    }
+    deleteAccount.classList.add('container--hide')
+    deleteAccountForm.reset()
+    home.classList.remove('container--hide')
+}
 
-    deleteAccountForm.onsubmit = function (event) {
-        event.preventDefault()
+deleteAccountForm.onsubmit = function (event) {
+    event.preventDefault()
 
-        var passwordInput = deleteAccountForm.querySelector('input')
-        var Password = passwordInput.value
+    var passwordInput = deleteAccountForm.querySelector('input')
+    var Password = passwordInput.value
 
-        deleteAccount.classList.add('container--hide')
-        spinner.classList.remove('container--hide')
+    deleteAccount.classList.add('container--hide')
+    spinner.classList.remove('container--hide')
 
-        try {
-            unregisterUser(sessionStorage.token, Password, function (error) {
-                if (error) {
-                    alert(error.message)
-                    spinner.classList.add('container--hide')
-                    deleteAccount.classList.remove('container--hide')
-                    return
-                }
+    try {
+        unregisterUser(sessionStorage.token, Password, function (error) {
+            if (error) { alert(error.message) 
                 spinner.classList.add('container--hide')
-                deleteAccountForm.reset()
-                delete sessionStorage.token
-                landing.classList.remove('container--hide')
-            })
-        } catch (error) {
-            alert(error.message)
+                deleteAccount.classList.remove('container--hide')
+                return
+            }
             spinner.classList.add('container--hide')
-            deleteAccount.classList.remove('container--hide')
-        }
+            deleteAccountForm.reset()
+            delete sessionStorage.token
+            landing.classList.remove('container--hide')
+        })
+    } catch (error) {
+        alert(error.message)
+        spinner.classList.add('container--hide')
+        deleteAccount.classList.remove('container--hide')
     }
+}
 
-    // PAGINA VIEW PROFILE
-    // BOTONES VIEW PROFILE
+// PAGINA VIEW PROFILE
+// BOTONES VIEW PROFILE
 
-    var viewProfileButtons = viewProfile.querySelectorAll('button')
-    var viewProfileEditButton = viewProfileButtons[0]
-    var viewProfileBackButton = viewProfileButtons[1]
+var viewProfileButtons = viewProfile.querySelectorAll('button')
+var viewProfileEditButton = viewProfileButtons[0]
+var viewProfileBackButton = viewProfileButtons[1]
 
-    viewProfileBackButton.onclick = function () {
-        viewProfile.classList.add('container--hide')
-        home.classList.remove('container--hide')
-    }
+viewProfileBackButton.onclick = function () {
+    viewProfile.classList.add('container--hide')
+    home.classList.remove('container--hide')
+}
 
 

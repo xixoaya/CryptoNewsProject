@@ -18,15 +18,15 @@
     <!-- Empieza ahora la página LANDING -->
 
     <div class="landing pagelayout container--hide">
-        <div class="landing__title title layout__title">
+        <div class="landing__title title">
             <h1>WELCOME</h1>
         </div>
-        <div class=" layout__subtitle">
+        <div class="landing__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
                 repellat velit ipsum sapiente corrupti natus aspernatur, deserunt eveniet. Eveniet, nesciunt deleniti
                 assumenda sequi nobis neque?</p>
         </div>
-        <div class="landing__buttons layout__main">
+        <div class="landing__buttons">
             <button class='button'>SIGN IN</button>
             <button class='button'>SIGN UP</button>
         </div>
@@ -35,19 +35,19 @@
     <!-- Empieza ahora la página SIGN IN -->
 
     <div class="sign-in pagelayout container--hide">
-        <div class="sign-in__title title layout__title">
+        <div class="sign-in__title title">
             <h1>SIGN IN</h1>
         </div>
         <div class="sign-in__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
             </p>
         </div>
-        <form action="" class="sign-in__form layout__main">
-            <div class="layout__inputs">
+        <form action="" class="sign-in__form">
+            <div class="sign-in__inputs">
                 <input type="email" class="input" name="username" placeholder="Email">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
-            <div class="sign-in__buttons layout__buttons">
+            <div class="sign-in__buttons">
                 <button type="submit" class='button'>SIGN IN</button>
                 <p id="p-link">Go to <a class="link">Sign Up</a></p>
             </div>
@@ -57,25 +57,25 @@
     <!-- Empieza ahora la página SIGN UP -->
 
     <div class="sign-up pagelayout container--hide">
-        <div class="sign-up__title title layout__title">
+        <div class="sign-up__title title">
             <h1>SIGN UP</h1>
         </div>
         <div class="sign-up__subtitle layout__subtitle">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
             </p>
         </div>
-        <form action="" class="sign-up__form layout__main">
-            <div class=" layout__inputs">
+        <form action="" class="sign-up__form">
+            <div class="sign-up__inputs">
                 <input type="text" class="input" name="name" placeholder="Name">
                 <input type="text" class="input" name="surname" placeholder="Surname">
                 <input type="email" class="input" name="username" placeholder="Email">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
-            <div class="sign-up__checkbox layout__inputs--check">
+            <div class="sign-up__checkbox">
                 <input type="checkbox" class="checkbox" name="checkbox" id="checkbox">
                 <label for="checkbox" class="checkbox__label">I accept Whatever</label>
             </div>
-            <div class="sign-up__buttons layout__buttons">
+            <div class="sign-up__buttons">
                 <button type="submit" class='button'>SIGN UP</button>
                 <p id="p-link">Go to <a class="link">Sign IN</a></p>
             </div>
@@ -85,16 +85,16 @@
     <!-- Empieza ahora la página THANK YOU -->
 
     <div class="thank-you pagelayout container--hide">
-        <div class="thank-you__title title title--font-height layout__title">
+        <div class="thank-you__title title title--font-height">
             <h1>Gracias Por Registrarte</h1>
         </div>
         <div class="thank-you__subtitle layout__subtitle">
             <p>Ve a SIGN IN para acceder a la home con tus credenciales.
             </p>
         </div>
-        <form action="" class="thank-you__form layout__main">
+        <form action="" class="thank-you__form">
 
-            <div class="thank-you__buttons layout__buttons">
+            <div class="thank-you__buttons">
                 <button class='button'> GO SIGN IN</button>
             </div>
         </form>
@@ -102,38 +102,21 @@
 
     <!-- Empieza ahora la página HOME -->
 
-    <div class="home pagelayout container--hide ">
-        <div class="home__title title layout__title">
+    <div class="home pagelayout container--hide">
+        <div class="home__title title">
             <h1>RELAX</h1>
         </div>
         <div class="home__subtitle layout__subtitle">
             <p><strong class="name">Name</strong> YOU ARE AT HOME
             </p>
         </div>
-        <div class="home-buttons layout__main">
-            <form class="home__search-panel layout__buttons">
-                <input type="text" id='query' class="input" name="query" placeholder="Search car">
-                <button class='button' type="submit">SEARCH</button>
-            </form>
-            <ul class="home-results-list "></ul>
-            <div class="home__detail container--hide">
-                <h2>title</h2><button class='button'>Back</button>
-                <img class="home__detail-image" src="https://previews.123rf.com/images/wuk/wuk1710/wuk171000023/88766953-child-crash-test-dummy-sitting-in-a-car.jpg" alt="">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum quas sapiente veritatis, magni natus necessitatibus velit aliquam enim iste? Beatae velit explicabo temporibus et blanditiis! Deleniti nemo voluptatem cumque nam.</p>
-                <time>2021</time>
-                <span>100 $</span>
-                <span>color</span>
-                <span>style</span>
-                <span>collection</span>
-                <span>maker</span>
-                <a href="http://">original</a>
-            </div>
-            <div class="layout__buttons--home-hi layout__buttons">
+        <div class="home-buttons buttons-layout">
+            <div class="home__upButtons buttons-layout">
                 <button class='button'>VIEW PROFILE</button>
                 <button class='button'>UPDATE PROFILE</button>
                 <button class='button'>CHANGE PASSWORD</button>
             </div>
-            <div class="layout__buttons--home-low layout__buttons">
+            <div class="home__lowButtons buttons-layout">
                 <button class='button'>SIGN OUT</button>
                 <button class='button'>DELETE ACCOUNT</button>
             </div>
@@ -144,7 +127,7 @@
     <!-- Empieza ahora la página CHANGE PASSWORD -->
 
     <div class="change-pswd pagelayout container--hide">
-        <div class="change-pswd__title title title--font-height layout__title">
+        <div class="change-pswd__title title title--font-height">
             <h1>Change Password</h1>
         </div>
         <div class="change-pswd__subtitle layout__subtitle">
@@ -152,12 +135,12 @@
                 Old Password
             </p>
         </div>
-        <form action="" class="change-pswd__form layout__main">
-            <div class="layout__inputs">
+        <form action="" class="change-pswd__form">
+            <div class="change-pswd__inputs sign-in-layout">
                 <input type="password" class="input" name="oldPassword" placeholder="Old Password">
                 <input type="password" class="input" name="newPassword" placeholder="New Password">
             </div>
-            <div class="layout__buttons layout__buttons--change-pswd">
+            <div class="change-pswd__buttons buttons-layout">
                 <button type="submit" class='button'>UPDATE</button>
                 <button class='button'>BACK HOME</button>
             </div>
@@ -167,7 +150,7 @@
     <!-- Empieza ahora la página DELETE ACCOUNT -->
 
     <div class="delete-account pagelayout container--hide">
-        <div class="delete-account__title title layout__title">
+        <div class="delete-account__title title">
             <h1>Delete Account</h1>
         </div>
         <div class="delete-account__subtitle layout__subtitle">
@@ -175,11 +158,11 @@
                 Password
             </p>
         </div>
-        <form action="" class="delete-account__form layout__main">
-            <div class="layout__inputs">
+        <form action="" class="delete-account__form">
+            <div class="delete-account__inputs sign-in-layout">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
-            <div class="layout__buttons--delete-account layout__buttons">
+            <div class="delete-account__buttons buttons-layout">
                 <button type="submit" class='button'>DELETE</button>
                 <button class='button'>BACK HOME</button>
             </div>
@@ -189,18 +172,18 @@
     <!-- Empieza ahora la página VIEW PROFILE -->
 
     <div class="view-profile pagelayout container--hide">
-        <div class="view-profile__title title layout__title">
+        <div class="view-profile__title title">
             <h1>YOUR PROFILE</h1>
         </div>
         <div class="view-profile__subtitle layout__subtitle">
             <p>Hello <strong class="name">Name</strong>, this is the information you have provide us.
             </p>
         </div>
-        <div class="view-profile__content layout__main">
-            <div class="layout__inputs">
+        <div class="view-profile__content">
+            <div class="view-profile__inputs sign-in-layout">
                 <input type="password" class="input" name="password" placeholder="Password">
             </div>
-            <div class="view-profile__buttons layout__buttons">
+            <div class="view-profile__buttons buttons-layout">
                 <button type="submit" class='button'>EDIT PROFILE</button>
                 <button class='button'>BACK HOME</button>
             </div>
@@ -209,7 +192,7 @@
 
     <!-- Empieza ahora la página SPINNER -->
 
-    <div class="spinner  spinner__layout">
+    <div class="spinner spinner__layout">
         <img class="spinner__image" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35771931234507.564a1d2403b3a.gif" alt="">
     </div>
 
