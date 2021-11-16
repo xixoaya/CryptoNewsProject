@@ -25,9 +25,9 @@ else if (command === 'save') // $ node agenda.js save Mario 456456456 mario@mail
 
         const contacts = JSON.parse(json)
 
-        const { argv: [, , , id, name, phone, email] } = process
+        const { argv: [, , , name, phone, email] } = process
 
-        contacts.push({ id, name, phone, email })
+        contacts.push({ id:  contacts.length + 1, name, phone, email })
 
         const json2 = JSON.stringify(contacts, null, 4)
 
@@ -60,8 +60,8 @@ else if (command === 'find') // $ node agenda.js find peter
         //     return console.log(contacts[index])
         // }
 
-        contacts.forEach(e => {
-            if (e.name === query || e.phone === query || e.email === query) {
+        contacts.forEach(({name, phone, email}) => {
+            if (name.toLowerCase().includes(query.toLowerCase()) || phone.toLowerCase().includes(query.toLowerCase()) || email.toLowerCase().includes(query.toLowerCase())) {
                 console.log(e)
             }
 
@@ -79,9 +79,9 @@ else if (command === 'remove') // $ node agenda.js remove 3
         }
 
         const contacts = JSON.parse(json)
-        const { argv: [, , , user] } = process
+        const { argv: [, , , userId] } = process
 
-        const index = contacts.findIndex(o => o.id === user || o.name === user || o.phone === user || o.email === user)
+        const index = contacts.findIndex(({id}) => id == userId )
 
         if (index < 0) {
             return console.log('nothing found with that name, email or phone')
@@ -135,16 +135,6 @@ else if (command === 'modify') // $ node agenda.js modify 3 * * peter3@mail.com
                 phone: (phone === '*' || !phone) ? contact.phone : phone,
                 email: (email === '*' || !email) ? contact.email : email
             }
-        
-            // if (name.length > 2) {
-            //     contact.name = name
-            // }
-            // if (phone.length > 2) {
-            //     contact.phone = phone
-            // }
-            // if (email.length > 1) {
-            //     contact.email = email
-            // }
 
             contacts[index] = newContact
 
