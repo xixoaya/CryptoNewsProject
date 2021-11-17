@@ -2,7 +2,7 @@ const { readFile, writeFile } = require('fs')
 
 function modifyUser(userId, data, callback) { // data => { name: ?, username: ?, password: ? }
     // TODO implement me
-    readFile( './users.json', 'utf8', (error, json) => {
+    readFile( `${__dirname}/../users.json`, 'utf8', (error, json) => {
         if (error) return callback(error)
 
         const users = JSON.parse(json)
@@ -13,15 +13,15 @@ function modifyUser(userId, data, callback) { // data => { name: ?, username: ?,
 
         if (!user) return callback(new Error(`No user with that ${id}`))
 
-        if (data[0] !== '.') {
+        if (data.name !== '.') {
             user.name = data[0]
         }
-        if (data[1] !== '.') {
+        if (data.username !== '.') {
             user.username = data[1]
         }
-        if (data[2] !== '.') {
-            if (data[2]!==user.password) {return callback(new Error(`Wrong credentials to change password`))} 
-            user.password = data[3]
+        if (data.oldPassword !== '.') {
+            if (data.oldPassword!==user.password) {return callback(new Error(`Wrong credentials to change password`))} 
+            user.password = data.newPassword
         }
 
         users[index] = user
@@ -30,7 +30,7 @@ function modifyUser(userId, data, callback) { // data => { name: ?, username: ?,
         writeFile('./users.json', json2, error => {
             if (error) return callback(error)
 
-            callback()
+            callback(null)
         })
     })
 }

@@ -59,7 +59,7 @@ if (command === 'register') { // $ node manager register "Peter Pan" peterpan 12
 } else if (command === 'modify') { // $ node manager modify kw0ms3h9 * * 123123123 234234234
     const { argv: [, , , id, name, username, oldPassword, newPassword] } = process
 
-    modifyUser(id, [name, username, oldPassword, newPassword], (error)=> {
+    modifyUser(id, {name, username, oldPassword, newPassword}, (error)=> {
         if (error) {
             console.log(error.message)
         } else {console.log('User updated')}
