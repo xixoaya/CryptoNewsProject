@@ -1,6 +1,16 @@
 const { readFile, writeFile } = require('fs')
 
 function unregisterUser(id, password, callback) {
+    if (typeof id !== 'string') throw new TypeError(id + ' is not a string')
+
+    if (!typeof password === 'string') {throw new TypeError(password +' is not a string')}
+    if (!password.trim().length) throw new Error('Password is empty')
+    if (/\r?\n|\r|\t| /g.test(password)) throw new Error('Password has blank spaces')
+    if (password.length < 5) {throw new Error ('Password has less than five characters')}
+
+    if (!typeof callback === 'function') {throw new TypeError(callback + 'is not a function')}
+
+
     readFile(`${__dirname}/../users.json`, 'utf8', (error, json) => {
         if (error) return callback(error)
 
