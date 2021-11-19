@@ -11,17 +11,19 @@ function modifyUser(userId, data, callback) { // data => { name: ?, username: ?,
 
         const user = users[index]
 
+        const {name, username, oldPassword, newPassword} = data 
+
         if (!user) return callback(new Error(`No user with that ${id}`))
 
-        if (data.name !== '.') {
-            user.name = data[0]
+        if (name !== '.') {
+            user.name = name
         }
-        if (data.username !== '.') {
-            user.username = data[1]
+        if (username !== '.') {
+            user.username = username
         }
-        if (data.oldPassword !== '.') {
-            if (data.oldPassword!==user.password) {return callback(new Error(`Wrong credentials to change password`))} 
-            user.password = data.newPassword
+        if (oldPassword !== '.') {
+            if (oldPassword!==user.password) {return callback(new Error(`Wrong credentials to change password`))} 
+            user.password = newPassword
         }
 
         users[index] = user

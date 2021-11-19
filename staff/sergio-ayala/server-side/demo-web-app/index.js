@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const formBodyParser = bodyParser.urlencoded({ extended: false })
 const { registerUser, authenticateUser, retrieveUser } = require('users')
 const { signUp, signIn, postSignUp, fail, home, landing } = require('./components')
-const { getCookieId, noCookieGoHome } = require('./helpers')
+const { getCookieId } = require('./helpers')
 
 const server = express()
 
@@ -13,71 +13,79 @@ server.get('/', (req, res) => {
     const { headers: { cookie } } = req
     const id = getCookieId(cookie)
 
-        if (id) {
-            try {
-                retrieveUser(id, (error, user) => {
-                    if (error) {
-                        res.send(fail({feedback : error.message}))
-                    } else {
-                        res.send(home({user}))
-                    }
-                })
-            } catch (error) {
-                res.send(fail({feedback : error.message}))
-            }
-    
-        } else res.send(landing())
+    if (id) {
+        try {
+            retrieveUser(id, (error, user) => {
+                if (error) {
+                    res.send(fail({ feedback: error.message }))
+                } else {
+                    res.send(home({ user }))
+                }
+            })
+        } catch (error) {
+            res.send(fail({ feedback: error.message }))
+        }
+
+    } else res.send(landing())
 })
 
 server.get('/signup', (req, res) => {
     const { headers: { cookie } } = req
     const id = getCookieId(cookie)
+
     if (id) return res.redirect('/')
     res.send(signUp())
 })
 
 server.post('/signup', formBodyParser, (req, res) => {
     const { headers: { cookie } } = req
-    noCookieGoHome(cookie)
+    const id = getCookieId(cookie)
+
+    if (id) return res.redirect('/')
 
     const { body: { name, username, password } } = req
 
     try {
         registerUser(name, username, password, (error) => {
             if (error) {
-                res.send(signUp({name, username, feedback: error.message}))
+                res.send(signUp({ name, username, feedback: error.message }))
             } else {
                 // res.redirect('signin')
-                res.send(postSignUp({name}))
+                res.send(postSignUp({ name }))
             }
         })
 
     } catch (error) {
-        res.send(signUp({name, username, feedback: error.message}))
+        res.send(signUp({ name, username, feedback: error.message }))
     }
 })
 
 server.get('/signin', (req, res) => {
     const { headers: { cookie } } = req
-    noCookieGoHome(cookie)
+    const id = getCookieId(cookie)
+
+    if (id) return res.redirect('/')
     res.send(signIn())
 })
 
 server.post('/signin', formBodyParser, (req, res) => {
-    const { headers: { cookie } } = req 
-    noCookieGoHome(cookie)
+    const { headers: { cookie } } = req
+    const id = getCookieId(cookie)
+
+    if (id) return res.redirect('/')
+
     const { body: { username, password } } = req
 
     try {
         authenticateUser(username, password, (error, id) => {
             if (error) {
-                res.send(signIn({username, feedback:error.message}))
+                res.send(signIn({ username, feedback: error.message }))
             }
             res.setHeader('Set-Cookie', `user-id=${id} ; Max-Age=3600`)
             res.redirect('/')
         })
     } catch (error) {
-        res.send(signIn({username, feedback:error.message}))
+        res.send(signIn({ username, feedback: error.message }))
     }
 })
 

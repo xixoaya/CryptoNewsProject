@@ -7,12 +7,20 @@ function getCookieId(cookie) {
     return res
 }
 
-function noCookieGoHome(cookie) {
-    const id = getCookieId(cookie)
-    if (id) return res.redirect('/')
-    
-}
+// function getCookieId(cookie) { //IGUAL QUE LA DE ARRIBA MÄS CORTO
+//     if (cookie) {
+//         const [, id] = cookie.split('=')
+//         return id
+//     }   
+// }
+
+// function ifCookieGoHome(cookie) {
+//     const id = getCookieId(cookie)
+
+//     if (id) return res.redirect('/')  
+// }
+// ifCookieGoHome,
+
 module.exports = {
     getCookieId,
-    noCookieGoHome
 }
