@@ -18,8 +18,10 @@ const auth = (user, secret, callback) => {
         if (err) callback(new Error(err.message))
    
         const users = JSON.parse(json)
-        const {id} = users.find(({email}) => email === _email)
-        if (!id) callback(new Error('User not found baby'))
+        const user = users.find((user) => user.email === _email && user.password === _password)
+        if (!user) callback(new Error('Wrong credentials'))
+        const id = user.id
+        if (!id) callback(new Error('User not found'))
 
         const token = jwt.sign({ sub: id, exp: Math.floor(Date.now() / 1000) + 3600 }, secret)
 

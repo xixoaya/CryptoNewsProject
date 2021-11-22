@@ -35,10 +35,15 @@ app.post('/api/users/unregister', (req, res) => {
 
 app.post('/api/users', (req, res) => {
     const {  headers: { authorization }, body: user } = req
-    retrieve(user, (err, data) => {
-        if (err) res.send(err.message)
-        else res.send(data)
-    })
+    const [, token] = authorization.split(' ')
+    const validation = {token, SECRET}
+    try {
+        retrieve(user, validation, (err, data) => {
+            if (err) res.send(err.message)
+            else res.send(data)
+        })
+        
+    } catch (error) { res.send(error.message)}
 })
 
 app.patch('/api/users', (req, res) => {

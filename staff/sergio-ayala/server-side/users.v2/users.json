@@ -19,5 +19,13 @@
         "username": "ventu54",
         "email": "gad@email.com",
         "password": "123456"
+    },
+    {
+        "name": "Xixo Aya",
+        "age": 31,
+        "single": true,
+        "username": "XixoAya2",
+        "password": "123123123",
+        "id": 7
     }
 ]
