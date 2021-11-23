@@ -10,6 +10,12 @@ const {readFile} = require('fs')
 //     }
 // })
 
+/**
+ * 
+ * @param {*} user 
+ * @param {*} secret 
+ * @param {*} callback 
+ */
 
 const auth = (user, secret, callback) => {
     const {email: _email, password: _password} = user
