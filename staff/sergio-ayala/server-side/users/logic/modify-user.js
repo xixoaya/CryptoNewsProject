@@ -15,25 +15,31 @@ function modifyUser(userId, data, callback) { // data => { name: ?, username: ?,
 
         if (!user) return callback(new Error(`No user with that ${id}`))
 
-        if (name !== '.') {
-            user.name = name
-        }
-        if (username !== '.') {
+        if (username) {
+            const exist = users.some(u => u.username === username)
+            if (exist) return callback(new Error (`${username} already exist as a username`))
             user.username = username
         }
-        if (oldPassword !== '.') {
+
+        if (newPassword) { 
             if (oldPassword!==user.password) {return callback(new Error(`Wrong credentials to change password`))} 
             user.password = newPassword
         }
 
+        for (const property in data)
+        if (property !== 'username' && property !== 'newPassword' && property !== 'oldPassword') {
+            user[property] = data[property]
+        }
+        
         users[index] = user
         const json2 = JSON.stringify(users, null, 4)
-
+        
         writeFile('./users.json', json2, error => {
             if (error) return callback(error)
-
+            
             callback(null)
         })
     })
 }
 module.exports = modifyUser
+

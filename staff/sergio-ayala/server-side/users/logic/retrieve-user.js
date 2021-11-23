@@ -16,11 +16,7 @@ function retrieveUser(id, callback) {
 
         delete user.id
         delete user.password
-        
-        // const publicDataUser = {
-        //     name: user.name,
-        //     username: user.username
-        // }
+    
 
         callback(null, user)
     })
