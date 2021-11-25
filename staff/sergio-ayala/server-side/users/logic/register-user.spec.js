@@ -156,8 +156,9 @@ describe('Register User', () => {
     
 
 
-    after(done => {
+    after(done => users.deleteMany({}, error => {
+        if (error) return done(error)
         client.close(done)
-    })
+    }))
 
 });

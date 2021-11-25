@@ -1,6 +1,6 @@
 const context = require('./context')
 
-function registerUser(name, username, password, callback) {
+function registerUser( name, username, password , callback) {
     if (typeof name !== 'string') throw new TypeError('name is not a string')
     if (!name.trim().length) throw new Error('Name is empty or blank')
     if (name.trim() !== name) throw new Error('Name has spaces around')
