@@ -2,6 +2,7 @@ const { expect } = require('chai')
 const registerUser = require('./register-user')
 const { MongoClient } = require('mongodb')
 const context = require('./context')
+const { ConflictError, FormatError} = require('errors') 
 
 describe('Register User', () => {
     let users, db, client
@@ -67,6 +68,7 @@ describe('Register User', () => {
 
             registerUser(name, username, password, error => {
                 expect(error).to.exist
+                expect(error).to.be.instanceOf(ConflictError)
                 expect(error.message).to.equal(`User with username ${username} already exists`)
                 done()
             })
@@ -85,12 +87,12 @@ describe('Register User', () => {
                 expect(() => registerUser(()=>{}, 'pepito84', '123213123', ()=>{ })).to.throw(TypeError, 'name is not a string')
             });
             it('should fail when name is empty or blank', () => {
-                expect(() => registerUser('', 'pepito84', '123213123', ()=>{ })).to.throw(Error, 'Name is empty or blank')
-                expect(() => registerUser('   ', 'pepito84', '123213123', ()=>{ })).to.throw(Error, 'Name is empty or blank')
+                expect(() => registerUser('', 'pepito84', '123213123', ()=>{ })).to.throw(FormatError, 'name is empty or blank')
+                expect(() => registerUser('   ', 'pepito84', '123213123', ()=>{ })).to.throw(FormatError, 'name is empty or blank')
                 
             });
             it('should fail when name has spaces around', () => {
-                expect(() => registerUser('pepito palotes ', 'pepito84', '123213123', ()=>{ })).to.throw(Error, 'Name has spaces around')  
+                expect(() => registerUser('pepito palotes ', 'pepito84', '123213123', ()=>{ })).to.throw(FormatError, 'name has spaces around')  
             });
             
         });
@@ -104,17 +106,17 @@ describe('Register User', () => {
                 expect(() => registerUser('Pepito palotes',()=>{}, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
             });
             it('should fail when username is empty or blank', () => {
-                expect(() => registerUser('Pepito palotes', '', '123213123', ()=>{ })).to.throw(Error, 'username is empty or blank')
-                expect(() => registerUser('Pepito palotes', '  ', '123213123', ()=>{ })).to.throw(Error, 'username is empty or blank')
+                expect(() => registerUser('Pepito palotes', '', '123213123', ()=>{ })).to.throw(FormatError, 'username is empty or blank')
+                expect(() => registerUser('Pepito palotes', '  ', '123213123', ()=>{ })).to.throw(FormatError, 'username is empty or blank')
                 
             });
             it('should fail when username has spaces around', () => {
-                expect(() => registerUser('pepito palotes', 'pepi to84', '123213123', ()=>{ })).to.throw(Error, 'username has blank spaces')  
-                expect(() => registerUser('pepito palotes', 'pepito84 ', '123213123', ()=>{ })).to.throw(Error, 'username has blank spaces')  
+                expect(() => registerUser('pepito palotes', 'pepi to84', '123213123', ()=>{ })).to.throw(FormatError, 'username has blank spaces')  
+                expect(() => registerUser('pepito palotes', 'pepito84 ', '123213123', ()=>{ })).to.throw(FormatError, 'username has blank spaces')  
             });
-            it('should fail when username has less than 6 chars', () => {
-                expect(() => registerUser('pepito palotes', 'pepi', '123213123', ()=>{ })).to.throw(Error, 'username is to short')  
-                expect(() => registerUser('pepito palotes', 'pepit', '123213123', ()=>{ })).to.throw(Error, 'username is to short')  
+            it('should fail when username has less than 4 chars', () => {
+                expect(() => registerUser('pepito palotes', 'pep', '123213123', ()=>{ })).to.throw(FormatError, 'username has less than 4 characters')  
+                expect(() => registerUser('pepito palotes', 'p', '123213123', ()=>{ })).to.throw(FormatError, 'username has less than 4 characters')  
             });
             
         });
@@ -127,17 +129,17 @@ describe('Register User', () => {
                 expect(() => registerUser('Pepito palotes','pepito84',()=>{}, ()=>{ })).to.throw(TypeError, 'password is not a string')
             });
             it('should fail when password is empty or blank', () => {
-                expect(() => registerUser('Pepito palotes', 'pepito84', '', ()=>{ })).to.throw(Error, 'password is empty or blank')
-                expect(() => registerUser('Pepito palotes', 'pepito84', '  ', ()=>{ })).to.throw(Error, 'password is empty or blank')
+                expect(() => registerUser('Pepito palotes', 'pepito84', '', ()=>{ })).to.throw(FormatError, 'password is empty or blank')
+                expect(() => registerUser('Pepito palotes', 'pepito84', '  ', ()=>{ })).to.throw(FormatError, 'password is empty or blank')
                 
             });
             it('should fail when password has spaces around', () => {
-                expect(() => registerUser('pepito palotes', 'pepito84', '123213 123', ()=>{ })).to.throw(Error, 'password has blank spaces')  
-                expect(() => registerUser('pepito palotes', 'pepito84', ' 123213123', ()=>{ })).to.throw(Error, 'password has blank spaces')  
+                expect(() => registerUser('pepito palotes', 'pepito84', '123213 123', ()=>{ })).to.throw(FormatError, 'password has blank spaces')  
+                expect(() => registerUser('pepito palotes', 'pepito84', ' 123213123', ()=>{ })).to.throw(FormatError, 'password has blank spaces')  
             });
             it('should fail when password has less than 6 chars', () => {
-                expect(() => registerUser('pepito palotes', 'pepito84', '12', ()=>{ })).to.throw(Error, 'password is to short')  
-                expect(() => registerUser('pepito palotes', 'pepito84', '12321', ()=>{ })).to.throw(Error, 'password is to short')  
+                expect(() => registerUser('pepito palotes', 'pepito84', '12', ()=>{ })).to.throw(FormatError, 'password has less than 6 characters')  
+                expect(() => registerUser('pepito palotes', 'pepito84', '12321', ()=>{ })).to.throw(FormatError, 'password has less than 6 characters')  
             });
             
         });

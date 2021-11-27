@@ -2,6 +2,7 @@ const { expect } = require('chai')
 const retrieveUser = require('./retrieve-user')
 const { MongoClient, ObjectId } = require('mongodb')
 const context = require('./context');
+const { NotFoundError, FormatError} = require('errors')
 
 describe('Retrieve User', () => {
     let users, db, client
@@ -68,6 +69,7 @@ describe('Retrieve User', () => {
         retrieveUser(userId, (error) => {
 
             expect(error).to.exist
+            expect(error).to.be.instanceOf(NotFoundError)
             expect(error.message).to.equal(`No user with the id: ${userId}`)
 
             done()
@@ -90,19 +92,19 @@ describe('Retrieve User', () => {
             })
 
             it('should fail when id is empty or blank', () => {
-                expect(() => retrieveUser('', () => { })).to.throw(Error, 'id is empty or blank')
+                expect(() => retrieveUser('', () => { })).to.throw(FormatError, 'id is empty or blank')
 
-                expect(() => retrieveUser('   ', () => { })).to.throw(Error, 'id is empty or blank')
+                expect(() => retrieveUser('   ', () => { })).to.throw(FormatError, 'id is empty or blank')
             })
 
             it('should fail when id has spaces', () => {
-                expect(() => retrieveUser(' abcd1234abcd1234abcd1234 ', () => { })).to.throw(Error, 'id has blank spaces')
+                expect(() => retrieveUser(' abcd1234abcd1234abcd1234 ', () => { })).to.throw(FormatError, 'id has blank spaces')
 
-                expect(() => retrieveUser('abcd 1234abc d1234abc d1234', () => { })).to.throw(Error, 'id has blank spaces')
+                expect(() => retrieveUser('abcd 1234abc d1234abc d1234', () => { })).to.throw(FormatError, 'id has blank spaces')
             })
 
             it('should fail when id length is different from 24 characters', () => {
-                expect(() => retrieveUser('abc', () => { })).to.throw(Error, 'id doesn\'t have 24 characters')
+                expect(() => retrieveUser('abc', () => { })).to.throw(FormatError, 'id doesn\'t have 24 characters')
             })
         })
 

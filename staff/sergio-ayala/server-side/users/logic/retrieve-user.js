@@ -1,21 +1,19 @@
 // const { readFile } = require("fs");
 const { ObjectId } = require('mongodb')
 const context = require('./context')
+const {validateId, validateCallback} = require('./helpers/validators')
+const { NotFoundError } = require('errors')
 
 
 function retrieveUser(id, callback) {
-    if (typeof id !== 'string') throw new TypeError('id is not a string')
-    if (!id.trim().length) throw new Error('id is empty or blank')
-    if (/\r?\n|\r|\t| /g.test(id)) throw new Error('id has blank spaces')
-    if (id.length !== 24) throw new Error('id doesn\'t have 24 characters')
-    
-    if (typeof callback !== 'function') throw new TypeError('callback is not a function')
+    validateId(id)
+    validateCallback(callback)
 
     const users = context.db.collection('users')
 
     users.findOne({_id: ObjectId(id)}, (error, user) => {
         if (error) return callback(error)
-        if (!user) return callback(new Error(`No user with the id: ${id}`))
+        if (!user) return callback(new NotFoundError(`No user with the id: ${id}`))
 
         user.id = user._id.toString()
         

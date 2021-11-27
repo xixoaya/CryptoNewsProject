@@ -2,6 +2,7 @@ const { expect } = require('chai')
 const unregisterUser = require('./unregister-user')
 const { MongoClient, ObjectId } = require('mongodb')
 const context = require('./context');
+const { NotFoundError, CredentialsError, FormatError } = require('errors')
 
 describe('Unregister', () => {
     let users, db, client
@@ -73,6 +74,7 @@ describe('Unregister', () => {
 
             unregisterUser(userId, password, (error, res) => {
                 expect(error).to.exist
+                expect(error).to.be.instanceOf(CredentialsError)
                 expect(error.message).to.equal('invalid password to delete account')
 
                 done()
@@ -88,6 +90,7 @@ describe('Unregister', () => {
 
             unregisterUser(userId, password, (error) => {
                 expect(error).to.exist
+                expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.equal(`User not found with the id: ${userId}`)
                 
                 done () 
@@ -112,19 +115,19 @@ describe('Unregister', () => {
             })
 
             it('should fail when id is empty or blank', () => {
-                expect(() => unregisterUser('', '123123123', () => { })).to.throw(Error, 'id is empty or blank')
+                expect(() => unregisterUser('', '123123123', () => { })).to.throw(FormatError, 'id is empty or blank')
 
-                expect(() => unregisterUser('   ', '123123123', () => { })).to.throw(Error, 'id is empty or blank')
+                expect(() => unregisterUser('   ', '123123123', () => { })).to.throw(FormatError, 'id is empty or blank')
             })
 
             it('should fail when id has spaces', () => {
-                expect(() => unregisterUser(' abcd1234abcd1234abcd1234 ', '123123123', () => { })).to.throw(Error, 'id has blank spaces')
+                expect(() => unregisterUser(' abcd1234abcd1234abcd1234 ', '123123123', () => { })).to.throw(FormatError, 'id has blank spaces')
 
-                expect(() => unregisterUser('abcd 1234abc d1234abc d1234', '123123123', () => { })).to.throw(Error, 'id has blank spaces')
+                expect(() => unregisterUser('abcd 1234abc d1234abc d1234', '123123123', () => { })).to.throw(FormatError, 'id has blank spaces')
             })
 
             it('should fail when id length is different from 24 characters', () => {
-                expect(() => unregisterUser('abc', '123123123', () => { })).to.throw(Error, 'id doesn\'t have 24 characters')
+                expect(() => unregisterUser('abc', '123123123', () => { })).to.throw(FormatError, 'id doesn\'t have 24 characters')
             })
         })
         
@@ -142,19 +145,19 @@ describe('Unregister', () => {
             })
 
             it('should fail when password is empty', () => {
-                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '' , () => { })).to.throw(Error, 'password is empty or blank')
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '' , () => { })).to.throw(FormatError, 'password is empty or blank')
 
-                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '   ' , () => { })).to.throw(Error, 'password is empty or blank')
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '   ' , () => { })).to.throw(FormatError, 'password is empty or blank')
             })
 
             it('should fail when password has spaces', () => {
-                expect(() => unregisterUser('abcd1234abcd1234abcd1234', ' 123123123 ' , () => { })).to.throw(Error, 'password has blank spaces')
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', ' 123123123 ' , () => { })).to.throw(FormatError, 'password has blank spaces')
 
-                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123 123 123' , () => { })).to.throw(Error, 'password has blank spaces')
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123 123 123' , () => { })).to.throw(FormatError, 'password has blank spaces')
             })
 
             it('should fail when password length is less that 6 characters', () => {
-                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '12123' , () => { })).to.throw(Error, 'password is to short')
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '12123' , () => { })).to.throw(FormatError, 'password has less than 6 characters')
             })
         })
 
