@@ -1,35 +1,36 @@
-const context = require('./context')
-const { ObjectId } = require('mongodb')
-const {validateId, validateCallback, validateData} = require('./helpers/validators')
+const { mongoose, models: { User } } = require('data')
+const {validateId, validateData} = require('./helpers/validators')
 const { NotFoundError, ConflictError, CredentialsError } = require('errors')
 
-function modifyUser(id, data, callback) { // data => { name: ?, username: ?, password: ? }
+function modifyUser(id, data) { // data => { name: ?, username: ?, password: ? }
     validateId(id)
     validateData(data)
-    validateCallback(callback)
 
-    const users = context.db.collection('users')
+    
+    return User.findById(id)
+        .then(user => {
+            if (!user)  throw new NotFoundError(`No user found with id ${id}`)
+            const { password, oldPassword } = data
 
-    users.findOne({ _id: ObjectId(id) }, (error, user) => {
-        if (error) return callback(error)
-        if (!user) return callback(new NotFoundError(`No user found with id ${id}`))
-
-        const { password, oldPassword } = data
-
-        if (password) {
-            if (oldPassword !== user.password)
-                return callback(new CredentialsError(`Wrong credentials`))
-            else
-                delete data.oldPassword
-        }
-        users.updateOne({ _id: ObjectId(id) }, {$set : data}, error => {
-            if (error) {
-                if (error.code === 11000) return callback(new ConflictError(`user with Username ${data.username} already exists`))
-                else return callback(error)
+            if (password) {
+                if (oldPassword !== user.password)
+                    throw new CredentialsError(`Wrong credentials`)
+                else
+                    delete data.oldPassword
             }
-            callback(null)
+
+            for (const property in data)
+                user[property] = data[property]
+
+            return user.save()
+                .then(() => {})
+                .catch(error => {
+                    if (error.code === 11000) 
+                        throw new ConflictError(`user with Username ${data.username} already exists`)
+                    throw error     
+                })
+
         })
-    })
 
 
 }

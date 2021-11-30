@@ -1,76 +1,100 @@
-require('dotenv').config()
-
 const { expect } = require('chai')
 const unregisterUser = require('./unregister-user')
-const { mongoose, models: { User } } = require('data')
-const { Types: { ObjectId } } = mongoose
-// const context = require('./context');
+const { MongoClient, ObjectId } = require('mongodb')
+const context = require('./context');
 const { NotFoundError, CredentialsError, FormatError } = require('errors')
 
-const { env: { MONGO_URL } } = process
-
-
 describe('Unregister', () => {
+    let users, db, client
 
-    before(() => mongoose.connect(MONGO_URL))
-    beforeEach(() => User.deleteMany())
+    before(done => {
+        client = new MongoClient('mongodb://localhost:27017')
+
+        client.connect(error => {
+            if (error) done(error)
+            else {
+
+                db = client.db('demo')
+                context.db = db
+
+                users = db.collection('users')
+
+                users.createIndex({ username: 1 }, { unique: true })
+
+                done()
+            }
+        })
+    })
+
+    beforeEach(done => {
+        users.deleteMany({}, done)
+    })
+
     let user, userId
 
-    beforeEach(() => {
+    beforeEach(done => {
         user = {
             name: 'Juana la Loca',
             username: 'crazyJ',
             password: '123123123'
         }
-        return User.create(user)
-            .then(user => userId = user.id)
+        users.insertOne(user, (error, result) => {
+            if (error) done(error)
+            else {
+                userId = result.insertedId.toString()
+
+                done()
+            }
+        })
     })
 
     describe('when user with id given exists', () => {
-        it('should succed if password is correct', () => {
+        it('should succed if password is correct', (done) => {
             const { password} = user
 
-            return unregisterUser(userId, password)
-                .then(res => {
-                    expect(res).to.be.undefined
+            unregisterUser(userId, password, (error) => {
+                if (error) return done(error)
+                // expect(res).to.equal({Succeed: 'user deleted'})
+                expect(error).to.be.null
 
-                    return User.findById(userId)
-                })
-                .then(user => {
+                users.findOne({_id: ObjectId(userId)}, (error, user) => {
+                    if (error) return done(error)
+
                     expect(user).to.be.null
-                    
                 })
+                done () 
+            }) 
              
         });
 
-        it('should fail if password is wrong', () => {
+        it('should fail if password is wrong', (done) => {
             let { password} = user
 
             password += '-wrong'
 
-            return unregisterUser(userId, password)
-                .then(() => { throw new Error('Should not arrive here') })
-                .catch(error => {
-                    expect(error).to.exist
-                    expect(error).to.be.instanceOf(CredentialsError)
-                    expect(error.message).to.equal('invalid password to delete account')
-                })   
+            unregisterUser(userId, password, (error, res) => {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(CredentialsError)
+                expect(error.message).to.equal('invalid password to delete account')
+
+                done()
+            })   
         }); 
         
     });
 
     describe('When id given doesnt match any user', () => {
-        it('should fail if userId doesnt exist', () => {
+        it('should fail if userId doesnt exist', (done) => {
             const userId = ObjectId().toString()
             const { password} = user
 
-            return unregisterUser(userId, password)
-                .then(() => { throw new Error('Should not arrive here') })
-                .catch(error => {
-                    expect(error).to.exist
-                    expect(error).to.be.instanceOf(NotFoundError)
-                    expect(error.message).to.equal(`User not found with the id: ${userId}`)
-                })
+            unregisterUser(userId, password, (error) => {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`User not found with the id: ${userId}`)
+                
+                done () 
+            }) 
              
         }); 
     });
@@ -137,11 +161,24 @@ describe('Unregister', () => {
             })
         })
 
+        describe('when callback is not valid', () => {
+            it('should fail when callback is not a string', () => {
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123123123', true)).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123123123', 123)).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123123123', {})).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123123123', '...')).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => unregisterUser('abcd1234abcd1234abcd1234', '123123123', [])).to.throw(TypeError, 'callback is not a function')
+            })
+        })
     });
 
-    after(() =>
-        User.deleteMany()
-            .then(() => mongoose.disconnect())
-    )
+    after(done => users.deleteMany({}, error => {
+        if (error) return done(error)
+        client.close(done)
+    }))
     
 });

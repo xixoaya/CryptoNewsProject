@@ -1,29 +1,20 @@
-const context = require('./context')
-const { ObjectId } = require('mongodb')
-const { validateId, validatePassword, validateCallback } = require('./helpers/validators')
+const { models: { User } } = require('data')
+const { validateId, validatePassword } = require('./helpers/validators')
 const { NotFoundError, CredentialsError } = require('errors')
 
-function unregisterUser(id, password, callback) {
+function unregisterUser(id, password) {
     validateId(id)
     validatePassword(password)
-    validateCallback(callback)
 
-    const users = context.db.collection('users')
+    return User.findById(id)
+        .then(user => {
+            if (!user) throw new NotFoundError(`User not found with the id: ${id}`)
 
-    users.findOne({ _id: ObjectId(id) }, (error, user) => {
-        if (error) return callback(error)
-        if (!user) return callback(new NotFoundError(`User not found with the id: ${id}`))
-
-        if (password === user.password) {
-            users.deleteOne({ _id: ObjectId(id) }, error => {
-                if (error) return callback(error)
-                return callback(null)
-            })
-
-        } else return callback(new CredentialsError('invalid password to delete account'))
-
-
-    })
+            if (password !== user.password) throw new CredentialsError('invalid password to delete account')
+            
+            return User.deleteOne({_id: id})
+                  .then(() => { })    
+        })
 
 }
 

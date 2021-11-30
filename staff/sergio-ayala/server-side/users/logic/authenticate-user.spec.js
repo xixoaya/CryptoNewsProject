@@ -1,179 +1,148 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
 const authenticateUser = require('./authenticate-user')
-const { MongoClient } = require('mongodb')
+const { mongoose, models: { User } } = require('data')
 const context = require('./context')
-const {CredentialsError , FormatError} = require('errors')
+const { CredentialsError, FormatError } = require('errors')
+
+const { env: { MONGO_URL } } = process
 
 describe('Authenticate User', () => {
-    let users, db, client
 
-    before(done => {
-        client = new MongoClient('mongodb://localhost:27017')
+    before(() => mongoose.connect(MONGO_URL))
 
-        client.connect(error => {
-            if (error) done(error)
-            else {
-
-                db = client.db('demo')
-                context.db = db
-
-                users = db.collection('users')
-
-                users.createIndex({ username: 1 }, { unique: true })
-
-                done()
-            }
-        })
-    })
-
-    beforeEach(done => {
-        users.deleteMany({}, done)
-    })
+    beforeEach(() => User.deleteMany())
 
     let user, userId
 
-    beforeEach(done => {
+    beforeEach(() => {
         user = {
             name: 'Juana la Loca',
             username: 'crazyJ',
             password: '123123123'
         }
-        users.insertOne(user, (error, result) => {
-            if (error) done(error)
-            else {
-                userId = result.insertedId.toString()
-
-                done()
-            }
-        })
+        return User.create(user)
+            .then(user => userId = user.id)
     })
 
-    it('should pass when username and password are correct and of an existing user', (done) => {
+    it('should pass when username and password are correct and of an existing user', () => {
         const { username, password } = user
 
-        authenticateUser(username, password, (error, id) => {
-            if (error) done(error)
-            else {
+        return authenticateUser(username, password)
+            .then(id => {
                 expect(id).to.exist
                 expect(id).to.equal(userId)
-                done()
-            }
-        })
-
+            })
     });
 
-    it('should fail when username doesnt match any existing user', (done) => {
+    it('should fail when username doesnt match any existing user', () => {
         const { username, password } = user
 
-        authenticateUser(username + 'wrong', password, (error, id) => {
+        return authenticateUser(username + 'wrong', password)
 
-            expect(error).to.exist
-            expect(error).to.be.instanceOf(CredentialsError)
-            expect(error.message).to.equal('Wrong credentials')
+            .then(() => { throw new Error('Should not arrive here') })
+            .catch(error => {
 
-            expect(id).to.be.undefined
-            done()
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(CredentialsError)
+                expect(error.message).to.equal('Wrong credentials')
 
-        })
-
+            })
     });
 
-    it('should fail when password is incorrect for an existing username', (done) => {
+    it('should fail when password is incorrect for an existing username', () => {
         const { username, password } = user
 
-        authenticateUser(username , password + 'wrong', (error, id) => {
+        return authenticateUser(username, password + 'wrong')
 
-            expect(error).to.exist
-            expect(error.message).to.equal('Wrong credentials')
+            .then(() => { throw new Error('Should not arrive here') })
+            .catch(error => {
 
-            expect(id).to.be.undefined
-            done()
-
-        })
-
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(CredentialsError)
+                expect(error.message).to.equal('Wrong credentials')
+            })
     });
 
-    it('should fail when password & username are incorrect', (done) => {
+    it('should fail when password & username are incorrect', () => {
         const { username, password } = user
 
-        authenticateUser(username + 'Wrong' , password + 'wrong', (error, id) => {
+        return authenticateUser(username + 'Wrong', password + 'wrong')
 
-            expect(error).to.exist
-            expect(error.message).to.equal('Wrong credentials')
+            .then(() => { throw new Error('Should not arrive here') })
+            .catch(error => {
 
-            expect(id).to.be.undefined
-            done()
-
-        })
-
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(CredentialsError)
+                expect(error.message).to.equal('Wrong credentials')
+            })
     });
 
     describe('validation parameters with invalid data', () => {
-        
+
         describe('When username is not valid', () => {
             it('should fail when username is not a string', () => {
-                expect(() => authenticateUser(true, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
-                expect(() => authenticateUser({}, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
-                expect(() => authenticateUser(123, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
-                expect(() => authenticateUser(()=>{}, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
+                expect(() => authenticateUser(true, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
+                expect(() => authenticateUser({}, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
+                expect(() => authenticateUser(123, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
+                expect(() => authenticateUser(() => { }, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
             });
             it('should fail when username is empty or blank', () => {
-                expect(() => authenticateUser( '', '123213123', ()=>{ })).to.throw(FormatError, 'username is empty or blank')
-                expect(() => authenticateUser( '  ', '123213123', ()=>{ })).to.throw(FormatError, 'username is empty or blank')
-                
+                expect(() => authenticateUser('', '123213123', () => { })).to.throw(FormatError, 'username is empty or blank')
+                expect(() => authenticateUser('  ', '123213123', () => { })).to.throw(FormatError, 'username is empty or blank')
+
             });
             it('should fail when username has spaces around', () => {
-                expect(() => authenticateUser( 'pepi to84', '123213123', ()=>{ })).to.throw(FormatError, 'username has blank spaces')  
-                expect(() => authenticateUser( 'pepito84 ', '123213123', ()=>{ })).to.throw(FormatError, 'username has blank spaces')  
+                expect(() => authenticateUser('pepi to84', '123213123', () => { })).to.throw(FormatError, 'username has blank spaces')
+                expect(() => authenticateUser('pepito84 ', '123213123', () => { })).to.throw(FormatError, 'username has blank spaces')
             });
             it('should fail when username has less than 4 chars', () => {
-                expect(() => authenticateUser( 'pep', '123213123', ()=>{ })).to.throw(FormatError, 'username has less than 4 characters')  
-                expect(() => authenticateUser( 'p', '123213123', ()=>{ })).to.throw(FormatError, 'username has less than 4 characters')  
+                expect(() => authenticateUser('pep', '123213123', () => { })).to.throw(FormatError, 'username has less than 4 characters')
+                expect(() => authenticateUser('p', '123213123', () => { })).to.throw(FormatError, 'username has less than 4 characters')
             });
-            
+
         });
 
         describe('When password is not valid', () => {
             it('should fail when password is not a string', () => {
-                expect(() => authenticateUser('pepito84',true, ()=>{ })).to.throw(TypeError, 'password is not a string')
-                expect(() => authenticateUser('pepito84',{}, ()=>{ })).to.throw(TypeError, 'password is not a string')
-                expect(() => authenticateUser('pepito84',123, ()=>{ })).to.throw(TypeError, 'password is not a string')
-                expect(() => authenticateUser('pepito84',()=>{}, ()=>{ })).to.throw(TypeError, 'password is not a string')
+                expect(() => authenticateUser('pepito84', true, () => { })).to.throw(TypeError, 'password is not a string')
+                expect(() => authenticateUser('pepito84', {}, () => { })).to.throw(TypeError, 'password is not a string')
+                expect(() => authenticateUser('pepito84', 123, () => { })).to.throw(TypeError, 'password is not a string')
+                expect(() => authenticateUser('pepito84', () => { }, () => { })).to.throw(TypeError, 'password is not a string')
             });
             it('should fail when password is empty or blank', () => {
-                expect(() => authenticateUser( 'pepito84', '', ()=>{ })).to.throw(FormatError, 'password is empty or blank')
-                expect(() => authenticateUser( 'pepito84', '  ', ()=>{ })).to.throw(FormatError, 'password is empty or blank')
-                
+                expect(() => authenticateUser('pepito84', '', () => { })).to.throw(FormatError, 'password is empty or blank')
+                expect(() => authenticateUser('pepito84', '  ', () => { })).to.throw(FormatError, 'password is empty or blank')
+
             });
             it('should fail when password has spaces around', () => {
-                expect(() => authenticateUser( 'pepito84', '123213 123', ()=>{ })).to.throw(FormatError, 'password has blank spaces')  
-                expect(() => authenticateUser( 'pepito84', ' 123213123', ()=>{ })).to.throw(FormatError, 'password has blank spaces')  
+                expect(() => authenticateUser('pepito84', '123213 123', () => { })).to.throw(FormatError, 'password has blank spaces')
+                expect(() => authenticateUser('pepito84', ' 123213123', () => { })).to.throw(FormatError, 'password has blank spaces')
             });
             it('should fail when password has less than 6 chars', () => {
-                expect(() => authenticateUser( 'pepito84', '12', ()=>{ })).to.throw(FormatError, 'password has less than 6 characters')  
-                expect(() => authenticateUser( 'pepito84', '12321', ()=>{ })).to.throw(FormatError, 'password has less than 6 characters')  
+                expect(() => authenticateUser('pepito84', '12', () => { })).to.throw(FormatError, 'password has less than 6 characters')
+                expect(() => authenticateUser('pepito84', '12321', () => { })).to.throw(FormatError, 'password has less than 6 characters')
             });
-            
+
         });
 
-        describe('When callback is not valid', () => {
-            it('should fail when callback is not a function', () => {
-                expect(() => authenticateUser('pepito84', '123123', true)).to.throw(TypeError, 'callback is not a function')
-                expect(() => authenticateUser('pepito84', '123123', {})).to.throw(TypeError, 'callback is not a function')
-                expect(() => authenticateUser('pepito84', '123123', 123)).to.throw(TypeError, 'callback is not a function')
-                expect(() => authenticateUser('pepito84', '123123', 'callback')).to.throw(TypeError, 'callback is not a function')
-            });
-            
-        });
-         
+        // describe('When callback is not valid', () => {
+        //     it('should fail when callback is not a function', () => {
+        //         expect(() => authenticateUser('pepito84', '123123', true)).to.throw(TypeError, 'callback is not a function')
+        //         expect(() => authenticateUser('pepito84', '123123', {})).to.throw(TypeError, 'callback is not a function')
+        //         expect(() => authenticateUser('pepito84', '123123', 123)).to.throw(TypeError, 'callback is not a function')
+        //         expect(() => authenticateUser('pepito84', '123123', 'callback')).to.throw(TypeError, 'callback is not a function')
+        //     });
+
+        // });
+
     });
-    
 
 
-
-    after(done => users.deleteMany({}, error => {
-        if (error) return done(error)
-        client.close(done)
-    }))
+    after(() =>
+        User.deleteMany()
+            .then(() => mongoose.disconnect())
+    )
 
 });

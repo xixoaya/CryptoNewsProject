@@ -1,29 +1,23 @@
 // const { readFile } = require("fs");
-const { ObjectId } = require('mongodb')
-const context = require('./context')
-const {validateId, validateCallback} = require('./helpers/validators')
+const { models: { User } } = require('data')
+const { validateId } = require('./helpers/validators')
 const { NotFoundError } = require('errors')
 
 
-function retrieveUser(id, callback) {
+function retrieveUser(id) {
     validateId(id)
-    validateCallback(callback)
 
-    const users = context.db.collection('users')
+    return User.findById(id).lean()
+        .then(user => {
+            if (!user) throw new NotFoundError(`No user with the id: ${id}`)
 
-    users.findOne({_id: ObjectId(id)}, (error, user) => {
-        if (error) return callback(error)
-        if (!user) return callback(new NotFoundError(`No user with the id: ${id}`))
+            user.id = user._id.toString()
 
-        user.id = user._id.toString()
-        
-        delete user._id
-        delete user.password
-    
+            delete user._id
+            delete user.password
+            delete user.__v
 
-        callback(null, user)
-
-
-    })
+            return user
+        })
 }
 module.exports = retrieveUser

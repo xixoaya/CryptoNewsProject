@@ -1,49 +1,79 @@
-require('dotenv').config()
-
 const { expect } = require('chai')
 const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('data')
-const { Types: { ObjectId } } = mongoose
+const { MongoClient, ObjectId } = require('mongodb')
+const context = require('./context');
 const { NotFoundError, FormatError} = require('errors')
 
-const { env: { MONGO_URL } } = process
-
 describe('Retrieve User', () => {
-    before(() => mongoose.connect(MONGO_URL))
-    beforeEach(() => User.deleteMany())
+    let users, db, client
+
+    before(done => {
+        client = new MongoClient('mongodb://localhost:27017')
+
+        client.connect(error => {
+            if (error) done(error)
+            else {
+
+                db = client.db('demo')
+                context.db = db
+
+                users = db.collection('users')
+
+                users.createIndex({ username: 1 }, { unique: true })
+
+                done()
+            }
+        })
+    })
+
+    beforeEach(done => {
+        users.deleteMany({}, done)
+    })
+
     let user, userId
 
-    beforeEach(() => {
+    beforeEach(done => {
         user = {
             name: 'Juana la Loca',
             username: 'crazyJ',
             password: '123123123'
         }
-        return User.create(user)
-            .then(user => userId = user.id)
+        users.insertOne(user, (error, result) => {
+            if (error) done(error)
+            else {
+                userId = result.insertedId.toString()
+
+                done()
+            }
+        })
     })
 
-
-    it('should suceed with correct id of an existing user', () => {
+    it('should suceed with correct id of an existing user', (done) => {
         const { name, username } = user
 
-        return retrieveUser(userId)
-            .then(user => {
+        retrieveUser(userId, (error, user) => {
+            if (error) done(error)
+            else {
                 expect(user).to.exist
                 expect(user.name).to.equal(name)
                 expect(user.username).to.equal(username)
-            })      
+
+                done()
+            }
+        })
     });
 
-    it('should fail with incorrect id', () => {
-        userId = new ObjectId().toString()
+    it('should fail with incorrect id', (done) => {
+        userId = ObjectId().toString()
 
-        return retrieveUser(userId)
-        .then(() => { throw new Error('Should not arrive here') })
-        .catch(error => {
+        retrieveUser(userId, (error) => {
+
             expect(error).to.exist
             expect(error).to.be.instanceOf(NotFoundError)
             expect(error.message).to.equal(`No user with the id: ${userId}`)
+
+            done()
+
         })
     });
 
@@ -78,11 +108,23 @@ describe('Retrieve User', () => {
             })
         })
 
+        describe('when callback is not valid', () => {
+            it('should fail when callback is not a string', () => {
+                expect(() => retrieveUser('abcd1234abcd1234abcd1234', true)).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => retrieveUser('abcd1234abcd1234abcd1234', 123)).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => retrieveUser('abcd1234abcd1234abcd1234', {})).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => retrieveUser('abcd1234abcd1234abcd1234', '...')).to.throw(TypeError, 'callback is not a function')
+
+                expect(() => retrieveUser('abcd1234abcd1234abcd1234', [])).to.throw(TypeError, 'callback is not a function')
+            })
+        })
     })
 
-    after(() =>
-        User.deleteMany()
-            .then(() => mongoose.disconnect())
-    )
-    
-})
+    after(done => users.deleteMany({}, error => {
+        if (error) return done(error)
+        client.close(done)
+    }))
+});
