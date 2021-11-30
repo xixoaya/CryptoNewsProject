@@ -29,9 +29,6 @@ function modifyUser(id, data) { // data => { name: ?, username: ?, password: ? }
                         throw new ConflictError(`user with Username ${data.username} already exists`)
                     throw error     
                 })
-
         })
-
-
 }
 module.exports = modifyUser

@@ -9,7 +9,6 @@ const { ConflictError, FormatError } = require('errors')
 const { env: { MONGO_URL } } = process
 
 describe('Register User', () => {
-    // let users, db, client
 
     before(() => mongoose.connect(MONGO_URL))
 
@@ -34,21 +33,6 @@ describe('Register User', () => {
                     expect(user.username).to.equal(username)
                     expect(user.password).to.equal(password)
                 })
-
-            // registerUser(name, username, password, (error) => {
-            //     if (error) return done(error)
-
-            //     users.findOne({ username }, (error, user) => {
-            //         if (error) return done(error)
-
-            //         expect(user).to.exist
-            //         expect(user.name).to.equal(name)
-            //         expect(user.username).to.equal(username)
-            //         expect(user.password).to.equal(password)
-            //         done()
-            //     })
-            // })
-
         });
     });
 
@@ -73,14 +57,6 @@ describe('Register User', () => {
                     expect(error).to.be.instanceOf(ConflictError)
                     expect(error.message).to.equal(`User with username ${username} already exists`)
                 })
-
-            // registerUser(name, username, password, error => {
-            //     expect(error).to.exist
-            //     expect(error).to.be.instanceOf(ConflictError)
-            //     expect(error.message).to.equal(`User with username ${username} already exists`)
-            //     done()
-            // })
-
         });
 
     });
@@ -90,7 +66,6 @@ describe('Register User', () => {
             it('should fail when name is not a string', () => {
                 expect(() => registerUser(true, 'pepito84', '123213123', () => { })).to.throw(TypeError, 'name is not a string')
                 expect(() => registerUser({}, 'pepito84', '123213123', () => { })).to.throw(TypeError, 'name is not a string')
-                // expect(() => registerUser(pepito, 'pepito84', '123213123', ()=>{ })).to.throw(TypeError, 'name is not a string')
                 expect(() => registerUser(123, 'pepito84', '123213123', () => { })).to.throw(TypeError, 'name is not a string')
                 expect(() => registerUser(() => { }, 'pepito84', '123213123', () => { })).to.throw(TypeError, 'name is not a string')
             });
@@ -109,7 +84,6 @@ describe('Register User', () => {
             it('should fail when username is not a string', () => {
                 expect(() => registerUser('Pepito palotes', true, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
                 expect(() => registerUser('Pepito palotes', {}, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
-                // expect(() => registerUser('Pepito palotes',pepito, '123213123', ()=>{ })).to.throw(TypeError, 'username is not a string')
                 expect(() => registerUser('Pepito palotes', 123, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
                 expect(() => registerUser('Pepito palotes', () => { }, '123213123', () => { })).to.throw(TypeError, 'username is not a string')
             });
@@ -153,8 +127,6 @@ describe('Register User', () => {
         });
 
     });
-
-
 
     after(() =>
         User.deleteMany()

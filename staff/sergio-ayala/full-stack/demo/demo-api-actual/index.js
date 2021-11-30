@@ -3,7 +3,7 @@ require('dotenv').config()
 const { registerUser, authenticateUser, retrieveUser, modifyUser, unregisterUser } = require('./handlers')
 
 const { mongoose } = require('data')
-const context = require('../users/logic/context')
+// const context = require('../users/logic/context')
 
 const { env: { PORT, MONGO_URL }, argv: [, , port = PORT || 8000] } = process
 
@@ -11,7 +11,7 @@ mongoose.connect(MONGO_URL)
 
     .then(() => {
 
-        context.db = mongoose.connection.db
+        // context.db = mongoose.connection.db
 
         const app = express()
 
