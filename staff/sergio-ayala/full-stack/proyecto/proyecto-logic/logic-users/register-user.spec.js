@@ -4,6 +4,7 @@ const { expect } = require('chai')
 const registerUser = require('./register-user')
 const { mongoose, models: { User } } = require('proyecto-data')
 const { ConflictError, FormatError } = require('proyecto-errors')
+const bcrypt = require('bcryptjs')
 
 const { env: { MONGO_URL } } = process
 
@@ -30,7 +31,8 @@ describe('Register User', () => {
                     expect(user).to.exist
                     expect(user.name).to.equal(name)
                     expect(user.username).to.equal(username)
-                    expect(user.password).to.equal(password)
+                    // expect(user.password).to.equal(password)
+                    expect(bcrypt.compareSync(password, user.password)).to.be.true
                 })
         });
     });

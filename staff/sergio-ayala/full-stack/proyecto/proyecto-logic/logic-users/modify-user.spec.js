@@ -6,6 +6,8 @@ const { mongoose, models: { User } } = require('proyecto-data')
 const { Types: { ObjectId } } = mongoose
 const { NotFoundError, ConflictError, CredentialsError, FormatError } = require('proyecto-errors')
 
+const bcrypt = require('bcryptjs')
+
 const { env: { MONGO_URL } } = process
 
 describe('Modify User', () => {
@@ -20,7 +22,7 @@ describe('Modify User', () => {
             username: 'crazyJ',
             password: '123123123'
         }
-        return User.create(user)
+        return User.create({ ...user, password: bcrypt.hashSync(user.password) })
             .then(user => userId = user.id)
     })
 
@@ -55,7 +57,7 @@ describe('Modify User', () => {
 
                     return User.findById(userId)
                 })
-                .then(user => expect(user.password).to.equal(password))
+                .then(user => expect(bcrypt.compareSync(password, user.password)).to.be.true)
 
         });
 
@@ -103,7 +105,7 @@ describe('Modify User', () => {
                 })
                 .then(user => {
                     expect(user).to.exist
-                    expect(user.password).to.equal(password)
+                    expect(bcrypt.compareSync(password, user.password)).to.be.true
                     expect(user.name).to.equal(name)
                     expect(user.username).to.equal(username)
                 })

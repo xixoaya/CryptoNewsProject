@@ -1,0 +1,264 @@
+/* RESETS */
+
+* {
+    box-sizing: content-box;
+    /* border: 1px dashed black;  */
+    cursor: default;
+}
+
+/* GENERAL */
+
+@import url('https://lorempixel.com/400/850/abstract/');
+
+html, body {
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.app-bg {
+    background-image: url(https://i2.wp.com/www.csscodelab.com/wp-content/uploads/2019/11/stripe-hero-background-effect-html-css.png?fit=1062%2C631&ssl=1);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+.pagelayout {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.layout__title{
+text-align: center;
+margin-top: 10px;
+}
+
+.layout__subtitle{
+    margin-top: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: white;
+    font-size: 18px;
+    align-self: center;
+    text-align: center;
+}
+
+.layout__main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout__inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.layout__inputs--check{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 7px;
+}
+
+.layout__buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout__buttons--inline {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#p-link{
+    text-align: end;
+    color: white;
+    font-size: 1.1rem;
+}
+.link {
+    color: orange;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.link:hover {
+    color: rgb(246, 2, 145);
+}
+
+.container--hide {
+    display: none!important;
+}
+
+.name {
+    color: orange;
+    font-size: 1.5rem;
+    font-family: fantasy;
+}
+
+.title {
+    font-family:'Rubik Mono One', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 60px;
+    color: #000000;
+    mix-blend-mode: normal;
+    text-align: center;
+    margin: 0;
+}
+
+.title--font-height{
+    line-height: 60px;
+}
+
+.button {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(250, 250, 250);
+    font-size: 1rem;
+    width: 200px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+}
+
+.button--small {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    padding: 7px;
+    background-color: rgb(250, 250, 250);
+    font-size: 1rem;
+    width: fit-content;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+}
+
+.input {
+    border-radius: 7px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    padding: 10px;
+    background-color: white;
+    font-size: 1rem;
+    width: 300px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.spinner__layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute ;
+    top: 0;
+    left: 0;
+    /* background-color: black;
+    opacity: 0.4; */
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.spinner__image {
+    width: 25vw;
+    height: 25vw;
+}
+
+
+
+/* ----------- PAGES ----------- */
+
+/* ----------- HOME ----------- */
+
+.layout__buttons--home-low {
+    margin-top: 30px;
+    /* align-self: flex-end; */
+}
+
+.layout__buttons--home-hi {
+   gap: 15px;
+}
+
+.home__results-list {
+    width: 400px;
+    height: 300px;
+    overflow: auto;
+    display : flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.home__result {
+display: flex;
+flex-direction: column;
+background-color: whitesmoke;
+border-radius: 15px;
+width: 300px;
+height: 200px;
+padding: 30px;
+box-sizing: content-box;
+cursor: pointer;
+}
+.home__result-title {
+    margin: 0;
+}
+
+.home__detail {
+    width: 400px;
+    height: 300px;
+    overflow-y: scroll;
+    /* overflow: auto; */
+    display : flex;
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.home__detail-image {
+    width: 300px;
+    height: 200px; 
+}
+
+.home__detail-main {
+    display: flex;
+    justify-content: flex-start;
+    row-gap: 5px;
+}
+.home__detail-second {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* ----------- DELETE ACCOUNT ----------- */
+
+.layout__buttons--delete-account {
+    margin-top: 90px;
+}
+
+/* ----------- CHANGE PASSWORD ----------- */
+
+.layout__buttons--change-pswd {
+    margin-top: 90px;
+}

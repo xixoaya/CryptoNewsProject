@@ -6,6 +6,8 @@ const { mongoose, models: { User } } = require('proyecto-data')
 const { Types: { ObjectId } } = mongoose
 const { NotFoundError, CredentialsError, FormatError } = require('proyecto-errors')
 
+const bcrypt = require('bcryptjs')
+
 const { env: { MONGO_URL } } = process
 
 
@@ -21,7 +23,7 @@ describe('Unregister', () => {
             username: 'crazyJ',
             password: '123123123'
         }
-        return User.create(user)
+        return User.create({ ...user, password: bcrypt.hashSync(user.password) })
             .then(user => userId = user.id)
     })
 

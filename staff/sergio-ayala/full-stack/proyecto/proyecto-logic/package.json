@@ -2,7 +2,7 @@
   "name": "proyecto-logic",
   "version": "1.0.0",
   "description": "",
-  "main": "logic-users",
+  "main": "index.js",
   "scripts": {
     "test": "mocha logic/*.spec.js",
     "test-inspect": "mocha --inspect-brk logic/*.spec.js",
@@ -18,5 +18,8 @@
     "nyc": "^15.1.0",
     "proyecto-data": "file:../proyecto-data",
     "proyecto-errors": "file:../proyecto-errors"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3"
   }
 }
