@@ -42,7 +42,28 @@ const user = new Schema({
                 message: 'password cant have blank spaces'
             }
         ]
-    }
+    },
+    queue: {
+        type: [{
+            type: ObjectId,
+            ref: 'Bulletin'
+        }],
+        required: false
+    },
+    history: {
+        type: [{
+            type: ObjectId,
+            ref: 'Bulletin'
+        }],
+        required: false
+    },
+    favs: {
+        type: [{
+            type: ObjectId,
+            ref: 'Bulletin'
+        }],
+        required: false
+    },
 })
 
 module.exports = user
