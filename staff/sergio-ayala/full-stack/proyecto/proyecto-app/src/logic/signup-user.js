@@ -12,14 +12,14 @@
  * @throws {Error} When any of the arguments does not contain the correct format
  */
 
- function signUpUser(name, lastName, username, password, checkbox, callback) {
+ function signUpUser(name, username, password, callback) {
     if (!typeof name === 'string') {throw new TypeError(name + ' is not a string')}
     if (!name.trim().length) throw new Error('Name is empty')
     if (!name.trim() === name) throw new Error('Name has spaces around')
 
-    if (!typeof lastName === 'string') {throw new TypeError(lastName + ' is not a string')}
-    if (!lastName.trim().length) throw new Error('last Name is empty')
-    if (!lastName.trim() === lastName) throw new Error('last Name has spaces around')
+    // if (!typeof lastName === 'string') {throw new TypeError(lastName + ' is not a string')}
+    // if (!lastName.trim().length) throw new Error('last Name is empty')
+    // if (!lastName.trim() === lastName) throw new Error('last Name has spaces around')
 
     if (!typeof username === 'string') {throw new TypeError( username + ' is not a string')}
     if (!username.trim().length) throw new Error('Email is empty')
@@ -31,7 +31,7 @@
     if (/\r?\n|\r|\t| /g.test(password)) throw new Error('Password has blank spaces')
     if (password.length < 5) {throw new Error ('Password has less than five characters')}
 
-    if (!checkbox) throw new Error('you have to accept terms')
+    // if (!checkbox) throw new Error('you have to accept terms')
 
     if (!typeof callback === 'function') {throw new TypeError(callback + 'is not a function')}
 
@@ -50,12 +50,12 @@
     }
     var user = {
         name: name,
-        lastName: lastName,
+        // lastName: lastName,
         username: username,
         password: password,
-        termsAccepted: checkbox
+        // termsAccepted: checkbox
     }
-    xhr.open('POST', 'https://b00tc4mp.herokuapp.com/api/v2/users')
+    xhr.open('POST', 'mongodb://localhost/demo/api/users/register')
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))
 }

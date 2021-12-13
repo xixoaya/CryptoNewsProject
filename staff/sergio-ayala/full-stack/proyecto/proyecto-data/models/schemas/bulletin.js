@@ -1,4 +1,4 @@
-const { Schema } =require('mongoose')
+const { Schema, Types: { ObjectId } } = require('mongoose')
 const comment = require('./comment')
 
 const bulletin = new Schema ({

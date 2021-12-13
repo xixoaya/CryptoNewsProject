@@ -74,10 +74,10 @@ function App() {
     }
 
 
-    const signUp = (name, lastName, username, password, checkbox) => {
+    const signUp = (name, username, password) => {
         showSpinner()
         try {
-            signUpUser(name, lastName, username, password, checkbox, (error) => {
+            signUpUser(name, username, password, (error) => {
                 if (error) {
                     showModal(error.message)
                     hideSpinner()
