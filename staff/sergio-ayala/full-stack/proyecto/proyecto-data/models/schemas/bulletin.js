@@ -15,15 +15,11 @@ const bulletin = new Schema ({
         type: String,
         required: false
     },
-    lead: {
+    createdTime: {
         type: String,
         required: false
     },
-    date: {
-        type: Date,
-        required: false
-    },
-    saveDate: {
+    savedDate: {
         type: Date,
         required: true
     },
@@ -35,15 +31,24 @@ const bulletin = new Schema ({
         type: String,
         required: false
     },
-    tag: {
+    tags: {
+        type: [{
+            type: String
+        }],
+        required: false
+    },
+    impContent: {
+        type: [{
+            type: String
+        }],
+        required: false
+    },
+    badge: {
         type: String,
         required: false
     },
     source: {
-        type: [{
-            type: ObjectId,
-            ref: 'Source'
-        }],
+        type: String,
         required: true
     },
     comments: {

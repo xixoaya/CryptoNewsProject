@@ -41,7 +41,7 @@
         username: username,
         password: password
     }
-    xhr.open('POST', 'https://b00tc4mp.herokuapp.com/api/v2/users/auth')
+    xhr.open('POST', 'http://localhost:8000/api/users/auth')
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))
 }

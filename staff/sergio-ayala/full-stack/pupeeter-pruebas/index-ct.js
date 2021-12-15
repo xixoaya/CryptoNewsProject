@@ -50,10 +50,10 @@ async function scrapCTCover() {
                 const url = (article.querySelector('.post-card__header > a')) ? article.querySelector('.post-card__header > a').href : 'Unknown url'
                 const imageSrc = (article.querySelector('.lazy-image.post-card__cover.lazy-image_loaded > img')) ? article.querySelector('.lazy-image.post-card__cover.lazy-image_loaded > img').src : 'Unknown image Src'
                 const author = (article.querySelector('.post-card__author > a')) ? article.querySelector('.post-card__author > a').innerHTML : 'Unknown Author'
-                const date = (article.querySelector('.post-card__footer > time')) ? article.querySelector('.post-card__footer > time').dateTime : 'Unknown Created Time'
+                const createdTime = (article.querySelector('.post-card__footer > time')) ? article.querySelector('.post-card__footer > time').dateTime : 'Unknown Created Time'
                 const badge = (article.querySelector('.post-card__figure > span')) ? article.querySelector('.post-card__figure > span').innerHTML : 'Unknown badge'
     
-                results.push({ title, subTitle, url, badge, imageSrc, author, date })
+                results.push({ title, subTitle, url, badge, imageSrc, author, createdTime })
             })
         }
 
@@ -91,7 +91,7 @@ async function scrapCTNoticeDetail(noticeUrl) {
         const badge = (document.querySelector('.post-cover__badge')) ? document.querySelector('.post-cover__badge').innerHTML : 'Unknown badge'
 
         let tags = []
-        let content = []
+        let impContent = []
         const tagsArticle = document.querySelectorAll('.tags-list__item')
 
         if (tagsArticle) {
@@ -108,11 +108,11 @@ async function scrapCTNoticeDetail(noticeUrl) {
             
             importantContent.forEach(e => {
                 const strong = e.innerText
-                content.push(strong)
+                impContent.push(strong)
             })
         }
 
-        const detailNotice = { title, subtitle, imageSrc, mediumViews, badge, tags, content }
+        const detailNotice = { title, subtitle, imageSrc, mediumViews, badge, tags, impContent }
 
         return detailNotice
 

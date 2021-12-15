@@ -27,7 +27,7 @@
             callback(null, user)
         }
     }
-    xhr.open('GET', 'https://b00tc4mp.herokuapp.com/api/v2/users')
+    xhr.open('POST', 'http://localhost:8000/api/users')
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.send()
 }

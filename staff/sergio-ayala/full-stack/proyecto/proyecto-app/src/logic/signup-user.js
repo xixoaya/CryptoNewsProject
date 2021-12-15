@@ -55,7 +55,7 @@
         password: password,
         // termsAccepted: checkbox
     }
-    xhr.open('POST', 'mongodb://localhost/demo/api/users/register')
+    xhr.open('POST', 'http://localhost:8000/api/users/register')
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))
 }

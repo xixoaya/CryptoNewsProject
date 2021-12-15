@@ -13,7 +13,7 @@ const click = new Schema ({
             type: ObjectId,
             ref: 'Bulletin'
         }],
-        required: false
+        required: true
     },
     type: {
         type: String,

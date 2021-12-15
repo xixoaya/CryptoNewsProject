@@ -1,12 +1,15 @@
 {
   "name": "proyecto-logic",
   "version": "1.0.0",
-  "description": "",
+  "description": "",  
   "main": "index.js",
   "scripts": {
-    "test": "mocha logic/*.spec.js",
-    "test-inspect": "mocha --inspect-brk logic/*.spec.js",
-    "test-coverage": "nyc --reporter=html --reporter=text mocha logic-users/*.spec.js"
+    "test-users": "mocha users/*.spec.js",
+    "test-bulletins": "mocha bulletins/*.spec.js",
+    "test-all": "mocha /*.spec.js",
+    "test-inspect": "mocha --inspect-brk users/*.spec.js",
+    "test-coverage": "nyc --reporter=html --reporter=text mocha users/*.spec.js",
+    "test-inspect-test": "mocha --inspect-brk bulletins/scrape-ct-bulletin.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +23,7 @@
     "proyecto-errors": "file:../proyecto-errors"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "puppeteer": "^13.0.0"
   }
 }
