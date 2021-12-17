@@ -59,7 +59,7 @@ debugger
         debugger
         const {title , subtitle , imageSrc, mediumViews, badge, tags, impContent} = objCTBulletinDetail 
         
-        const bulletin = await Bulletin.findOne({ noticeUrl })
+        const bulletin = await Bulletin.findOne({ url: noticeUrl })
             
                 if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
                 

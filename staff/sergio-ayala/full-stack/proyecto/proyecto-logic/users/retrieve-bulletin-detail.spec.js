@@ -35,7 +35,7 @@ describe('Retrieve Bulletin Detail', () => {
         it('should suceed with correct id of an existing bulletin of CT and add impContent', () => {
             //const { title, url, subTitle, badge, author, source } = bulletin
     
-            return retrieveBulletinDetail("61bc86c9efb5af6e4c59ce27")
+            return retrieveBulletinDetail("61bcb7b3e66bbefecfc1b9f0")
                 // .then(bulletin => {
                     
                 //     expect(bulletin).to.exist

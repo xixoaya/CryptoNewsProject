@@ -28,7 +28,7 @@ mongoose.connect(MONGO_URL)
 
         app.patch('/api/bulletins', modifyBulletin)
         app.post('/api/bulletins', retrieveBulletins)
-        app.get('/api/bulletins/:bulletinId', retrieveBulletinDetail)
+        app.get('/api/bulletins/detail/:bulletinId', retrieveBulletinDetail)
         app.get('/api/bulletins/home', retrieveHomeLeads)
         app.post('/api/bulletins/search', retrieveSearchedBulletins)
 

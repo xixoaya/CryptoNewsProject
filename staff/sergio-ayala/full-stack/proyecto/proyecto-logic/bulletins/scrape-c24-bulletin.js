@@ -86,7 +86,7 @@ function scrapeC24Bulletin(noticeUrl) {
 
         const { title, subtitle, imageSrc, badge, tags, impContent } = objC24BulletinDetail
 
-        const bulletin = await Bulletin.findOne({ noticeUrl })
+        const bulletin = await Bulletin.findOne({ url: noticeUrl })
             
                 if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
 

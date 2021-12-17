@@ -63,7 +63,7 @@ function scrapeOBBulletin(noticeUrl) {
 
         const { title, subtitle, imageSrc, badge, tags, impContent } = objOBBulletinDetail
 
-        const bulletin = await Bulletin.findOne({ noticeUrl })
+        const bulletin = await Bulletin.findOne({ url: noticeUrl })
 
         if (!bulletin) throw new NotFoundError(`No Bulletin found to show detail with url ${noticeUrl}`)
 
