@@ -6,9 +6,9 @@ const search = new Schema ({
             type: ObjectId,
             ref: 'User'
         }],
-        required: true
+        required: false
     },
-    bulletin: {
+    bulletins: {
         type: [{
             type: ObjectId,
             ref: 'Bulletin'
@@ -19,9 +19,13 @@ const search = new Schema ({
         type: String,
         required: true,
     },
-    date: {
+    lastUpdate: {
         type: Date,
-        required: true,
+        required: true
+    },
+    source: {
+        type: String,
+        required: true
     },
 
 })

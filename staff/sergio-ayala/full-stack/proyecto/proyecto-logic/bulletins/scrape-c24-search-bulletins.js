@@ -1,6 +1,6 @@
 // TODO scrape news from site and save into db
 const puppeteer = require('puppeteer')
-const { models: { Bulletin } } = require('proyecto-data')
+const { models: { Bulletin, Search } } = require('proyecto-data')
 /**
  * Scrape C24 search and saves them into DB.
  * 
@@ -10,6 +10,8 @@ function scrapeC24Search(query) {
     // SYNC code here
 
     return (async () => {
+        debugger
+
         // ASYNC code here
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
@@ -18,7 +20,6 @@ function scrapeC24Search(query) {
         await autoScrollTwoTimes(page);
 
         const arrC24Search = await page.evaluate(() => {
-
             const articles = (document.querySelectorAll('.entry.nota-lista ')) ? document.querySelectorAll('.entry.nota-lista ') : 'articles tag failed'
 
             let results = []
@@ -35,6 +36,7 @@ function scrapeC24Search(query) {
                 //console.log(badge)
 
             })
+
             return results
 
         })
@@ -51,7 +53,7 @@ function scrapeC24Search(query) {
                         window.scrollBy(0, distance);
                         totalHeight += distance;
 
-                        if (totalHeight === 5000) {
+                        if (totalHeight === 3000) {
                             clearInterval(timer);
                             resolve();
                         }
@@ -72,23 +74,51 @@ function scrapeC24Search(query) {
             }
         })
 
-        const creates = c24SearchBulletins.map( async (element) => {
+        debugger
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-                // const { url:_url } = bulletin
+        const checksPromises = c24SearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
-                // Object.keys(bulletin)
-                // console.log(Object.keys(bulletin))
+        const exists = await Promise.all(checksPromises)
+
+        const insertions = c24SearchBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
+
+            return accum
+        }, [])
+
+        let bulletins
+
+        if (insertions) {
+
+            const creates = insertions.map(element => Bulletin.create(element))
+
+            bulletins = await Promise.all(creates)
+        }
+
+        let bulletinsId
+
+        if (bulletins.length) {
+
+            bulletinsId = bulletins.map(e => { return e.id })
+        } else {
+            bulletinsId = []
+        }
 
 
-            await Bulletin.create(element)
-                    
-        })
+        const search = await Search.findOne({ query, source: 'cripto247' })
+        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cripto247' }).lean()
+        debugger
+        if (search) {
+            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
+            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
+            search.bulletins = search.bulletins.push(uniqueBulletinsId)
+            search.lastUpdate = new Date()
 
-        await Promise.all( creates )
+            await search.save()
+        } else {
+            await Search.create({ lastUpdate: new Date(), query, source: 'cripto247', bulletins: bulletinsId })
+
+        }
     })()
 }
 

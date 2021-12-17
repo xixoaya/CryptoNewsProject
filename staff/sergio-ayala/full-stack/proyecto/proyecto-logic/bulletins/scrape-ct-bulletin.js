@@ -1,6 +1,7 @@
 // TODO scrape news from site and save into db
 const puppeteer = require('puppeteer')
 const { models: { Bulletin } } = require('proyecto-data')
+const { NotFoundError, ConflictError, CredentialsError } = require('proyecto-errors')
 /**
  * Scrape CT news and saves them into DB.
  * 
@@ -15,16 +16,16 @@ function scrapeCTBulletin(noticeUrl) {
         await page.goto(noticeUrl)
 
 
-        const objNoticeDetails = await page.evaluate(() => {
+        const objCTBulletinDetail = await page.evaluate(() => {
 
-            const title = (document.querySelector('.post__title')) ? document.querySelector('.post__title').innerHTML : 'Unknown Title'
-            const subtitle = (document.querySelector('.post__lead')) ? document.querySelector('.post__lead').innerHTML : 'Unknown subtitle'
+            const title = (document.querySelector('.post__title')) ? document.querySelector('.post__title').innerHTML.trim() : 'Unknown Title'
+            const subtitle = (document.querySelector('.post__lead')) ? document.querySelector('.post__lead').innerHTML.trim() : 'Unknown subtitle'
             const imageSrc = (document.querySelector('.lazy-image.post-cover__image.lazy-image_loaded.lazy-image_immediate > picture > img')) ? document.querySelector('.lazy-image.post-cover__image.lazy-image_loaded.lazy-image_immediate > picture > img').srcset : 'Unknown imageSrc'
-            const mediumViews = (document.querySelector('.post-actions__item-count')) ? document.querySelector('.post-actions__item-count').innerHTML : 'Unknown mediumViews'
-            const badge = (document.querySelector('.post-cover__badge')) ? document.querySelector('.post-cover__badge').innerHTML : 'Unknown badge'
+            const mediumViews = (document.querySelector('.post-actions__item-count')) ? document.querySelector('.post-actions__item-count').innerHTML.trim() : 'Unknown mediumViews'
+            const badge = (document.querySelector('.post-cover__badge')) ? document.querySelector('.post-cover__badge').innerHTML.trim() : 'Unknown badge'
 
             let tags = []
-            let impContent = []
+            let arrContent = []
             const tagsArticle = document.querySelectorAll('.tags-list__item')
 
             if (tagsArticle) {
@@ -41,33 +42,54 @@ function scrapeCTBulletin(noticeUrl) {
 
                 importantContent.forEach(e => {
                     const strong = e.innerText
-                    impContent.push(strong)
+                    arrContent.push(strong)
                 })
             }
 
+            const impContent = arrContent.slice(0,5)
             const detailNotice = { title, subtitle, imageSrc, mediumViews, badge, tags, impContent }
 
             return detailNotice
 
         })
 
-        //await fs.writeFile("test-detail-notice-ct.json", JSON.stringify(objNoticeDetails))
-
-
         await browser.close()
-        
-        const ctBulletinProps = Object.keys(objNoticeDetails).map(key => {
-            return {
-                // title: (objNoticeDetails[key].includes('Unknown')) ? null: (objNoticeDetails[key].trim())
-                title: (objNoticeDetails[key]),
-                subtitle: (objNoticeDetails[key])
-            }
-        })
+ 
         debugger
-        const {title, subtitle, imageSrc, mediumViews, badge, tags, impContent} = objNoticeDetails 
+        const {title , subtitle , imageSrc, mediumViews, badge, tags, impContent} = objCTBulletinDetail 
         
         await Bulletin.findOne({ noticeUrl })
             .then(bulletin => {
+                if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
+                
+                if (!(title.includes('Unknown')) && (!title)) bulletin.title = title
+                if (!(subtitle.includes('Unknown')) && (!subtitle)) bulletin.subtitle = subtitle
+                if (!(imageSrc.includes('Unknown')) && (!imageSrc)) bulletin.imageSrc = imageSrc
+                if (!(mediumViews.includes('Unknown')) && (!mediumViews)) bulletin.mediumViews = mediumViews
+                if (!(badge.includes('Unknown')) && (!badge)) bulletin.badge = badge
+
+                if (tags.length) {
+                    tags.forEach(e => {
+                        if (e) {
+                            e.trim()
+                            bulletin.tags.push(e)
+                        }
+                    })                    
+                }
+                if (impContent.length) {
+                    impContent.forEach( e => {
+                        if (e) {
+                            e.trim()
+                            bulletin.impContent.push(e)
+                        }
+                    })
+                }
+
+                bulletin.savedDate = new Date()
+
+
+                return bulletin.save()
+                    .then(() => { })
                 
             })
 

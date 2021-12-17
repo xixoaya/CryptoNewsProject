@@ -8,6 +8,7 @@ const { models: { Bulletin } } = require('proyecto-data')
  */
 function scrapeC24Cover() {
     return (async () => {
+
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto('https://www.cripto247.com/');
@@ -64,22 +65,23 @@ function scrapeC24Cover() {
                 title: (b.title.includes('Unknown')) ? null : b.title.trim(),
                 url: (b.url.includes('Unknown')) ? null : b.url,
                 source: 'cripto247',
+                scrapedType: 'cover',
                 savedDate: new Date()
 
             }
         })
 
-        const creates = c24CoverBulletins.map( async (element) => {
+        const checksPromises = c24CoverBulletins.map(({url}) => Bulletin.exists({ url }))
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-                // const { url:_url } = bulletin
+        const exists = await Promise.all(checksPromises)
 
-                // Object.keys(bulletin)
-                // console.log(Object.keys(bulletin))
+        const insertions = c24CoverBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
 
+            return accum
+        }, [])
+
+        const creates = insertions.map( async (element) => {
 
             await Bulletin.create(element)
                     

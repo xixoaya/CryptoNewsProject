@@ -4,5 +4,6 @@ module.exports = {
     search: require('./search'),
     comment: require('./comment'),
     click: require('./click'),
-    bulletin: require('./bulletin')
+    bulletin: require('./bulletin'),
+    lastScrap: require('./lastScrap')
 }

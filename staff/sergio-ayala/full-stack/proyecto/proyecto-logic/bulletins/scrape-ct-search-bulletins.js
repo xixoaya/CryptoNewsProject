@@ -1,6 +1,6 @@
 // TODO scrape news from site and save into db
 const puppeteer = require('puppeteer')
-const { models: { Bulletin } } = require('proyecto-data')
+const { models: { Bulletin, Search } } = require('proyecto-data')
 /**
  * Scrape CT news and saves them into DB.
  * 
@@ -8,6 +8,8 @@ const { models: { Bulletin } } = require('proyecto-data')
  */
 function scrapCTSearch(query) {
     return (async () => {
+        debugger
+
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
 
@@ -15,7 +17,6 @@ function scrapCTSearch(query) {
 
 
         const arrCTSearch = await page.evaluate(() => {
-
             const articles = document.querySelectorAll('.row.result')
 
             let results = []
@@ -60,24 +61,50 @@ function scrapCTSearch(query) {
             }
         })
 
+        const checksPromises = ctSearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
-        const creates = ctSearchBulletins.map(async (element) => {
+        const exists = await Promise.all(checksPromises)
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-            // const { url:_url } = bulletin
+        const insertions = ctSearchBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
 
-            // Object.keys(bulletin)
-            // console.log(Object.keys(bulletin))
+            return accum
+        }, [])
 
 
-            await Bulletin.create(element)
+        let bulletins
 
-        })
+        if (insertions) {
 
-        await Promise.all(creates)
+            const creates = insertions.map(element => Bulletin.create(element))
+
+            bulletins = await Promise.all(creates)
+        }
+
+        let bulletinsId
+
+        if (bulletins.length) {
+
+            bulletinsId = bulletins.map(e => { return e.id })
+        } else {
+            bulletinsId = []
+        }
+
+
+        const search = await Search.findOne({ query, source: 'cointelegraph' })
+        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cointelegraph' }).lean()
+        debugger
+        if (search) {
+            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
+            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
+            search.bulletins = search.bulletins.push(uniqueBulletinsId)
+            search.lastUpdate = new Date()
+
+            await search.save()
+        } else {
+            await Search.create({ lastUpdate: new Date(), query, source: 'cointelegraph', bulletins: bulletinsId })
+
+        }
     })()
 }
 

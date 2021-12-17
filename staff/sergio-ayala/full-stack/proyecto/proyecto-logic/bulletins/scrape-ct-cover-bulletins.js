@@ -61,45 +61,23 @@ function scrapeCTCover() {
                 imageSrc: (b.imageSrc.includes('Unknown')) ? null : b.imageSrc,
                 createdTime: (b.createdTime.includes('Unknown')) ? null : b.createdTime,
                 source: 'cointelegraph',
+                scrapedType: 'cover',
                 savedDate: new Date()
 
             }
         })
 
-        // ctCoverBulletins.forEach(e => {
+        const checksPromises = ctCoverBulletins.map(({url}) => Bulletin.exists({ url }))
 
-        //     return Bulletin.create({ e })
-        //         .then(() => { })
-        //         .catch(error => {
-        //             debugger
-        //             if (error.code === 11000) {
-        //                 if (e.savedDate > today) {
-        //                     return Bulletin.findOne({ url })
-        //                         .then(bulletin => {
-        //                             for (const property in e) {
-        //                                 if (!(property.includes('Unknown')))
-        //                                     bulletin[property] = e[property]
-                        
-        //                             }
-        //                         })
-        //                 }
-        //             }
-        //                 // throw new ConflictError(`User with username ${username} already exists`)
+        const exists = await Promise.all(checksPromises)
 
-        //             throw error
-        //         })
-        // })
+        const insertions = ctCoverBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
 
-        const creates = ctCoverBulletins.map( async (element) => {
+            return accum
+        }, [])
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-                // const { url:_url } = bulletin
-
-                // Object.keys(bulletin)
-                // console.log(Object.keys(bulletin))
+        const creates = insertions.map( async (element) => {
 
 
             await Bulletin.create(element)

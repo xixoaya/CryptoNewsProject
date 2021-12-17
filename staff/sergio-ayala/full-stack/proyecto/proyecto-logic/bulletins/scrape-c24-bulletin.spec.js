@@ -1,18 +1,18 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const scrapeC24Search = require('./scrape-c24-search-bulletins')
+const scrapeC24Bulletin = require('./scrape-c24-bulletin')
 const { mongoose, models: { Bulletin } } = require('proyecto-data')
 //const { ConflictError, FormatError } = require('proyecto-errors')
 //const bcrypt = require('bcryptjs')
 
 const { env: { MONGO_URL } } = process
 
-describe('c24 search', () => {
+describe('C24 bulletin scrap', () => {
 
     before(() => mongoose.connect(MONGO_URL))
 
-    //beforeEach(() => Bulletin.deleteMany())
+ //   beforeEach(() => Bulletin.deleteMany())
 
     it('should succeed with new Bulletin url', () => {
         // const bulletin = {
@@ -21,7 +21,7 @@ describe('c24 search', () => {
         //     badge: "COTIZACIÓN"
         // },
 
-        return scrapeC24Search('btc')
+        return scrapeC24Bulletin('https://www.cripto247.com/comunidad-cripto/elon-musk-dispara-el-precio-de-doge-en-mas-de-un-25-208518')
     //         .then(res => {
     //             expect(res).to.be.undefined
 

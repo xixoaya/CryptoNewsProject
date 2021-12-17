@@ -53,7 +53,27 @@ const bulletin = new Schema ({
     },
     comments: {
         type: [comment]
-    }
+    },
+    mediumViews: {
+        type: String,
+        required: false
+    },
+    scrapedType: {
+        type: String,
+        required: false
+    },
+    clicks: {
+        type: Number,
+        required: false
+    },
+    clicksFav: {
+        type: Number,
+        required: false
+    },
+    clicksQueue: {
+        type: Number,
+        required: false
+    },
 })
 
 module.exports = bulletin

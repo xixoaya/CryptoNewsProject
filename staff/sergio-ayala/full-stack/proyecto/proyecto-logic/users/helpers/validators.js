@@ -39,10 +39,15 @@ function validateCallback(callback) {
     if (typeof callback !== 'function') throw new TypeError('callback is not a function')
 }
 
+function validateNumber(number) {
+    if (typeof number !== 'number') throw new TypeError('value is not a number')
+        if (!(number.toString().trim().length)) throw new FormatError('value is empty or blank')
+}
+
 function validateData(data) {
     if (typeof data !== 'object' || data.constructor.name !== 'Object') throw new TypeError('data is not an object')
 
-    const { name, username, oldPassword, password } = data
+    const { name, username, oldPassword, password, clicks, clicksFav, clicksQueue } = data
 
     if (typeof name !== 'undefined') {
         validateName(name)
@@ -61,6 +66,16 @@ function validateData(data) {
 
     if (typeof oldPassword !== 'undefined') {
         validateOldPassword(oldPassword)
+    }
+
+    if (typeof clicks !== 'undefined') {
+        validateNumber(clicks)
+    }
+    if (typeof clicksFav !== 'undefined') {
+        validateNumber(clicksFav)
+    }
+    if (typeof clicksQueue !== 'undefined') {
+        validateNumber(clicksQueue)
     }
 }
 

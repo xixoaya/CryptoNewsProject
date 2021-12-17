@@ -12,7 +12,7 @@ describe('OB search', () => {
 
     before(() => mongoose.connect(MONGO_URL))
 
-    beforeEach(() => Bulletin.deleteMany())
+    //beforeEach(() => Bulletin.deleteMany())
 
     it('should succeed with new Bulletin url', () => {
         // const bulletin = {
@@ -21,7 +21,7 @@ describe('OB search', () => {
         //     badge: "COTIZACIÓN"
         // },
 
-        return scrapOBSearch('btc')
+        return scrapOBSearch('ether')
     //         .then(res => {
     //             expect(res).to.be.undefined
 

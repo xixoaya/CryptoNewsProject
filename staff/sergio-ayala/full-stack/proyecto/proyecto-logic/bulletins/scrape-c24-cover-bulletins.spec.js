@@ -20,7 +20,7 @@ describe('c24 cover', () => {
         //     url: "https://www.cripto247.com/comunidad-cripto/precio-de-bitcoin-btc-no-logra-mantenerse-y-vuelve-a-caer-un-2-208449",
         //     badge: "COTIZACIÓN"
         // },
-
+        
         return scrapeC24Cover()
     //         .then(res => {
     //             expect(res).to.be.undefined
@@ -37,9 +37,9 @@ describe('c24 cover', () => {
      });
 
     after(() =>
-         Bulletin.deleteMany()
-            .then(() => mongoose.disconnect())
-           // mongoose.disconnect()
+         //Bulletin.deleteMany()
+           // .then(() => mongoose.disconnect())
+            mongoose.disconnect()
     )
 
 });

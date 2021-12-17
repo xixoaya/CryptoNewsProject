@@ -12,7 +12,7 @@ describe('CT Search', () => {
 
     before(() => mongoose.connect(MONGO_URL))
 
-    beforeEach(() => Bulletin.deleteMany())
+    //beforeEach(() => Bulletin.deleteMany())
 
     it('should succeed with new Bulletin url', () => {
         // const bulletin = {
@@ -37,9 +37,9 @@ describe('CT Search', () => {
      });
 
     after(() =>
-         Bulletin.deleteMany()
-            .then(() => mongoose.disconnect())
-            //mongoose.disconnect()
+         //Bulletin.deleteMany()
+            //.then(() => mongoose.disconnect())
+            mongoose.disconnect()
     )
 
 });

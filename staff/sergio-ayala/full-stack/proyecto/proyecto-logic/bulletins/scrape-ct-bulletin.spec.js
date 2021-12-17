@@ -21,7 +21,7 @@ describe('CT bulletin scrap', () => {
         //     badge: "COTIZACIÓN"
         // },
 
-        return scrapeCTBulletin('https://es.cointelegraph.com/news/coinbase-wallet-rolls-out-support-for-nfts')
+        return scrapeCTBulletin('https://es.cointelegraph.com/news/cove-markets-to-join-robinhood-crypto-in-latest-acquisition')
     //         .then(res => {
     //             expect(res).to.be.undefined
 
@@ -37,9 +37,9 @@ describe('CT bulletin scrap', () => {
      });
 
     after(() =>
-         Bulletin.deleteMany()
-            .then(() => mongoose.disconnect())
-            //mongoose.disconnect()
+         //Bulletin.deleteMany()
+           // .then(() => mongoose.disconnect())
+            mongoose.disconnect()
     )
 
 });

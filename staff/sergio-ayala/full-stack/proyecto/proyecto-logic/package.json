@@ -7,9 +7,10 @@
     "test-users": "mocha users/*.spec.js",
     "test-bulletins": "mocha bulletins/*.spec.js",
     "test-all": "mocha /*.spec.js",
-    "test-inspect": "mocha --inspect-brk users/*.spec.js",
+    "test-inspect-users": "mocha --inspect-brk users/*.spec.js",
+    "test-inspect-bulletins": "mocha --inspect-brk bulletins/*.spec.js",
     "test-coverage": "nyc --reporter=html --reporter=text mocha users/*.spec.js",
-    "test-inspect-test": "mocha --inspect-brk bulletins/scrape-ct-bulletin.spec.js"
+    "test-inspect-test": "mocha --inspect-brk bulletins/scrape-ob-cover-bulletins.spec"
   },
   "keywords": [],
   "author": "",

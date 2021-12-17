@@ -1,6 +1,6 @@
 // TODO scrape news from site and save into db
 const puppeteer = require('puppeteer')
-const { models: { Bulletin } } = require('proyecto-data')
+const { models: { Bulletin, Search } } = require('proyecto-data')
 /**
  * Scrape CT news and saves them into DB.
  * 
@@ -8,13 +8,15 @@ const { models: { Bulletin } } = require('proyecto-data')
  */
 function scrapOBSearch(query) {
     return (async () => {
+        debugger 
+
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
 
         await page.goto(`https://observatorioblockchain.com/?s=${query}`)
 
-
         const arrOBSearch = await page.evaluate(() => {
+            debugger
 
             const articles = document.querySelectorAll('.d-md-flex.mg-posts-sec-post')
 
@@ -37,6 +39,7 @@ function scrapOBSearch(query) {
 
         })
 
+        debugger
         await browser.close()
 
         const obSearchBulletins = arrOBSearch.map(b => {
@@ -53,24 +56,51 @@ function scrapOBSearch(query) {
 
             }
         })
+debugger
+        const checksPromises = obSearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
-        const creates = obSearchBulletins.map(async (element) => {
+        const exists = await Promise.all(checksPromises)
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-            // const { url:_url } = bulletin
+        const insertions = obSearchBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
 
-            // Object.keys(bulletin)
-            // console.log(Object.keys(bulletin))
+            return accum
+        }, [])
 
+        let bulletins
 
-            await Bulletin.create(element)
+        if (insertions) {
+            
+            const creates = insertions.map(element => Bulletin.create(element))
+    
+            bulletins = await Promise.all(creates)
+        }
 
-        })
+        let bulletinsId
 
-        await Promise.all(creates)
+        if (bulletins.length){
+
+            bulletinsId = bulletins.map(e => { return e.id })
+        } else {
+            bulletinsId = []
+        }
+
+        
+        const search = await Search.findOne({ query, source: 'observatorioblockchain' })
+        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'observatorioblockchain' }).lean()
+        debugger
+        if (search) {
+            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
+            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
+            search.bulletins = search.bulletins.push(uniqueBulletinsId)
+            search.lastUpdate = new Date()
+            
+            await search.save()
+        } else {
+            await Search.create({ lastUpdate: new Date(), query, source: 'observatorioblockchain', bulletins: bulletinsId })
+            
+        }
+        
     })()
 }
 

@@ -1,18 +1,18 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const scrapeC24Search = require('./scrape-c24-search-bulletins')
+const scrapeOBBulletin = require('./scrape-ob-bulletin')
 const { mongoose, models: { Bulletin } } = require('proyecto-data')
 //const { ConflictError, FormatError } = require('proyecto-errors')
 //const bcrypt = require('bcryptjs')
 
 const { env: { MONGO_URL } } = process
 
-describe('c24 search', () => {
+describe('OB bulletin scrap', () => {
 
     before(() => mongoose.connect(MONGO_URL))
 
-    //beforeEach(() => Bulletin.deleteMany())
+ //   beforeEach(() => Bulletin.deleteMany())
 
     it('should succeed with new Bulletin url', () => {
         // const bulletin = {
@@ -21,7 +21,7 @@ describe('c24 search', () => {
         //     badge: "COTIZACIÓN"
         // },
 
-        return scrapeC24Search('btc')
+        return scrapeOBBulletin('https://observatorioblockchain.com/criptomonedas/rally-alcista-para-dogecoin-tras-decir-elon-musk-que-lo-usara-para-comprar-productos-en-tesla/')
     //         .then(res => {
     //             expect(res).to.be.undefined
 

@@ -37,9 +37,9 @@ describe('OB cover', () => {
      });
 
     after(() =>
-         Bulletin.deleteMany()
-            .then(() => mongoose.disconnect())
-            //mongoose.disconnect()
+         //Bulletin.deleteMany()
+           // .then(() => mongoose.disconnect())
+            mongoose.disconnect()
     )
 
 });

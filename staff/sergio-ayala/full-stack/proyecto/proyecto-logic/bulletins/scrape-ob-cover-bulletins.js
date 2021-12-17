@@ -52,21 +52,24 @@ function scrapeOBCover() {
                 url: (b.url.includes('Unknown')) ? null : b.url,
                 createdTime: (b.createdTime.includes('Unknown')) ? null : b.createdTime,
                 source: 'observatorioblockchain',
+                scrapedType: 'cover',
                 savedDate: new Date()
 
             }
         })
 
-        const creates = obCoverBulletins.map( async (element) => {
+        const checksPromises = obCoverBulletins.map(({url}) => Bulletin.exists({ url }))
 
-            // const { url } = element
-            // console.log(url)
-            // const result = await Bulletin.findOne({url})
-            //console.log(result)
-                // const { url:_url } = bulletin
+        const exists = await Promise.all(checksPromises)
 
-                // Object.keys(bulletin)
-                // console.log(Object.keys(bulletin))
+        const insertions = obCoverBulletins.reduce((accum, bulletin, index) => {
+            if (!exists[index]) accum.push(bulletin)
+
+            return accum
+        }, [])
+
+
+        const creates = insertions.map( async (element) => {
 
 
             await Bulletin.create(element)
@@ -74,6 +77,8 @@ function scrapeOBCover() {
         })
 
         await Promise.all( creates )
+
+        debugger
 
 
     })()
