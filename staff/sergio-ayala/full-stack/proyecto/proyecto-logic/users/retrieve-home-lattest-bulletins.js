@@ -11,7 +11,7 @@ function retrieveHomeBulletins() {
 
         if (!lastHomeScrapDb.length) {
             await LastScrap.create({ lastUpdate: Date.now() })
-            awaitromise.all([scrapeCTCover(), scrapeOBCover(), scrapeC24Cover()])
+            await Promise.all([scrapeCTCover(), scrapeOBCover(), scrapeC24Cover()])
             lastHomeScrapDb = await LastScrap.find().sort({ _id: -1 }).limit(1).lean()
         }
 
@@ -22,6 +22,8 @@ function retrieveHomeBulletins() {
 
         if (hoursSinceScrap >= 6) {
             Promise.all([scrapeCTCover(), scrapeOBCover(), scrapeC24Cover()])
+
+            await LastScrap.create({ lastUpdate: Date.now() })
         }
 
         const lastHomeOBBulletins = await Bulletin.find({ scrapedType: 'cover', source: 'observatorioblockchain' }).sort({ _id: -1 }).limit(10).lean()
@@ -30,7 +32,6 @@ function retrieveHomeBulletins() {
 
         const lastHomeBulletins = lastHomeOBBulletins.concat(lastHomeCTBulletins).concat(lastHomeC24Bulletins)
 
-        debugger
         lastHomeBulletins.forEach(bulletin => {
 
             bulletin.id = bulletin._id.toString()
@@ -61,9 +62,6 @@ function retrieveHomeBulletins() {
 
         //funciona, falta ordenarlas por clicks
 
-        await LastScrap.create({ lastUpdate: Date.now() })
-
-        debugger
         return lastHomeBulletins
 
     })()

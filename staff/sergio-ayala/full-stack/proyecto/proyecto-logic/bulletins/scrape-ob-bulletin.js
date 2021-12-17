@@ -15,7 +15,7 @@ function scrapeOBBulletin(noticeUrl) {
 
         await page.goto(noticeUrl)
 
-
+        debugger
         const objOBBulletinDetail = await page.evaluate(() => {
 
             var title = (document.querySelector('.title.single')) ? document.querySelector('.title.single').innerText.trim() : 'Unknown Title'
@@ -29,8 +29,10 @@ function scrapeOBBulletin(noticeUrl) {
 
             if (tagsArticle) {
                 tagsArticle.forEach(e => {
-                    const tag = e.innerText
-                    tags.push(tag)
+                    const tag = e.innerText.trim()
+                    
+                    if (tag)
+                        tags.push(tag)
                 })
 
             }
@@ -39,8 +41,10 @@ function scrapeOBBulletin(noticeUrl) {
 
             if (importantContent) {
                 importantContent.forEach(e => {
-                    const strong = e.innerText
-                    content.push(strong)
+                    const strong = e.innerText.trim()
+
+                    if (strong)
+                        content.push(strong)
                 })
 
             }
@@ -59,40 +63,40 @@ function scrapeOBBulletin(noticeUrl) {
 
         const { title, subtitle, imageSrc, badge, tags, impContent } = objOBBulletinDetail
 
-        await Bulletin.findOne({ noticeUrl })
-            .then(bulletin => {
-                if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
+        const bulletin = await Bulletin.findOne({ noticeUrl })
 
-                if (!(title.includes('Unknown')) && (!title)) bulletin.title = title
-                if (!(subtitle.includes('Unknown')) && (!subtitle)) bulletin.subtitle = subtitle
-                if (!(imageSrc.includes('Unknown')) && (!imageSrc)) bulletin.imageSrc = imageSrc
-                if (!(badge.includes('Unknown')) && (!badge)) bulletin.badge = badge
+        if (!bulletin) throw new NotFoundError(`No Bulletin found to show detail with url ${noticeUrl}`)
 
-                if (tags.length) {
-                    tags.forEach(e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.tags.push(e)
-                        }
-                    })
+        if (!(title.includes('Unknown')) && (!title)) bulletin.title = title
+        if (!(subtitle.includes('Unknown')) && (!subtitle)) bulletin.subtitle = subtitle
+        if (!(imageSrc.includes('Unknown')) && (!imageSrc)) bulletin.imageSrc = imageSrc
+        if (!(badge.includes('Unknown')) && (!badge)) bulletin.badge = badge
+
+        if (tags.length) {
+            tags.forEach(tag => {
+                const tagued = tag.trim()
+
+                if (tagued) {
+                    bulletin.tags.push(tag)
                 }
-                if (impContent.length) {
-                    impContent.forEach(e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.impContent.push(e)
-                        }
-                    })
-                }
-
-                bulletin.savedDate = new Date()
-
-                return bulletin.save()
-                    .then(() => { })
-
             })
+        }
+        if (impContent.length) {
+            impContent.forEach(content => {
+                const contnt = content.trim()
 
-        
+                if (contnt) {
+                    bulletin.impContent.push(content)
+                }
+            })
+        }
+
+        bulletin.savedDate = new Date()
+
+        debugger
+
+        await bulletin.save()
+    
     })()
 }
 module.exports = scrapeOBBulletin

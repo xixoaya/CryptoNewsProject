@@ -32,8 +32,10 @@ function scrapeC24Bulletin(noticeUrl) {
 
             if (tagsArticle) {
                 tagsArticle.forEach(e => {
-                    const tag = e.innerText
-                    tags.push(tag)
+                    const tag = e.innerText.trim()
+                    
+                    if (tag)
+                        tags.push(tag)
                 })
 
             }
@@ -43,14 +45,14 @@ function scrapeC24Bulletin(noticeUrl) {
             if (importantContent) {
 
                 importantContent.forEach(e => {
-                    const cont = e.innerText
+                    const cont = e.innerText.trim()
 
                     if (cont)
                         contentArr.push(cont)
                 })
             }
 
-            const impContent = contentArr.slice(0, 5)
+            const impContent = contentArr.slice(0, 3)
 
             const detailNotice = { title, subtitle, imageSrc, badge, tags, impContent }
 
@@ -84,8 +86,8 @@ function scrapeC24Bulletin(noticeUrl) {
 
         const { title, subtitle, imageSrc, badge, tags, impContent } = objC24BulletinDetail
 
-        await Bulletin.findOne({ noticeUrl })
-            .then(bulletin => {
+        const bulletin = await Bulletin.findOne({ noticeUrl })
+            
                 if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
 
                 if (!(title.includes('Unknown')) && (!title)) bulletin.title = title
@@ -94,18 +96,20 @@ function scrapeC24Bulletin(noticeUrl) {
                 if (!(badge.includes('Unknown')) && (!badge)) bulletin.badge = badge
 
                 if (tags.length) {
-                    tags.forEach(e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.tags.push(e)
+                    tags.forEach(tag => {
+                        const tagued = tag.trim()
+        
+                        if (tagued) {
+                            bulletin.tags.push(tag)
                         }
                     })
                 }
                 if (impContent.length) {
-                    impContent.forEach(e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.impContent.push(e)
+                    impContent.forEach(content => {
+                        const contnt = content.trim()
+        
+                        if (contnt) {
+                            bulletin.impContent.push(content)
                         }
                     })
                 }
@@ -113,10 +117,10 @@ function scrapeC24Bulletin(noticeUrl) {
                 bulletin.savedDate = new Date()
                 debugger
 
-                return bulletin.save()
-                    .then(() => { })
+                await bulletin.save()
+                   
 
-            })
+            
     })()
 }
 

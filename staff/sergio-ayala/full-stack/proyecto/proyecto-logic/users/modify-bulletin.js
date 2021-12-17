@@ -20,7 +20,7 @@ function modifyBulletin(bulletinId, data) {
         const { clicks, clicksFav, clicksQueue } = data
 
         for (const property in data) {
-            if (!property.includes("Unknown") && typeof property !== 'undefined' && property !== 'url' )
+            if (!property.includes("Unknown") && typeof property !== 'undefined' && property !== 'url' && property !== 'source' )
                 bulletinToModify[property] = data[property]
            
         }

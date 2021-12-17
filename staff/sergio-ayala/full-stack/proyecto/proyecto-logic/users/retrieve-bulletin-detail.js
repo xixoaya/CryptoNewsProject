@@ -6,6 +6,7 @@ const { scrapeC24Bulletin , scrapeOBBulletin , scrapeCTBulletin } = require('../
 function retrieveBulletinDetail(bulletinId) {
     validateId(bulletinId)
     return (async () => {
+        debugger
 
         let bulletin = await Bulletin.findById({_id: bulletinId}).lean()
 
@@ -21,6 +22,7 @@ function retrieveBulletinDetail(bulletinId) {
             debugger
             
             const bulletin2 = await Bulletin.findById({_id: bulletinId}).lean()
+            debugger
             if(!bulletin2.impContent.length) throw new NotFoundError(`Not Content found for the new ${bulletin.title}`)
 
             bulletin = bulletin2

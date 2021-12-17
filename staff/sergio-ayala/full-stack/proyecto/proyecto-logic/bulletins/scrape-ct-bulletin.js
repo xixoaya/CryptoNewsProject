@@ -14,7 +14,7 @@ function scrapeCTBulletin(noticeUrl) {
         const page = await browser.newPage()
 
         await page.goto(noticeUrl)
-
+debugger
 
         const objCTBulletinDetail = await page.evaluate(() => {
 
@@ -31,7 +31,7 @@ function scrapeCTBulletin(noticeUrl) {
             if (tagsArticle) {
 
                 tagsArticle.forEach(e => {
-                    const tag = e.querySelector('a').innerHTML
+                    const tag = e.querySelector('a').innerHTML.trim()
                     tags.push(tag)
                 })
             }
@@ -41,8 +41,9 @@ function scrapeCTBulletin(noticeUrl) {
             if (importantContent) {
 
                 importantContent.forEach(e => {
-                    const strong = e.innerText
-                    arrContent.push(strong)
+                    const strong = e.innerText.trim()
+                    if (strong)
+                        arrContent.push(strong)
                 })
             }
 
@@ -58,8 +59,8 @@ function scrapeCTBulletin(noticeUrl) {
         debugger
         const {title , subtitle , imageSrc, mediumViews, badge, tags, impContent} = objCTBulletinDetail 
         
-        await Bulletin.findOne({ noticeUrl })
-            .then(bulletin => {
+        const bulletin = await Bulletin.findOne({ noticeUrl })
+            
                 if (!bulletin) throw new NotFoundError(`No Bulletin found to update detail with url ${noticeUrl}`)
                 
                 if (!(title.includes('Unknown')) && (!title)) bulletin.title = title
@@ -69,18 +70,20 @@ function scrapeCTBulletin(noticeUrl) {
                 if (!(badge.includes('Unknown')) && (!badge)) bulletin.badge = badge
 
                 if (tags.length) {
-                    tags.forEach(e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.tags.push(e)
+                    tags.forEach(tag => {
+                        const tagued = tag.trim()
+        
+                        if (tagued) {
+                            bulletin.tags.push(tag)
                         }
-                    })                    
+                    })
                 }
                 if (impContent.length) {
-                    impContent.forEach( e => {
-                        if (e) {
-                            e.trim()
-                            bulletin.impContent.push(e)
+                    impContent.forEach(content => {
+                        const contnt = content.trim()
+        
+                        if (contnt) {
+                            bulletin.impContent.push(content)
                         }
                     })
                 }
@@ -88,26 +91,8 @@ function scrapeCTBulletin(noticeUrl) {
                 bulletin.savedDate = new Date()
 
 
-                return bulletin.save()
-                    .then(() => { })
+                await bulletin.save()
                 
-            })
-
-
-        
-            // {
-
-            //     author: (b.author.includes('Unknown')) ? null : b.author.trim(),
-            //     badge: (b.badge.includes('Unknown')) ? null : b.badge.trim(),
-            //     subTitle: (b.subTitle.includes('Unknown')) ? null : b.subTitle.trim(),
-            //     title: (b.title.includes('Unknown')) ? null : b.title.trim(),
-            //     url: (b.url.includes('Unknown')) ? null : b.url,
-            //     imageSrc: (b.imageSrc.includes('Unknown')) ? null : b.imageSrc,
-            //     createdTime: (b.createdTime.includes('Unknown')) ? null : b.createdTime,
-            //     source: 'cointelegraph',
-            //     savedDate: new Date()
-
-            // }
         
     })()
 }

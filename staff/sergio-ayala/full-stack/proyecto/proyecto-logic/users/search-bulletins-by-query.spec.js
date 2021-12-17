@@ -8,7 +8,7 @@ const { NotFoundError, FormatError } = require('proyecto-errors')
 
 const { env: { MONGO_URL } } = process
 
-describe.only('Search bulletins by query', () => {
+describe('Search bulletins by query', () => {
     before(() => mongoose.connect(MONGO_URL))
     //beforeEach(() => Bulletin.deleteMany())
 

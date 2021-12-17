@@ -77,6 +77,9 @@ function validateData(data) {
     if (typeof clicksQueue !== 'undefined') {
         validateNumber(clicksQueue)
     }
+    if (typeof id !== 'undefined') {
+        validateId(id)
+    }
 }
 
 module.exports = {
