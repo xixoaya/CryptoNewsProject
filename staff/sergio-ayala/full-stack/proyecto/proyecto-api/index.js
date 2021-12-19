@@ -22,7 +22,7 @@ mongoose.connect(MONGO_URL)
         app.post('/api/users/auth', authenticateUser)
         app.post('/api/users/register', registerUser)
         app.delete('/api/users/unregister', unregisterUser)
-        app.post('/api/users', retrieveUser)
+        app.get('/api/users', retrieveUser)
         app.patch('/api/users', modifyUser)
 
 
@@ -30,7 +30,7 @@ mongoose.connect(MONGO_URL)
         app.post('/api/bulletins', retrieveBulletins)
         app.get('/api/bulletins/detail/:bulletinId', retrieveBulletinDetail)
         app.get('/api/bulletins/home', retrieveHomeLeads)
-        app.post('/api/bulletins/search', retrieveSearchedBulletins)
+        app.get('/api/bulletins/search', retrieveSearchedBulletins)
 
 
 
