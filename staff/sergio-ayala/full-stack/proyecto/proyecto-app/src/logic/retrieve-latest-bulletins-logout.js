@@ -12,13 +12,13 @@ function retrieveLatestBulletinsNoLogued() {
             //body: JSON.stringify({ favs })
         })
 
-        const { status } = res2
+        const { status: status2  } = res2
 
-        if (status === 401 || status === 404) {
+        if (status2 === 401 || status2 === 404) {
             const { error } = res2.json()
 
             throw new Error(error)
-        } else if (status !== 401 && status !== 404 && status !== 201) {
+        } else if (status2 !== 401 && status2 !== 404 && status2 !== 201) {
             throw new Error('unknow error')
         }
 
@@ -27,6 +27,7 @@ function retrieveLatestBulletinsNoLogued() {
         //     bulletin.isFav = favs.includes(bulletin.id)
         //     bulletin.isFav = queue.includes(bulletin.id)
         // });
+        CoverBulletins.slice(0,15)
 
         return CoverBulletins
 

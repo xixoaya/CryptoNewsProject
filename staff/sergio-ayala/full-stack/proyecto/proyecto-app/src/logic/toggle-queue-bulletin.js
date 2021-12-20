@@ -1,8 +1,10 @@
+import addQueueToBulletin from './add-queue-to-bulletin'
+
 function toggleQueueBulletin(token, bulletinId) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
 
-    if (typeof id !== 'string') throw new TypeError(`${bulletinId} is not a string`)
+    if (typeof bulletinId !== 'string') throw new TypeError(`${bulletinId} is not a string`)
     if (!bulletinId.trim().length) throw new Error('id is empty or blank')
 
 
@@ -29,8 +31,10 @@ function toggleQueueBulletin(token, bulletinId) {
 
         const index = queue.indexOf(bulletinId)
 
-            if (index < 0)
+            if (index < 0){
                 queue.push(bulletinId)
+                await addQueueToBulletin(token, bulletinId)
+            }
             else
                 queue.splice(index, 1)
 
@@ -43,13 +47,13 @@ function toggleQueueBulletin(token, bulletinId) {
             body: JSON.stringify({ queue })
         })
 
-        const { status } = res2
+        const { status: status2  } = res2
 
-        if (status === 401 || status === 404) {
+        if (status2 === 401 || status2 === 404) {
             const { error } = res2.json()
 
             throw new Error(error)
-        } else if (status !== 401 && status !== 404 && status !== 204) {
+        } else if (status2 !== 401 && status2 !== 404 && status2 !== 204) {
             throw new Error('unknow error')
         }
         

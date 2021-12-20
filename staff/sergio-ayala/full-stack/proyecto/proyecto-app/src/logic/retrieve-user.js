@@ -27,7 +27,7 @@
             callback(null, user)
         }
     }
-    xhr.open('POST', 'http://localhost:8000/api/users')
+    xhr.open('GET', 'http://localhost:8000/api/users')
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.send()
 }

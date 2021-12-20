@@ -1,111 +1,87 @@
 import { useState, useEffect } from 'react'
 import {
-    retrieveVehicle,
-    toggleFavVehicle,
-    addVehicleToCart,
+    retrieveBulletinDetail,
+    toggleFavBulletin,
+    toggleQueueBulletin,
 } from '../logic'
 
-function Detail({ name, OnBackList, itemid, OnStartFlow, OnEndFlow, OnShowModal }) {
+function Detail({ name, OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    const [vehicle, setvehicle] = useState(null);
+    //const [vehicle, setvehicle] = useState(null);
+    const [bulletin, setbulletin] = useState(null);
     // const [cart, setcart] = useState(null);
 
-    useEffect(() => {
+    useEffect(async () => {
 
-        OnStartFlow()
         try {
-            retrieveVehicle(sessionStorage.token, itemid, (error, vehicle) => {
-                if (error) {
-                    OnShowModal(error.message)
-                    OnEndFlow()
+            OnStartFlow()
 
-                } else {
-                    setvehicle(vehicle)
-                    // OnGoToDetail(vehicle)
-                    // goToHome()
-                    OnEndFlow()
-                }
-            })
+            const bulletinDetail = await retrieveBulletinDetail(sessionStorage.token, itemid)
+
+            if (itemQueue) await toggleQueueBulletin(sessionStorage.token, itemid)
+
+            setbulletin(bulletinDetail)
+            // OnGoToDetail(vehicle)
+            // goToHome()
+            OnEndFlow()
+
+
         } catch ({ message }) {
             OnShowModal(message, 'warn')
             OnEndFlow()
         }
 
-    }, [itemid]);
+    }, []);
 
-    const ToggleFav = (id) => {
-        OnStartFlow()
+    const ToggleFav = async (id) => {
         try {
-            toggleFavVehicle(sessionStorage.token, id, (error => {
-                if (error) {
-                    OnShowModal(error.message)
-                    OnEndFlow()
-                    return
-                }
-                if (vehicle && vehicle.id === id) {
-                    setvehicle({ ...vehicle, isFav: !vehicle.isFav })
-                }
+            OnStartFlow()
+
+            await toggleFavBulletin(sessionStorage.token, id)
+
+            if (bulletin) {
                 
-                OnEndFlow()
-            }))
-        } catch ({ message }) {
-            OnShowModal(message, 'warn')
+                setbulletin({ ...bulletin, isFav: !bulletin.isFav })
+            }
             OnEndFlow()
-        }
-    }
-    
-    const addToCArt = (id) => {
-        OnStartFlow()
-        try {
-            addVehicleToCart(sessionStorage.token, id, (error) => {
-                if (error) {
-                    OnShowModal(error.message)
-                    OnEndFlow()
-                } else {
-                    // setcart(cart.map(vehicle => {
-                    //     if (vehicle.id === id) {
-                    //         return { ...vehicle, qty: vehicle.qty + 1 }
-                    //     }
-                    //     return vehicle
-                    // }))
-                    OnEndFlow()
-                    OnShowModal(`Car in the cart ${name}!`, 'success')
-                }
-            })
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
             OnEndFlow()
         }
     }
-
 
 
     return <>
-        {vehicle && <>
-        <div className="home__detail">
-        <h2>{vehicle.name}</h2>
-        <img className="home__detail-image" src={vehicle.image} alt=""></img>
+        {bulletin && <>
+            <div className="home__detail">
+                <img className="home__detail-image" src={(bulletin.imageSrc) ? bulletin.imageSrc : "src/default/detail"} alt=""></img>
+                
+                <h2>{bulletin.title}</h2>
+                <time>{bulletin.createdTime}</time>
+                <span>{bulletin.badge}</span>
+                
+                <span>{bulletin.subTitle}</span>
 
-        {/* <div className="home__detail-main"> */}
-        <span>{vehicle.maker}</span>
-        <time>{vehicle.year}</time>
-        <span>{vehicle.price} $</span>
-        {/* </div> */}
+                {/* <div className="home__detail-main"> */}
+                {/* </div> */}
 
-        {/* <div className="home__detail-second"> */}
-        <span>{vehicle.color}</span>
-        <span>{vehicle.style}</span>
-        <span>{vehicle.collection}</span>
-        {/* </div> */}
-        <p>{vehicle.description}</p>
-        <a href={vehicle.url}>original</a>
-        </div>
-        <div className="buttons-detail">
-            <button type='button' className='button--small' onClick={OnBackList}>Back</button>
-            <button type='button' className='button--small' onClick={() => ToggleFav(vehicle.id)}>{vehicle.isFav ? '🧡' : '🤍'}</button>
-            <button type='button' className='button--small' onClick={() => addToCArt(vehicle.id)}>Add to Cart</button>
-        </div>
+                {/* <div className="home__detail-second"> */}
+                <p>{bulletin.impContent[0]}</p>
+                <p>{bulletin.impContent[1]}</p>
+                <p>{bulletin.impContent[2]}</p>
+                <p>{bulletin.impContent[3] ? bulletin.impContent[3] : null}</p>
+                <p>{bulletin.impContent[4] ? bulletin.impContent[4] : null}</p>
+                {/* </div> */}
+                <p>{bulletin.tags[0]}</p>
+                <p>{bulletin.tags[1]}</p>
+                <a href={bulletin.url}>Visit {bulletin.source} for more info</a>
+            </div>
+            <div className="buttons-detail">
+                <button type='button' className='button--small' onClick={OnBackList}>Back</button>
+                <button type='button' className='button--small' onClick={() => ToggleFav(bulletin.id)}>{bulletin.isFav ? '🧡' : '🤍'}</button>
+                
+            </div>
         </>}
     </>
 

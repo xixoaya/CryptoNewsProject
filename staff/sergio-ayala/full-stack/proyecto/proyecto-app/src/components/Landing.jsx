@@ -12,6 +12,7 @@ function Landing({OnSignIn, OnSignUp}) {
         <button className='button' onClick ={OnSignIn}>SIGN IN</button>
         <button className='button' onClick ={OnSignUp}>SIGN UP</button>
     </div>
+    
 </div>
 }
 

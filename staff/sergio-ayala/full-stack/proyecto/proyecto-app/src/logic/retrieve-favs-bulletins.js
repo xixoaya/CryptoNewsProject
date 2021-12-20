@@ -1,4 +1,4 @@
-import context from './context'
+//import context from './context'
 
 /**
  * Signs up a user in the application.
@@ -43,16 +43,16 @@ function retrieveFavBulletins(token) {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ favs })
+                body: JSON.stringify( favs )
             })
 
-            const { status } = res2
+            const { status: status2  } = res2
 
-            if (status === 401 || status === 404) {
+            if (status2 === 401 || status2 === 404) {
                 const { error } = res2.json()
     
                 throw new Error(error)
-            } else if (status !== 401 && status !== 404 && status !== 201) {
+            } else if (status2 !== 401 && status2 !== 404 && status2 !== 201) {
                 throw new Error('unknow error')
             }
 

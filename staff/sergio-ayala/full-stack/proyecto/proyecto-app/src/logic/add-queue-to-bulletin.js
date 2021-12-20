@@ -1,4 +1,4 @@
-import context from './context'
+//import context from './context'
 
 /**
  * Signs up a user in the application.
@@ -15,7 +15,7 @@ function addQueueToBulletin(token, bulletinId) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
 
-    if (typeof id !== 'string') throw new TypeError(`${bulletinId} is not a string`)
+    if (typeof bulletinId !== 'string') throw new TypeError(`${bulletinId} is not a string`)
     if (!bulletinId.trim().length) throw new Error('id is empty or blank')
 
 
@@ -26,7 +26,7 @@ function addQueueToBulletin(token, bulletinId) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify([{ bulletinId }]) 
+            body: JSON.stringify([ bulletinId ]) 
         })
 
         const { status } = res
@@ -41,7 +41,10 @@ function addQueueToBulletin(token, bulletinId) {
 
         let { clicksQueue = 0 } = await res.json()
 
-        clicksQueue = clicksQueue + 1
+        const newClicksQueue = {
+            clicksQueue: clicksQueue + 1,
+            id: bulletinId
+        }
 
         //history.push(bulletinId)
 
@@ -51,16 +54,16 @@ function addQueueToBulletin(token, bulletinId) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ clicksQueue })
+            body: JSON.stringify( newClicksQueue )
         })
 
-        const { status } = res2
+        const { status: status2  } = res2
 
-        if (status === 401 || status === 404) {
+        if (status2 === 401 || status2 === 404) {
             const { error } = res2.json()
 
             throw new Error(error)
-        } else if (status !== 401 && status !== 404 && status !== 201) {
+        } else if (status2 !== 401 && status2 !== 404 && status2 !== 201) {
             throw new Error('unknow error')
         }
         

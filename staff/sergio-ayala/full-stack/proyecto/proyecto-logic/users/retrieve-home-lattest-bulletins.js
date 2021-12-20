@@ -26,9 +26,9 @@ function retrieveHomeBulletins() {
             await LastScrap.create({ lastUpdate: Date.now() })
         }
 
-        const lastHomeOBBulletins = await Bulletin.find({ scrapedType: 'cover', source: 'observatorioblockchain' }).sort({ _id: -1 }).limit(10).lean()
-        const lastHomeCTBulletins = await Bulletin.find({ scrapedType: 'cover', source: 'cointelegraph' }).sort({ _id: -1 }).limit(50).lean()
-        const lastHomeC24Bulletins = await Bulletin.find({ scrapedType: 'cover', source: 'cripto247' }).sort({ _id: -1 }).limit(10).lean()
+        const lastHomeOBBulletins = await Bulletin.find({ scrapedType: 'cover', source: 'observatorioblockchain' }).sort({ _id: -1 }).limit(15).lean()
+        const lastHomeCTBulletins = await Bulletin.find({ scrapedType: 'cover', source: 'cointelegraph' }).sort({ _id: -1 }).limit(15).lean()
+        const lastHomeC24Bulletins = await Bulletin.find({ scrapedType: 'cover', source: 'cripto247' }).sort({ _id: -1 }).limit(15).lean()
 
         const lastHomeBulletins = lastHomeOBBulletins.concat(lastHomeCTBulletins).concat(lastHomeC24Bulletins)
 
@@ -48,15 +48,35 @@ function retrieveHomeBulletins() {
             delete bulletin.tags
         })
 
-        function compare( a, b ) {
-            if ((((a.clicks ? a.clicks : 0) * 0.7) + ((a.clicksFav ? a.clicksFav : 0 ) * 1) + ((a.clicksQueue ? a.clicksQueue : 0 ) * 0.5)) > (((b.clicks ? b.clicks : 0) * 0.7) + ((b.clicksFav ? b.clicksFav : 0 ) * 1) + ((b.clicksQueue ? b.clicksQueue : 0 ) * 0.5))) {
+        function compare(a, b) {
+            if ((((a.clicks ? a.clicks : 0) * 0.7) + ((a.clicksFav ? a.clicksFav : 0) * 1) + ((a.clicksQueue ? a.clicksQueue : 0) * 0.5)) > (((b.clicks ? b.clicks : 0) * 0.7) + ((b.clicksFav ? b.clicksFav : 0) * 1) + ((b.clicksQueue ? b.clicksQueue : 0) * 0.5))) {
                 return 1;
             }
-            if ((((a.clicks ? a.clicks : 0) * 0.7) + ((a.clicksFav ? a.clicksFav : 0 ) * 1) + ((a.clicksQueue ? a.clicksQueue : 0 ) * 0.5)) < (((b.clicks ? b.clicks : 0) * 0.7) + ((b.clicksFav ? b.clicksFav : 0 ) * 1) + ((b.clicksQueue ? b.clicksQueue : 0 ) * 0.5))) {
+            if ((((a.clicks ? a.clicks : 0) * 0.7) + ((a.clicksFav ? a.clicksFav : 0) * 1) + ((a.clicksQueue ? a.clicksQueue : 0) * 0.5)) < (((b.clicks ? b.clicks : 0) * 0.7) + ((b.clicksFav ? b.clicksFav : 0) * 1) + ((b.clicksQueue ? b.clicksQueue : 0) * 0.5))) {
                 return -1;
             }
             return 0;
-          }
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (currentIndex != 0) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+
+            return array;
+        }
+
+        shuffle(lastHomeBulletins)
 
         lastHomeBulletins.sort(compare);
 

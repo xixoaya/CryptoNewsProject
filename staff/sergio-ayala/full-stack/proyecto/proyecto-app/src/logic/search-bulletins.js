@@ -38,13 +38,13 @@ function searchBulletins(token, query) {
             //body: JSON.stringify({ favs })
         })
 
-        const { status } = res2
+        const { status: status2  } = res2
 
-        if (status === 401 || status === 404) {
+        if (status2 === 401 || status2 === 404) {
             const { error } = res2.json()
 
             throw new Error(error)
-        } else if (status !== 401 && status !== 404 && status !== 201) {
+        } else if (status2 !== 401 && status2 !== 404 && status2 !== 201) {
             throw new Error('unknow error')
         }
 
@@ -59,13 +59,13 @@ function searchBulletins(token, query) {
             body: JSON.stringify(bulletins)
         })
 
-        const { status } = res3
+        const { status: status3  } = res3
 
-        if (status === 401 || status === 404) {
+        if (status3 === 401 || status3 === 404) {
             const { error } = res3.json()
 
             throw new Error(error)
-        } else if (status !== 401 && status !== 404 && status !== 201) {
+        } else if (status3 !== 401 && status3 !== 404 && status3 !== 201) {
             throw new Error('unknow error')
         }
 
