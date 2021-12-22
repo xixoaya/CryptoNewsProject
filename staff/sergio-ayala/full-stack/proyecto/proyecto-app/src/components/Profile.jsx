@@ -9,6 +9,11 @@ import BulletinsFavs from './BulletinsFavs'
 import Detail from './Detail'
 import BulletinsQueue from './BulletinsQueue'
 import BulletinsHistory from './BulletinsHistory'
+import ProfileButtons from './ProfileButtons'
+import './Profile.css'
+
+import * as React from 'react';
+
 
 function Profile({
     name,
@@ -25,7 +30,6 @@ function Profile({
     //const backtoprofile = () => setView('Profile')
 
     const backtoprofile = () => {
-        //setquery('')
         setView('Profile')
         setbulletinId(null)
     }
@@ -33,8 +37,28 @@ function Profile({
     const goToDetail = (id, isQueue) => {
         setbulletinId(id)
         setbulletinQueue(isQueue)
-        // setView('home')
     }
+
+    const goToFavs = () => {
+        setView('Favorites')
+    }
+
+    const goToQueue = () => {
+        setView('Queue')
+    }
+
+    const goToHistory = () => {
+        setView('History')
+    }
+
+    const goToPassword = () => {
+        setView('Password')
+    }
+
+    const goToAccount = () => {
+        setView('Account')
+    }
+
 
     const changePassword = (oldpassword, password) => {
         OnStartFlow()
@@ -78,32 +102,12 @@ function Profile({
 
 
     return <div>
-        <div className="title layout__title">
-            <h1>PROFILE</h1>
-        </div>
+        {!bulletinId && <> <div className="title layout__title"><h1>PROFILE</h1></div></>}
 
-        {view === 'Profile' && <>
-            <div className="layout__subtitle">
-                <p><strong className="name">{name ? name : 'Name'}</strong> {`What do you whant to do with your ${view}?`}
-                </p>
-            </div>
-            <div className="layout__buttons--home-hi layout__buttons ">
-                {/* <button className='button'>UPDATE PROFILE</button> */}
-                <button className='button' onClick={() => setView('Favorites')}>View Favorites</button>
-                <button className='button' onClick={() => setView('Queue')}>view News in Queue</button>
-                <button className='button' onClick={() => setView('History')}>view News History</button>
-            </div>
-            <div className="layout__buttons--home-hi layout__buttons ">
-                {/* <button className='button'>UPDATE PROFILE</button> */}
-                <button className='button' onClick={() => setView('Password')}>CHANGE PASSWORD</button>
-                <button className='button' onClick={() => setView('Account')}>DELETE ACCOUNT</button>
-            </div>
-
-            <div className="layout__buttons--home-low layout__buttons">
-                <button className='button' onClick={OnSignOut}>SIGN OUT</button>
-                {/* <button className='button' onClick={OnBackHome}>BACK HOME</button> */}
-            </div>
-        </>}
+        {view === 'Profile' && <ProfileButtons 
+            name={name} view={view} favorites={goToFavs} queue={goToQueue} 
+            history={goToHistory} password={goToPassword} account={goToAccount} OnSignOut={OnSignOut}
+        />}
 
         {view === 'Password' &&
             <ChangePassword OnBackProfile={backtoprofile} OnUpdatePassword={changePassword} ></ChangePassword>}

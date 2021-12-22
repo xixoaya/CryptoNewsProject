@@ -1,5 +1,5 @@
 /* RESETS */
-
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 * {
     box-sizing: content-box;
     /* border: 1px dashed black;  */
@@ -14,11 +14,19 @@ html, body {
     min-width: 100vw;
     min-height: 100vh;
     margin: 0;
+    font-family: 'EB Garamond', serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Crete Round', serif;
 }
 
 .app-bg {
-    background-image: url(https://i2.wp.com/www.csscodelab.com/wp-content/uploads/2019/11/stripe-hero-background-effect-html-css.png?fit=1062%2C631&ssl=1);
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHBbgtFgA-Ra_A3skbq3RdqCqaswhGtHHDFg&usqp=CAU);
+    /* background-image: url(https://i2.wp.com/www.csscodelab.com/wp-content/uploads/2019/11/stripe-hero-background-effect-html-css.png?fit=1062%2C631&ssl=1); */
+    /* background-image: url(https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80); */
     background-size: cover;
+    background-color: rgb(213, 234, 248);
     background-repeat: no-repeat;
     min-width: 100vw;
     min-height: 100vh;
@@ -152,6 +160,12 @@ margin-top: 10px;
 
 }
 
+.button--small__lead {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 .button--small__dark {
     border-radius: 10px;
     border-style: solid;
@@ -213,12 +227,12 @@ margin-top: 10px;
 }
 
 .home__results-list {
-    width: 400px;
+    width: 420px;
     height: 450px;
     overflow: auto;
     display : flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
     margin-top: 30px;
     align-items: center;
 }
@@ -240,8 +254,9 @@ cursor: pointer;
 
 .home__detail {
     width: 400px;
-    height: 300px;
+    height: 400px;
     overflow-y: scroll;
+    /* background-color: whitesmoke; */
     /* overflow: auto; */
     display : flex;
     flex-direction: column;

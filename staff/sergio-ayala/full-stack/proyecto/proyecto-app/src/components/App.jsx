@@ -11,6 +11,7 @@ import SignIn from './SignIn'
 import Home from './Home'
 import Spinner from './Spinner'
 import Modal from './Modal'
+import AppTopBar from './AppTopBar'
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
     const goToSignIn = () => setView('signin')
     const goToLanding = () => setView('landing')
     const goToThankYou = () => setView('thank-you')
+    const goToHome = () => setView('home')
 
     const showSpinner = () => setSpinner(true)
     const hideSpinner = () => setSpinner(false)
@@ -132,7 +134,20 @@ function App() {
 
 
     return <div className="app-bg">
-        {view === 'landing' && <Landing OnSignIn={goToSignIn} OnSignUp={goToSignUp}  ></Landing>}
+        <AppTopBar 
+        Username={name} View={view} 
+         OnSignIn={goToSignIn} 
+        //OnGoHome={goToHome}
+        // OnGoLanding={goToLanding}    
+        />
+        {view === 'landing' && 
+            <Landing 
+                OnSignIn={goToSignIn} 
+                OnSignUp={goToSignUp}  
+                OnStartFlow={showSpinner}
+                OnEndFlow={hideSpinner}
+                OnShowModal={showModal}
+            ></Landing>}
 
         {view === 'signup' && <SignUp OnSignIn={goToSignIn} OnSignUp={signUp} ></SignUp>}
   

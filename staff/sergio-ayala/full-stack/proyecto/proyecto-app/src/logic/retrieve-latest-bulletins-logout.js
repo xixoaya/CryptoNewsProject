@@ -27,9 +27,9 @@ function retrieveLatestBulletinsNoLogued() {
         //     bulletin.isFav = favs.includes(bulletin.id)
         //     bulletin.isFav = queue.includes(bulletin.id)
         // });
-        CoverBulletins.slice(0,15)
+        const CoverBulletinsNoLogged = CoverBulletins.slice(0,10)
 
-        return CoverBulletins
+        return CoverBulletinsNoLogged
 
     })()
 }
