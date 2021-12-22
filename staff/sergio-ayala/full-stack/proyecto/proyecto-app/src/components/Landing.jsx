@@ -3,6 +3,7 @@ import BulletinLeadPanelLogOut from './BulletinLeadPanelLogOut'
 import {
     retrieveLatestBulletinsNoLogued
 } from '../logic'
+import ButtonsAppLogOut from './ButtonsAppLogOut'
 
 function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
     const [bulletins, setbulletins] = useState([]);
@@ -27,7 +28,7 @@ function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
     }, [])
 
     const onItem = () => {
-        OnShowModal('Sorry but you have to log in to enjoy all de news and the full experience', 'warn')
+        OnShowModal('Sorry but you have to LOGIN to enjoy all de news and the full experience', 'warn')
     }
 
 
@@ -38,13 +39,10 @@ function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
             <h1>WELCOME</h1>
         </div>
         <div className="layout__subtitle">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
-                repellat velit ipsum sapiente corrupti natus aspernatur, deserunt eveniet. Eveniet, nesciunt deleniti
-                assumenda sequi nobis neque?</p>
+            <p>Enjoy all <strong className="strong__landing">the latest news</strong> related with crypto and blockchain <strong className="strong__landing">in just one place</strong>... you are welcome</p>
         </div>
         <div className="layout__main">
-            <button className='button' onClick ={OnSignIn}>SIGN IN</button>
-            <button className='button' onClick ={OnSignUp}>SIGN UP</button>
+            <ButtonsAppLogOut onSignIn={OnSignIn} onSignUp={OnSignUp} />
         </div>
         {bulletins.length ?
             <div className="home__results-list">

@@ -10,7 +10,7 @@ function retrieveSearchedBulletins(query) {
         let lastQuerySearchCT = await Search.findOne({ query, source: 'cointelegraph' }).lean()
         let lastQuerySearchC24 = await Search.findOne({ query, source: 'cripto247' }).lean()
 
-        debugger
+        
 
         if (!lastQuerySearchOB || !lastQuerySearchCT || !lastQuerySearchC24) {
             await Promise.all([scrapCTSearch(query), scrapOBSearch(query), scrapeC24Search(query)])
@@ -45,7 +45,7 @@ function retrieveSearchedBulletins(query) {
                 //const lastQuerySearch2 = await Search.find({ query: searchedquery }).lean()
             }
         }
-        debugger
+        
         const arrBulletinsOBQueryIds = lastQuerySearchOB.bulletins.map(id => id)
         const arrBulletinsCTQueryIds = lastQuerySearchCT.bulletins.map(id => id)
         const arrBulletinsC24QueryIds = lastQuerySearchC24.bulletins.map(id => id)
@@ -84,7 +84,7 @@ function retrieveSearchedBulletins(query) {
         shuffle(allArrBulletinsByQueryIds)
 
         allArrBulletinsByQueryIds.sort(compare);
-        debugger
+        
         return allArrBulletinsByQueryIds
     })()
 }

@@ -1,10 +1,10 @@
 function ThankYou({OnSignIn}) {
     return <div className="pagelayout">
-    <div className="title title--font-height layout__title">
-        <h1>Gracias Por Registrarte</h1>
+    <div className="title layout__title">
+        <h1>Thanks!</h1>
     </div>
     <div className="layout__subtitle">
-        <p>Ve a SIGN IN para acceder a la home con tus credenciales.
+        <p>we have correctly receive your info, now just log in and enjoy
         </p>
     </div>
     <form action="" className="layout__main">

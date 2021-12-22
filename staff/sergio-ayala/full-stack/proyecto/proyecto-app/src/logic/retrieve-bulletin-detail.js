@@ -61,7 +61,7 @@ function retrieveBulletinDetail(token, bulletinId) {
         const bulletinDetail = await res2.json()
 
         bulletinDetail.isFav = favs.includes(bulletinDetail.id)
-        bulletinDetail.isQueue = queue.includes(bulletinDetail.id)
+        //bulletinDetail.isQueue = queue.includes(bulletinDetail.id)
 
         await Promise.all([addClickToBulletin(token, bulletinId), addBulletinToHistory(token, bulletinId)])
 
@@ -70,15 +70,6 @@ function retrieveBulletinDetail(token, bulletinId) {
 
         return bulletinDetail
 
-
-
-        // if (status === 200) {
-        //     return await res.json()
-        // } else if (status === 401 || status === 404) {
-        //     const { error } = res.json()
-
-        //     throw new Error(error)
-        // } else throw new Error('unknow error')
     })()
 }
 

@@ -11,13 +11,20 @@ import MenuList from '@mui/material/MenuList';
 
 const options = ['Log Out', 'Change Password', 'Delete Account'];
 
-export default function ProfileEditButtonsGroup() {
+export default function ProfileEditButtonsGroup({password, account, OnSignOut}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+     //console.info(`You clicked ${options[selectedIndex]}`);
+    if (options[selectedIndex] === 'Log Out') {
+        OnSignOut()
+    } else if (options[selectedIndex] === 'Change Password') {
+        password()
+    }else {
+        account()
+    }
   };
 
   const handleMenuItemClick = (event, index) => {
@@ -73,7 +80,7 @@ export default function ProfileEditButtonsGroup() {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                      disabled={index === 2}
+                    
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >

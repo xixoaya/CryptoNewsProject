@@ -15,7 +15,6 @@ function scrapeOBBulletin(noticeUrl) {
 
         await page.goto(noticeUrl)
 
-        debugger
         const objOBBulletinDetail = await page.evaluate(() => {
 
             var title = (document.querySelector('.title.single')) ? document.querySelector('.title.single').innerText.trim() : 'Unknown Title'
@@ -93,7 +92,6 @@ function scrapeOBBulletin(noticeUrl) {
 
         bulletin.savedDate = new Date()
 
-        debugger
 
         await bulletin.save()
     

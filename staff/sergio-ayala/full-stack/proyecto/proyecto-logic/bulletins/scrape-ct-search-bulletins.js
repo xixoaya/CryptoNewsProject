@@ -74,32 +74,36 @@ function scrapCTSearch(query) {
 
         let bulletins
 
-        if (insertions) {
+        if (insertions.length) {
 
             const creates = insertions.map(element => Bulletin.create(element))
 
             bulletins = await Promise.all(creates)
         }
 
-        let bulletinsId
+        // let bulletinsId
 
-        if (bulletins.length) {
+        // if (bulletins) {
 
-            bulletinsId = bulletins.map(e => { return e.id })
-        } else {
-            bulletinsId = []
-        }
-
+        //     bulletinsId = bulletins.map(e => { return e.id })
+        // } else {
+        //     bulletinsId = []
+        // }
+        const promiseAllBulletins = ctSearchBulletins.map(({ url }) => Bulletin.findOne({ url }).lean())
+        const allBulletins = await Promise.all ( promiseAllBulletins )
+        const bulletinsId = allBulletins.map (({ _id }) => _id)
 
         const search = await Search.findOne({ query, source: 'cointelegraph' })
-        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cointelegraph' }).lean()
         debugger
         if (search) {
-            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
-            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
-            search.bulletins = search.bulletins.push(uniqueBulletinsId)
-            search.lastUpdate = new Date()
+            const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cointelegraph' }).lean()
+            const oldBulletins = lastQuerysearchedPlain.bulletins
 
+            const newBulletinsForQuery = bulletinsId.concat(oldBulletins)
+            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
+            search.bulletins = uniqueBulletinsId
+            search.lastUpdate = new Date()
+            
             await search.save()
         } else {
             await Search.create({ lastUpdate: new Date(), query, source: 'cointelegraph', bulletins: bulletinsId })

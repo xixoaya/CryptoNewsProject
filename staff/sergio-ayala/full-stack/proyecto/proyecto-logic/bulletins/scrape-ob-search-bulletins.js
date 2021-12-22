@@ -6,7 +6,7 @@ const { models: { Bulletin, Search } } = require('proyecto-data')
  * 
  * @returns {Promise}
  */
-function scrapOBSearch(query) {
+function scrapOBSearch(query) { //hacemos el scrapeo por la query(Hacemos la busqueda)
     return (async () => {
         debugger 
 
@@ -42,7 +42,7 @@ function scrapOBSearch(query) {
         debugger
         await browser.close()
 
-        const obSearchBulletins = arrOBSearch.map(b => {
+        const obSearchBulletins = arrOBSearch.map(b => { //en obSearchBulletins tenemos los resultados limpios de la búsqueda
             return {
 
                 author: (b.author.includes('Unknown')) ? null : b.author.trim(),
@@ -56,43 +56,41 @@ function scrapOBSearch(query) {
 
             }
         })
-debugger
+
         const checksPromises = obSearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
-        const exists = await Promise.all(checksPromises)
-
+        const exists = await Promise.all(checksPromises) //exist nos dice si hay nuevos bulletins que añadir si es false es que no está en bbdd
+//comprobamos si hany nuevos bulletins que añadir
         const insertions = obSearchBulletins.reduce((accum, bulletin, index) => {
             if (!exists[index]) accum.push(bulletin)
 
             return accum
-        }, [])
+        }, []) //insertions devuelve un array de urls encontradas y que no existen en bbdd
 
         let bulletins
 
-        if (insertions) {
-            
+        if (insertions.length) { 
+            //aqui creamos en bbdd las noticias con urls que no existiesen
             const creates = insertions.map(element => Bulletin.create(element))
     
             bulletins = await Promise.all(creates)
         }
 
-        let bulletinsId
-
-        if (bulletins.length){
-
-            bulletinsId = bulletins.map(e => { return e.id })
-        } else {
-            bulletinsId = []
-        }
-
+        //llamo a bbdd para traerme los ids de las url encontreadas con la query pero que ya tenía en bbdd
+        const promiseAllBulletins = obSearchBulletins.map(({ url }) => Bulletin.findOne({ url }).lean())
+        const allBulletins = await Promise.all ( promiseAllBulletins )
+        const bulletinsId = allBulletins.map (({ _id }) => _id)
+        //aquí tenemos un array de objects id se hayan creado o no, pendientes de relacionar con la query de búsqueda
         
         const search = await Search.findOne({ query, source: 'observatorioblockchain' })
-        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'observatorioblockchain' }).lean()
         debugger
         if (search) {
-            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
+            const lastQuerysearchedPlain = await Search.findOne({ query, source: 'observatorioblockchain' }).lean()
+            const oldBulletins = lastQuerysearchedPlain.bulletins
+
+            const newBulletinsForQuery = bulletinsId.concat(oldBulletins)
             let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
-            search.bulletins = search.bulletins.push(uniqueBulletinsId)
+            search.bulletins = uniqueBulletinsId
             search.lastUpdate = new Date()
             
             await search.save()

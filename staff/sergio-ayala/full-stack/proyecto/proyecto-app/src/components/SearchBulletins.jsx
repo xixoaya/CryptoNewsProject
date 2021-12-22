@@ -44,24 +44,27 @@ function SearchBulletins({
         setbulletinId(null)
     }
 
-    return <div>
-        <div className="title layout__title">
-            <h1>Lets Search</h1>
-        </div>
-        <form className="layout__buttons--iline" onSubmit={event => {
-            event.preventDefault()
-
-            const query = event.target.query.value
-
-            query ? onSearch(query) : cleanquery()
-
-            
-        }}>
-            <input type="text" id='query' className="input" name="query" placeholder="News Query" defaultValue={query ? query : ''}></input>
-            <button className='button--small' type="submit">{'🔍'}</button>
-        </form>
+    return <div className='pagelayout--shorter' > 
+        {!bulletinId && <>
+            <div className="title layout__title">
+                <h1>Lets Search</h1>
+            </div>
+        
+        </>}
 
         {view === 'Empty' && <>
+            <form className="layout__buttons--iline" onSubmit={event => {
+                event.preventDefault()
+
+                const query = event.target.query.value
+
+                query ? onSearch(query) : cleanquery()
+
+                
+            }}>
+                <input type="text" id='query' className="input" name="query" placeholder="News Query" defaultValue={query ? query : ''}></input>
+                <button className='button--small' type="submit">{'🔍'}</button>
+            </form>
             <div className="layout__subtitle">
                 <p><strong className="name">{name ? name : 'Name'}</strong> {`What should we look for 🙄?`}
                 </p>

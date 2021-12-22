@@ -59,6 +59,8 @@ function retrieveHistoryBulletins(token) {
             const historyBulletins =  await res2.json()
             //historyBulletins.forEach(bulletin => bulletin.ishistory = true)
 
+            historyBulletins.reverse()
+
             return historyBulletins
 
 

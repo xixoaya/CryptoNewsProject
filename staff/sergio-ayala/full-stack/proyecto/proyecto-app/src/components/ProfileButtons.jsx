@@ -4,6 +4,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import HistoryIcon from '@mui/icons-material/History';
 import QueueIcon from '@mui/icons-material/Queue';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ProfileEditButtonsGroup from './ProfileEditButtonsGroup'
 
 function ProfileButtons({name, favorites, queue, history, password, account, OnSignOut, view}) {
     
@@ -42,11 +43,12 @@ function ProfileButtons({name, favorites, queue, history, password, account, OnS
         </div>
     </div>
     <div className="layout__buttons--home-hi layout__buttons ">
-        <ButtonGroup size="small" variant="contained" aria-label="outlined primary button group">
+        {/* <ButtonGroup size="small" variant="contained" aria-label="outlined primary button group">
             <Button onClick={password}>Change Password</Button>
             <Button onClick={account}>Delete Account</Button>
             <Button onClick={OnSignOut}>Sign Out</Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
+        <ProfileEditButtonsGroup password={password} account={account} OnSignOut={OnSignOut} />
     </div>
 </>
 }

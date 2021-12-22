@@ -10,7 +10,7 @@ function scrapeC24Search(query) {
     // SYNC code here
 
     return (async () => {
-        debugger
+        
 
         // ASYNC code here
         const browser = await puppeteer.launch();
@@ -74,7 +74,7 @@ function scrapeC24Search(query) {
             }
         })
 
-        debugger
+        
 
         const checksPromises = c24SearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
@@ -88,32 +88,38 @@ function scrapeC24Search(query) {
 
         let bulletins
 
-        if (insertions) {
+        if (insertions.length) {
 
             const creates = insertions.map(element => Bulletin.create(element))
 
             bulletins = await Promise.all(creates)
         }
 
-        let bulletinsId
+        // let bulletinsId
 
-        if (bulletins.length) {
+        // if (bulletins) {
 
-            bulletinsId = bulletins.map(e => { return e.id })
-        } else {
-            bulletinsId = []
-        }
+        //     bulletinsId = bulletins.map(e => { return e.id })
+        // } else {
+        //     bulletinsId = []
+        // }
 
+        const promiseAllBulletins = c24SearchBulletins.map(({ url }) => Bulletin.findOne({ url }).lean())
+        const allBulletins = await Promise.all ( promiseAllBulletins )
+        const bulletinsId = allBulletins.map (({ _id }) => _id)
 
-        const search = await Search.findOne({ query, source: 'cripto247' })
-        const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cripto247' }).lean()
         debugger
+        const search = await Search.findOne({ query, source: 'cripto247' })
+        
         if (search) {
-            const newBulletinsForQuery = bulletinsId.concat(lastQuerysearchedPlain.bulletins)
-            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
-            search.bulletins = search.bulletins.push(uniqueBulletinsId)
-            search.lastUpdate = new Date()
+            const lastQuerysearchedPlain = await Search.findOne({ query, source: 'cripto247' }).lean()
+            const oldBulletins = lastQuerysearchedPlain.bulletins
 
+            const newBulletinsForQuery = bulletinsId.concat(oldBulletins)
+            let uniqueBulletinsId = [...new Set(newBulletinsForQuery)]
+            search.bulletins = uniqueBulletinsId
+            search.lastUpdate = new Date()
+            
             await search.save()
         } else {
             await Search.create({ lastUpdate: new Date(), query, source: 'cripto247', bulletins: bulletinsId })

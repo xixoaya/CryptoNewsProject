@@ -26,9 +26,18 @@ function Home({ Username, OnSignOut, OnDelete, OnStartFlow, OnEndFlow, OnShowMod
     const [bulletinId, setbulletinId] = useState(null);
     const [bulletinQueue, setbulletinQueue] = useState(null);
 
-    const goToHome = () => setView('home')
-    const goToProfile = () => setView('profile')
-    const goToSearch = () => setView('search')
+    const goToHome = () => {
+        setView('home')
+        setbulletinId(null)
+    }
+    const goToProfile = () => {
+        setView('profile')
+        setbulletinId(null)
+    }
+    const goToSearch = () => {
+        setView('search')
+        setbulletinId(null)
+    }
 
     const clearDetail = () => {
 

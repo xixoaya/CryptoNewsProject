@@ -4,7 +4,7 @@ function SignUp({OnSignUp, OnSignIn}) {
         <h1>SIGN UP</h1>
     </div>
     <div className="layout__subtitle">
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis earum nostrum quis quae accusamus
+        <p>Hello! Please take to seconds to fulfill the form with correct data, you will need it later to get in.
         </p>
     </div>
     <form action="" className="layout__main" onSubmit={(event) => {

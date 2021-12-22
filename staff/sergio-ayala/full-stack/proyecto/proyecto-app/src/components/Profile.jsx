@@ -101,8 +101,8 @@ function Profile({
     }
 
 
-    return <div>
-        {!bulletinId && <> <div className="title layout__title"><h1>PROFILE</h1></div></>}
+    return <div className='pagelayout--shorter'>
+        {!bulletinId && <> <div className="title layout__title"><h1>Profile</h1></div></>}
 
         {view === 'Profile' && <ProfileButtons 
             name={name} view={view} favorites={goToFavs} queue={goToQueue} 
