@@ -1,4 +1,4 @@
-# Crowd Aids
+# Crypto Hot News
 
 ## Introduction
 
@@ -20,7 +20,7 @@ CryptoHotNews is an application that allows its users to have outstanding news f
 
 #### Delete User
 
-![delete user](./images/delete-user.jpg)
+![delete user](./images/delete-user.png)
 
 #### Search News
 

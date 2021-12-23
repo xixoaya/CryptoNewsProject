@@ -44,6 +44,24 @@ function validateNumber(number) {
         if (!(number.toString().trim().length)) throw new FormatError('value is empty or blank')
 }
 
+function validatequery(query) {
+    let queryOk
+    if (query.includes('%20')) {
+        queryOk = {
+            queryCt: query,
+            queryOb: query.replace('%20', '+'),
+            queryC24: query
+        }
+    } else {
+        queryOk = {
+            queryCt: query,
+            queryOb: query,
+            queryC24: query
+        }
+    }
+    return queryOk
+}
+
 function validateData(data) {
     if (typeof data !== 'object' || data.constructor.name !== 'Object') throw new TypeError('data is not an object')
 
@@ -89,5 +107,6 @@ module.exports = {
     validatePassword,
     validateOldPassword,
     validateCallback,
-    validateData
+    validateData,
+    validatequery
 }

@@ -2,6 +2,12 @@ function searchBulletins(token, query) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
 
+    if (typeof query !== 'string') throw new TypeError(`${query} is not a string`)
+    query.trim()
+    let newquery
+    if (query.includes(' ')) { newquery = query.replace(' ', '%20')}
+    else { newquery = query}
+
     //////////////////////////////
     //////////////////////////////
     //  TODO -> FALTA VALIDAR QUERY INCLUYENDO MODIFICAR SI VIENE EL STRING CON ESPACIOS  // 
@@ -30,7 +36,7 @@ function searchBulletins(token, query) {
 
         const { favs = [], queue = [] } = await res.json()
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins/search?q=${query}`, {
+        const res2 = await fetch(`http://localhost:8000/api/bulletins/search?q=${newquery}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
