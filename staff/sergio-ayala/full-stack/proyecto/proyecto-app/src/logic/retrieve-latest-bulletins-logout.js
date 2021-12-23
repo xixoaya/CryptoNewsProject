@@ -29,6 +29,8 @@ function retrieveLatestBulletinsNoLogued() {
         // });
         const CoverBulletinsNoLogged = CoverBulletins.slice(0,10)
 
+        CoverBulletinsNoLogged.reverse()
+
         return CoverBulletinsNoLogged
 
     })()

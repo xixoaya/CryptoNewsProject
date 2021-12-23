@@ -28,7 +28,7 @@ export default function AppTopBar({ View, OnSignIn, Username }) {
             <Avatar alt="Cnews Logo" src='https://crypto.marketswiki.com/images/e/e1/Lisk_logo.png' />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Crypto News
+            Crypto Hot News
           </Typography>
           {View !== 'home' && <Button color="inherit" onClick={OnSignIn}>Login</Button>}
           {View === 'home' && <>

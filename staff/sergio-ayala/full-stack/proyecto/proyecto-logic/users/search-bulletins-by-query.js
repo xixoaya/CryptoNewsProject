@@ -10,18 +10,18 @@ function retrieveSearchedBulletins(query) {
 
     return (async () => {
 
-        let lastQuerySearchOB = await Search.findOne({ queryOb, source: 'observatorioblockchain' }).lean()
-        let lastQuerySearchCT = await Search.findOne({ queryCt, source: 'cointelegraph' }).lean()
-        let lastQuerySearchC24 = await Search.findOne({ queryC24, source: 'cripto247' }).lean()
+        let lastQuerySearchOB = await Search.findOne({ query: queryOb, source: 'observatorioblockchain' }).lean()
+        let lastQuerySearchCT = await Search.findOne({ query: queryCt, source: 'cointelegraph' }).lean()
+        let lastQuerySearchC24 = await Search.findOne({ query: queryC24, source: 'cripto247' }).lean()
 
         
 
         if (!lastQuerySearchOB || !lastQuerySearchCT || !lastQuerySearchC24) {
             await Promise.all([scrapCTSearch(queryCt), scrapOBSearch(queryOb), scrapeC24Search(query)])
             // await Search.create({ lastUpdate: Date.now() })
-            lastQuerySearchOB = await Search.findOne({ queryOb, source: 'observatorioblockchain' }).lean()
-            lastQuerySearchCT = await Search.findOne({ queryCt, source: 'cointelegraph' }).lean()
-            lastQuerySearchC24 = await Search.findOne({ queryC24, source: 'cripto247' }).lean()
+            lastQuerySearchOB = await Search.findOne({ query: queryOb, source: 'observatorioblockchain' }).lean()
+            lastQuerySearchCT = await Search.findOne({ query: queryCt, source: 'cointelegraph' }).lean()
+            lastQuerySearchC24 = await Search.findOne({ query: queryC24, source: 'cripto247' }).lean()
             //const lastQuerySearch2 = await Search.find({ query: searchedquery }).lean()
         } else {
             const lastTimeSearchedOB = lastQuerySearchOB.lastUpdate.getTime()
@@ -43,9 +43,9 @@ function retrieveSearchedBulletins(query) {
                 // lastQuerySearch[lastUpdate] = Date.now()
                 // await lastQuerySearch.save()
 
-                lastQuerySearchOB = await Search.findOne({ queryOb, source: 'observatorioblockchain' }).lean()
-                lastQuerySearchCT = await Search.findOne({ queryCt, source: 'cointelegraph' }).lean()
-                lastQuerySearchC24 = await Search.findOne({ queryC24, source: 'cripto247' }).lean()
+                lastQuerySearchOB = await Search.findOne({ query: queryOb, source: 'observatorioblockchain' }).lean()
+                lastQuerySearchCT = await Search.findOne({ query: queryCt, source: 'cointelegraph' }).lean()
+                lastQuerySearchC24 = await Search.findOne({ query: queryC24, source: 'cripto247' }).lean()
                 //const lastQuerySearch2 = await Search.find({ query: searchedquery }).lean()
             }
         }
@@ -53,7 +53,7 @@ function retrieveSearchedBulletins(query) {
         const arrBulletinsOBQueryIds = lastQuerySearchOB.bulletins.map(id => id)
         const arrBulletinsCTQueryIds = lastQuerySearchCT.bulletins.map(id => id)
         const arrBulletinsC24QueryIds = lastQuerySearchC24.bulletins.map(id => id)
-
+debugger
         const allArrBulletinsByQueryIds = arrBulletinsOBQueryIds.concat(arrBulletinsCTQueryIds).concat(arrBulletinsC24QueryIds)
 
         function compare(a, b) {

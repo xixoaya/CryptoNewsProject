@@ -55,10 +55,13 @@ CryptoHotNews is an application that allows its users to have outstanding news f
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1024px-Unofficial_JavaScript_logo_2.svg.png" title="JS" width="50"/>
         </td>
         <td>
-            <img src="https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2021/03/pasted-image-0-250x140.png" title="SASS" width="50">
+            <img src="https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2021/03/pasted-image-0-250x140.png" title="PUPEETER" width="50">
         </td>
         <td>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" title="REACT" width="50"/>
+        </td>
+        <td>
+            <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQFlZPMNmAzOGw/company-logo_200_200/0/1631744506900?e=2159024400&v=beta&t=-wAckC3PxDe_tata6yCjeLZNxQLEgmxdWiiU1Z2u8xA" title="MUI" width="50"/>
         </td>
         <td>
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" title="NODE" width="50"/>

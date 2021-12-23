@@ -45,6 +45,7 @@ function validateNumber(number) {
 }
 
 function validatequery(query) {
+    debugger
     let queryOk
     if (query.includes('%20')) {
         queryOk = {

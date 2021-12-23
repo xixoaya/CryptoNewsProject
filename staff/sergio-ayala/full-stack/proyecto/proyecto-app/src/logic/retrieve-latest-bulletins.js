@@ -48,6 +48,8 @@ function retrieveLatestBulletinsLogued(token) {
             bulletin.isFav = queue.includes(bulletin.id)
         });
 
+        CoverBulletins.reverse()
+
         return CoverBulletins
 
 
