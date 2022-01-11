@@ -1,4 +1,4 @@
-# Neoland Bootcamp 202109
+# Crypto News Project
 
 ![alt On the way to the moon](https://media.giphy.com/media/b85mPT4Usz7fq/giphy.gif)
 
