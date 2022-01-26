@@ -16,7 +16,6 @@ function scrapOBSearch(query) { //hacemos el scrapeo por la query(Hacemos la bus
         await page.goto(`https://observatorioblockchain.com/?s=${query}`)
 
         const arrOBSearch = await page.evaluate(() => {
-            debugger
 
             const articles = document.querySelectorAll('.d-md-flex.mg-posts-sec-post')
 
@@ -60,7 +59,7 @@ function scrapOBSearch(query) { //hacemos el scrapeo por la query(Hacemos la bus
         const checksPromises = obSearchBulletins.map(({ url }) => Bulletin.exists({ url }))
 
         const exists = await Promise.all(checksPromises) //exist nos dice si hay nuevos bulletins que añadir si es false es que no está en bbdd
-//comprobamos si hany nuevos bulletins que añadir
+        //comprobamos si hany nuevos bulletins que añadir
         const insertions = obSearchBulletins.reduce((accum, bulletin, index) => {
             if (!exists[index]) accum.push(bulletin)
 

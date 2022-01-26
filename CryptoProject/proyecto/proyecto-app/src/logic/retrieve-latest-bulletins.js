@@ -1,3 +1,10 @@
+/**
+ * Retrieve latest bulletins when user is logged.
+ * 
+ * @param {string} token The that identifies the user in that session.
+ *
+ */
+
 function retrieveLatestBulletinsLogued(token) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
@@ -8,7 +15,6 @@ function retrieveLatestBulletinsLogued(token) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         let { status } = res
@@ -25,10 +31,6 @@ function retrieveLatestBulletinsLogued(token) {
 
         const res2 = await fetch(`http://localhost:8000/api/bulletins/home`, {
             method: 'GET',
-            // headers: {
-            //     'Authorization': `Bearer ${token}`
-            // },
-            //body: JSON.stringify({ favs })
         })
 
         const { status: status2 } = res2
@@ -45,21 +47,13 @@ function retrieveLatestBulletinsLogued(token) {
         const CoverBulletins = await res2.json()
         CoverBulletins.forEach(bulletin => {
             bulletin.isFav = favs.includes(bulletin.id)
-            bulletin.isFav = queue.includes(bulletin.id)
+            bulletin.queue = queue.includes(bulletin.id)
         });
 
         CoverBulletins.reverse()
 
         return CoverBulletins
 
-
-        // if (status === 200) {
-        //     return await res.json()
-        // } else if (status === 401 || status === 404) {
-        //     const { error } = res.json()
-
-        //     throw new Error(error)
-        // } else throw new Error('unknow error')
     })()
 }
 

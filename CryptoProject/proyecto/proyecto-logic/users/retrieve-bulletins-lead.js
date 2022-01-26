@@ -1,14 +1,10 @@
-const { models: { Bulletin, LastScrap } } = require('proyecto-data')
-const { validateId } = require('./helpers/validators')
-const { NotFoundError } = require('proyecto-errors')
-const { scrapeCTCover , scrapeOBCover , scrapeC24Cover } = require('../bulletins')
+const { models: { Bulletin } } = require('proyecto-data')
 
 // function that receives an Array of BulletinsId and gives back de detail of those.
 // details back, title, source, subtitle(if there is), badge.
 
 function retrieveBulletinsLead(arrBulletinsId) {
     return (async () => {
-        //const arrBulletinsDetail = Bulletin.find()
 
         const arrBulletinsDetail = await Bulletin.find({ '_id': { $in: arrBulletinsId } }).lean();
 

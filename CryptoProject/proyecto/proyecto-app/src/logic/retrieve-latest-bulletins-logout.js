@@ -1,3 +1,6 @@
+/**
+ * Retrieve latest bulletinns when user is not logged.
+ */
 function retrieveLatestBulletinsNoLogued() {
     // if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     // if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
@@ -6,10 +9,6 @@ function retrieveLatestBulletinsNoLogued() {
 
         const res2 = await fetch(`http://localhost:8000/api/bulletins/home`, {
             method: 'GET',
-            // headers: {
-            //     'Authorization': `Bearer ${token}`
-            // },
-            //body: JSON.stringify({ favs })
         })
 
         const { status: status2  } = res2
@@ -23,10 +22,7 @@ function retrieveLatestBulletinsNoLogued() {
         }
 
         const CoverBulletins = await res2.json()
-        // CoverBulletins.forEach(bulletin => {
-        //     bulletin.isFav = favs.includes(bulletin.id)
-        //     bulletin.isFav = queue.includes(bulletin.id)
-        // });
+
         const CoverBulletinsNoLogged = CoverBulletins.slice(0,10)
 
         CoverBulletinsNoLogged.reverse()

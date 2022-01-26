@@ -1,5 +1,7 @@
 # Crypto News Project
 
-![alt On the way to the moon](https://media.giphy.com/media/b85mPT4Usz7fq/giphy.gif)
+Click to watch video demo on youtube
 
-[Slides](https://docs.google.com/presentation/d/1H3brK0rkk53yPohGuaEQVjDH4rzre33sciq5us9FFt8/edit?usp=sharing)
+[![Alt text](https://img.youtube.com/vi/qMITMyFAJnM/0.jpg)](https://www.youtube.com/watch?v=qMITMyFAJnM)
+
+## Complete project documentation inside proyecto-doc folder

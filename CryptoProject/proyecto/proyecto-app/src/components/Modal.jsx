@@ -1,10 +1,6 @@
-// import { useState } from 'react'
 import './Modal.css'
 
 function Modal ({level, message, onGetIt}) {
-
-    // const [level, setsetLevel] = useState(level ? level : 'error');
-    // const [message, setMessage] = useState(message);
 
     const classNametitle = `modal__tittle ${level ? `modal__tittle--${level}` : ''}`
     const classNamepanel = `modal__panel ${level ? `modal__panel--${level}` : ''}`

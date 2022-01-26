@@ -8,16 +8,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Paper from '@mui/material/Paper';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import ListItemText from '@mui/material/ListItemText';
-// import Avatar from '@mui/material/Avatar';
 
 export default function ButtonsAppLogOut({onSignIn, onSignUp}) {
     const [value, setValue] = React.useState(0);
     const ref = React.useRef(null);
-    //const [messages, setMessages] = React.useState(() => refreshMessages());
   
     React.useEffect(() => {
       ref.current.ownerDocument.body.scrollTop = 0;

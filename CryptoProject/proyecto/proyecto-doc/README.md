@@ -46,6 +46,10 @@ CryptoHotNews is an application that allows its users to have outstanding news f
 
 ![data model](./images/data-model.jpg)
 
+### Code Coverage
+
+![code coverage](./images/Crypto-project-coverage.jpg)
+
 
 ### Techonoliges
 

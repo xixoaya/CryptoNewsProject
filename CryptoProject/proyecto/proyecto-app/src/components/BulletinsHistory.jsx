@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
-    // searchVehicles,
-    // toggleFavVehicle,
-    retrieveLatestBulletinsLogued,
     toggleFavBulletin,
     toggleQueueBulletin,
-    retrieveFavBulletins,
     retrieveHistoryBulletins
 } from '../logic'
 
@@ -14,7 +10,6 @@ import BulletinLeadPanel from './BulletinLeadPanel'
 
 function BulletinsHistory({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    //const [vehicles, setvehicles] = useState([]);
     const [bulletins, setbulletins] = useState([]);
 
     useEffect(async () => {
@@ -27,7 +22,6 @@ function BulletinsHistory({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnSho
             setbulletins(bulletins)
 
             OnEndFlow()
-
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
@@ -88,13 +82,9 @@ function BulletinsHistory({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnSho
                         item={item} onItem={onItem} OnStartFlow={OnStartFlow}
                         OnEndFlow={OnEndFlow} OnShowModal={OnShowModal}
                         ToggleFav={ToggleFav} ToggleQueue={ToggleQueue}
-
-
                     />)
-
                 }
             </div>
-
             :
             null
         }

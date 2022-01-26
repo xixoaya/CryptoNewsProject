@@ -1,4 +1,3 @@
-// TODO scrape news from site and save into db
 const puppeteer = require('puppeteer')
 const { models: { Bulletin } } = require('proyecto-data')
 /**
@@ -34,9 +33,7 @@ function scrapeC24Cover() {
             return results
     
         })
-    
-        //await fs.writeFile("test-titles-c24.json", JSON.stringify(arrC24Cover))
-    
+        
         await browser.close()
 
         async function autoScroll(page) {

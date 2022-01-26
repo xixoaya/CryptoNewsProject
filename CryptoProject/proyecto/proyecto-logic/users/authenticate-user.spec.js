@@ -127,16 +127,6 @@ describe('Authenticate User', () => {
 
         });
 
-        // describe('When callback is not valid', () => {
-        //     it('should fail when callback is not a function', () => {
-        //         expect(() => authenticateUser('pepito84', '123123', true)).to.throw(TypeError, 'callback is not a function')
-        //         expect(() => authenticateUser('pepito84', '123123', {})).to.throw(TypeError, 'callback is not a function')
-        //         expect(() => authenticateUser('pepito84', '123123', 123)).to.throw(TypeError, 'callback is not a function')
-        //         expect(() => authenticateUser('pepito84', '123123', 'callback')).to.throw(TypeError, 'callback is not a function')
-        //     });
-
-        // });
-
     });
 
 

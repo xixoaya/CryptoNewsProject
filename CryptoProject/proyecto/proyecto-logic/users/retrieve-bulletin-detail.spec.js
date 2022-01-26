@@ -13,7 +13,7 @@ describe('Retrieve Bulletin Detail', () => {
     //beforeEach(() => Bulletin.deleteMany())
     let bulletin, bulletinId
     
-    describe.only('When CT notice detail doesnt exist', () => {
+    describe('When CT notice detail doesnt exist', () => {
         
         // beforeEach(() => {
         //     bulletin = {

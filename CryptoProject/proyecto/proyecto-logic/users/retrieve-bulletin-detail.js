@@ -18,11 +18,9 @@ function retrieveBulletinDetail(bulletinId) {
             if (source.includes('cointelegraph')) await scrapeCTBulletin(url)
             if (source.includes('observatorioblockchain')) await scrapeOBBulletin(url)
             if (source.includes('cripto247')) await scrapeC24Bulletin(url)
-
-            debugger
             
             const bulletin2 = await Bulletin.findById({_id: bulletinId}).lean()
-            debugger
+
             if(!bulletin2.impContent.length) throw new NotFoundError(`Not Content found for the new ${bulletin.title}`)
 
             bulletin = bulletin2
@@ -33,8 +31,6 @@ function retrieveBulletinDetail(bulletinId) {
         delete bulletin._id
 
         delete bulletin.__v
-
-        debugger
 
         return bulletin
 

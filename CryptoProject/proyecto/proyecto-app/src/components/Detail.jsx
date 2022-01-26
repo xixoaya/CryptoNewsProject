@@ -8,17 +8,13 @@ import './Detail.css'
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 
-function Detail({ name, OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, OnShowModal }) {
+function Detail({ OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    //const [vehicle, setvehicle] = useState(null);
     const [bulletin, setbulletin] = useState(null);
-    // const [cart, setcart] = useState(null);
 
     useEffect(async () => {
 
@@ -30,8 +26,7 @@ function Detail({ name, OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, O
             if (itemQueue) await toggleQueueBulletin(sessionStorage.token, itemid)
 
             setbulletin(bulletinDetail)
-            // OnGoToDetail(vehicle)
-            // goToHome()
+            
             OnEndFlow()
 
 
@@ -65,8 +60,7 @@ function Detail({ name, OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, O
         {bulletin && <>
             <div className="container-detail">
                 <div className="content__detail">
-                    {/* <img className="home__detail-image" src={(bulletin.imageSrc) ? bulletin.imageSrc : "src/default/detail"} alt=""></img> */}
-
+                    
                     <h2 className="detail__title">{bulletin.title}</h2>
                     <time className="detail__created-time">{bulletin.createdTime}</time>
                     <span className="detail__badge">{bulletin.badge}</span>
@@ -81,14 +75,12 @@ function Detail({ name, OnBackList, itemid, itemQueue, OnStartFlow, OnEndFlow, O
                     <a className="detail__url" href={bulletin.url}>Visit {bulletin.source} for more info</a>
 
                     <div className="detail__tags">
-                    <strong>Tags:</strong>
-                    <span>{bulletin.tags[0]}</span>
-                    <span>{bulletin.tags[1]}</span>
+                        <strong>Tags:</strong>
+                        <span>{bulletin.tags[0]}</span>
+                        <span>{bulletin.tags[1]}</span>
                     </div>
                 </div>
                 <div className="buttons-detail">
-                    {/* <button type='button' className='button--small' onClick={OnBackList}>Back</button>
-                <button type='button' className='button--small' onClick={() => ToggleFav(bulletin.id)}>{bulletin.isFav ? '🧡' : '🤍'}</button> */}
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" startIcon={<BackspaceIcon />} onClick={OnBackList}>
                             Go Back

@@ -56,7 +56,6 @@ function scrapeOBBulletin(noticeUrl) {
 
         })
 
-        //await fs.writeFile("test-detail-notice-ob.json", JSON.stringify(objOBBulletinDetail))
 
         await browser.close()
 

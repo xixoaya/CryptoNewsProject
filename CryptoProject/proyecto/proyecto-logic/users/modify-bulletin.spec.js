@@ -34,7 +34,7 @@ describe('Modify bulletin ', () => {
         it('should suceed with correct id of an existing bulletin of CT and add impContent', () => {
             // const { title, url, subTitle, badge, author, source } = bulletin
 
-            return modifyBulletin('61bb4004bf1ece624db16847', {clicksQueue: 5, clicksFav: 2, clicks: 4,})
+            return modifyBulletin('61bcb7b3e66bbefecfc1b9a7', {clicksQueue: 5, clicksFav: 2, clicks: 4,})
         //         .then(bulletin => {
 
         //             expect(bulletin).to.exist

@@ -17,7 +17,6 @@ export default function ProfileEditButtonsGroup({password, account, OnSignOut}) 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleClick = () => {
-     //console.info(`You clicked ${options[selectedIndex]}`);
     if (options[selectedIndex] === 'Log Out') {
         OnSignOut()
     } else if (options[selectedIndex] === 'Change Password') {

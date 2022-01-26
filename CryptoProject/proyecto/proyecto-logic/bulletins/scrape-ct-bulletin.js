@@ -14,7 +14,6 @@ function scrapeCTBulletin(noticeUrl) {
         const page = await browser.newPage()
 
         await page.goto(noticeUrl)
-debugger
 
         const objCTBulletinDetail = await page.evaluate(() => {
 

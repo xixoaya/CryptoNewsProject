@@ -1,15 +1,9 @@
-//import context from './context'
-
 /**
- * Signs up a user in the application.
+ * Adds a bulletin to the users history.
  * 
- * @param {string} name The full name of the user to be registered.
- * @param {string} username The username of the user to be registered.
- * @param {string} password The password of the user to be registered.
- * @param {function} callback The callback function to manage the response.
- * 
- * @throws {TypeError} When any of the arguments does not match the correct type.
- * @throws {Error} When any of the arguments does not contain the correct format.
+ * @param {string} token The that identifies the user in that session.
+ * @param {string} bulletinId The id of the bulletin that is added to the users history.
+ *
  */
 function addQueueToBulletin(token, bulletinId) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)

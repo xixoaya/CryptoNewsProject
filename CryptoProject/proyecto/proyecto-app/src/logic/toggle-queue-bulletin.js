@@ -1,3 +1,11 @@
+/**
+ * Include or exclude bulletin id of users queue .
+ * 
+ * @param {string} token The that identifies the user in that session.
+ * @param {string} bulletinId The id of the bulletin that is added to the users queue.
+ *
+ */
+
 import addQueueToBulletin from './add-queue-to-bulletin'
 
 function toggleQueueBulletin(token, bulletinId) {
@@ -14,7 +22,6 @@ function toggleQueueBulletin(token, bulletinId) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         const { status } = res
@@ -56,11 +63,6 @@ function toggleQueueBulletin(token, bulletinId) {
         } else if (status2 !== 401 && status2 !== 404 && status2 !== 204) {
             throw new Error('unknow error')
         }
-        
-        // const favBulletins = await res2.json()
-        // favBulletins.forEach(bulletin => bulletin.isFav = true)
-
-        // return favBulletins
 
     })()
 }

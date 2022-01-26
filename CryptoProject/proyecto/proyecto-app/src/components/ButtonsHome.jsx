@@ -4,20 +4,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Paper from '@mui/material/Paper';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import ListItemText from '@mui/material/ListItemText';
-// import Avatar from '@mui/material/Avatar';
 
 export default function ButtonsHome({OnViewProfile, OnViewHome, OnViewSearch, view}) {
     const [value, setValue] = React.useState(0);
     const ref = React.useRef(null);
-    //const [messages, setMessages] = React.useState(() => refreshMessages());
   
     React.useEffect(() => {
       ref.current.ownerDocument.body.scrollTop = 0;

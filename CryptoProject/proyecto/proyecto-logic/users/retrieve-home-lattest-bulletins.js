@@ -1,6 +1,4 @@
 const { models: { Bulletin, LastScrap } } = require('proyecto-data')
-const { validateId } = require('./helpers/validators')
-const { NotFoundError } = require('proyecto-errors')
 const { scrapeCTCover, scrapeOBCover, scrapeC24Cover } = require('../bulletins')
 
 function retrieveHomeBulletins() {
@@ -80,14 +78,8 @@ function retrieveHomeBulletins() {
 
         lastHomeBulletins.sort(compare);
 
-        //funciona, falta ordenarlas por clicks
-
         return lastHomeBulletins
 
     })()
 }
 module.exports = retrieveHomeBulletins
-
-// retrieveNews (inicio=Date.now()-1dia, fin = Date.now(), limit=20) => {
-//     News.finnd({})
-// }

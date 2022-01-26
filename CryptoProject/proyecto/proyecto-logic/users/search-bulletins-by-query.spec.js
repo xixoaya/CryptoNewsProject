@@ -69,8 +69,7 @@ describe('Search bulletins by query', () => {
         //             expect(bulletin.source).to.equal(source)
         //             expect(bulletin.impContent).to.have.lengthOf.above(0)
         //         })
-    })
-    //  .timeout(500000)
+    }).timeout(500000)
 });
 
 

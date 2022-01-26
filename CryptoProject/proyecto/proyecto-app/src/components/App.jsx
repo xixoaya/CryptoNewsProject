@@ -14,7 +14,6 @@ import Modal from './Modal'
 import AppTopBar from './AppTopBar'
 
 
-
 function App() {
 
     const [view, setView] = useState(sessionStorage.token ? '' : 'landing')
@@ -22,7 +21,6 @@ function App() {
     const [spinner, setSpinner] = useState(sessionStorage.token ? true : false)
     const [modal, setModal] = useState(null)
     const [level, setLevel] = useState('error')
-
 
     useEffect(() => {
         const { token } = sessionStorage
@@ -136,11 +134,10 @@ function App() {
 
     return <div className="app-bg">
         <AppTopBar 
-        Username={name} View={view} 
-         OnSignIn={goToSignIn} 
-        //OnGoHome={goToHome}
-        // OnGoLanding={goToLanding}    
+            Username={name} View={view} 
+            OnSignIn={goToSignIn} 
         />
+        
         {view === 'landing' && 
             <Landing 
                 OnSignIn={goToSignIn} 

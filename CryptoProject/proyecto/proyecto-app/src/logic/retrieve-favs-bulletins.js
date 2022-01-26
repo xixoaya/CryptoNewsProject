@@ -1,15 +1,8 @@
-//import context from './context'
-
 /**
- * Signs up a user in the application.
+ * Retrieve users fav bulletins.
  * 
- * @param {string} name The full name of the user to be registered.
- * @param {string} username The username of the user to be registered.
- * @param {string} password The password of the user to be registered.
- * @param {function} callback The callback function to manage the response.
- * 
- * @throws {TypeError} When any of the arguments does not match the correct type.
- * @throws {Error} When any of the arguments does not contain the correct format.
+ * @param {string} token The that identifies the user in that session.
+ *
  */
 function retrieveFavBulletins(token) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
@@ -21,7 +14,6 @@ function retrieveFavBulletins(token) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         const { status } = res
@@ -34,7 +26,7 @@ function retrieveFavBulletins(token) {
             throw new Error('unknow error')
         }
 
-        const { favs = [] } = await res.json()
+        const { favs = [], queue = [] } = await res.json()
 
         if (favs.length) {
             const res2 = await fetch(`http://localhost:8000/api/bulletins`, {
@@ -57,23 +49,17 @@ function retrieveFavBulletins(token) {
             }
 
             const favBulletins =  await res2.json()
-            favBulletins.forEach(bulletin => bulletin.isFav = true)
+            favBulletins.forEach(bulletin => {
+                bulletin.isQueue = queue.includes(bulletin.id)
+                bulletin.isFav = true
+            })
 
             return favBulletins
-
 
         } else {
             return favs
         }
 
-
-        // if (status === 200) {
-        //     return await res.json()
-        // } else if (status === 401 || status === 404) {
-        //     const { error } = res.json()
-
-        //     throw new Error(error)
-        // } else throw new Error('unknow error')
     })()
 }
 

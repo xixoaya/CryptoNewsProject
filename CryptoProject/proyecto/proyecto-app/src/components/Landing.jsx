@@ -19,7 +19,6 @@ function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
 
             OnEndFlow()
 
-
         } catch ({ message }) {
             OnShowModal(message, 'warn')
             OnEndFlow()
@@ -27,10 +26,7 @@ function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
 
     }, [])
 
-    const onItem = () => {
-        OnShowModal('Sorry but you have to LOGIN to enjoy all de news and the full experience', 'warn')
-    }
-
+    const onItem = () => {OnShowModal('Sorry but you have to LOGIN to enjoy all de news and the full experience', 'warn')}
 
     return <>
     <div className="landing pagelayout">
@@ -48,14 +44,9 @@ function Landing({OnSignIn, OnSignUp, OnStartFlow, OnEndFlow, OnShowModal}) {
             <div className="home__results-list">
                 {
                  bulletins.map( item => < BulletinLeadPanelLogOut 
-                    item = { item } onItem = {onItem} 
-                    
-                    
-                    />)
-                    
-                }
+                    item = { item } onItem = {onItem}     
+                />)}
             </div>
-
             :
             null
         }

@@ -1,16 +1,11 @@
-//import context from './context'
 import addClickToBulletin from './add-click-to-bulletin'
 import addBulletinToHistory from './add-bulletin-to-history'
 /**
- * Signs up a user in the application.
+ * Adds a bulletin to the users history.
  * 
- * @param {string} name The full name of the user to be registered.
- * @param {string} username The username of the user to be registered.
- * @param {string} password The password of the user to be registered.
- * @param {function} callback The callback function to manage the response.
- * 
- * @throws {TypeError} When any of the arguments does not match the correct type.
- * @throws {Error} When any of the arguments does not contain the correct format.
+ * @param {string} token The that identifies the user in that session.
+ * @param {string} bulletinId The id of the bulletin that is added to the users history.
+ *
  */
 function retrieveBulletinDetail(token, bulletinId) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
@@ -25,7 +20,6 @@ function retrieveBulletinDetail(token, bulletinId) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         const { status } = res
@@ -45,7 +39,6 @@ function retrieveBulletinDetail(token, bulletinId) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ favs })
         })
 
         const { status: status2 } = res2
@@ -61,12 +54,8 @@ function retrieveBulletinDetail(token, bulletinId) {
         const bulletinDetail = await res2.json()
 
         bulletinDetail.isFav = favs.includes(bulletinDetail.id)
-        //bulletinDetail.isQueue = queue.includes(bulletinDetail.id)
 
         await Promise.all([addClickToBulletin(token, bulletinId), addBulletinToHistory(token, bulletinId)])
-
-        // await addClickToBulletin(token, bulletinId)
-        // await addBulletinToHistory(token, bulletinId)
 
         return bulletinDetail
 

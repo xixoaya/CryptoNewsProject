@@ -15,8 +15,6 @@ function scrapeCTCover() {
 
         await page.goto("https://es.cointelegraph.com/")
 
-        //let ctCoverBulletins
-
         const arrCTCover = await page.evaluate(() => {
 
             const articles = document.querySelectorAll('.post-card__article')
@@ -41,14 +39,8 @@ function scrapeCTCover() {
             return results
 
         })
-        //await fs.writeFile("test-titles-ct.json", JSON.stringify(arrCTCover))
-
-        //ctCoverBulletins = arrCTCover
-        //Array.from(arrCTCover)
 
         await browser.close()
-
-        //const shouldIsave = new Date()
 
         const ctCoverBulletins = arrCTCover.map(b => {
             return {
@@ -78,7 +70,6 @@ function scrapeCTCover() {
         }, [])
 
         const creates = insertions.map( async (element) => {
-
 
             await Bulletin.create(element)
                     

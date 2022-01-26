@@ -18,16 +18,12 @@ function SearchBulletins({
     OnDelete,
     OnStartFlow, OnEndFlow, OnShowModal
 }) {
-    // const [view, setView] = useState('home')
     const [view, setView] = useState('Empty')
     const [bulletinId, setbulletinId] = useState(null);
     const [bulletinQueue, setbulletinQueue] = useState(null);
     const [query, setquery] = useState(null);
 
-    //const backtoprofile = () => setView('Profile')
-
     const cleanquery = () => {
-        //setquery('')
         setView('Empty')
         setquery(null)
     }
@@ -35,7 +31,6 @@ function SearchBulletins({
     const goToDetail = (id, isQueue) => {
         setbulletinId(id)
         setbulletinQueue(isQueue)
-        // setView('home')
     }
 
     const onSearch = (query) => {

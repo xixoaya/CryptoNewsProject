@@ -33,8 +33,6 @@ function scrapeC24Search(query) {
 
                 results.push({ title, url, badge })
 
-                //console.log(badge)
-
             })
 
             return results
@@ -94,15 +92,6 @@ function scrapeC24Search(query) {
 
             bulletins = await Promise.all(creates)
         }
-
-        // let bulletinsId
-
-        // if (bulletins) {
-
-        //     bulletinsId = bulletins.map(e => { return e.id })
-        // } else {
-        //     bulletinsId = []
-        // }
 
         const promiseAllBulletins = c24SearchBulletins.map(({ url }) => Bulletin.findOne({ url }).lean())
         const allBulletins = await Promise.all ( promiseAllBulletins )

@@ -41,8 +41,6 @@ function scrapCTSearch(query) {
 
         })
 
-        //await fs.writeFile("test-search-by-query-ct.json", JSON.stringify(arrCTSearch))
-
         await browser.close()
 
         const ctSearchBulletins = arrCTSearch.map(b => {
@@ -81,14 +79,6 @@ function scrapCTSearch(query) {
             bulletins = await Promise.all(creates)
         }
 
-        // let bulletinsId
-
-        // if (bulletins) {
-
-        //     bulletinsId = bulletins.map(e => { return e.id })
-        // } else {
-        //     bulletinsId = []
-        // }
         const promiseAllBulletins = ctSearchBulletins.map(({ url }) => Bulletin.findOne({ url }).lean())
         const allBulletins = await Promise.all ( promiseAllBulletins )
         const bulletinsId = allBulletins.map (({ _id }) => _id)

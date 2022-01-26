@@ -1,3 +1,11 @@
+/**
+ * Adds a bulletin to the users history.
+ * 
+ * @param {string} token The that identifies the user in that session.
+ * @param {string} query The query the user is looking for to find news related with.
+ *
+ */
+
 function searchBulletins(token, query) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
@@ -8,20 +16,12 @@ function searchBulletins(token, query) {
     if (query.includes(' ')) { newquery = query.replace(' ', '%20')}
     else { newquery = query}
 
-    //////////////////////////////
-    //////////////////////////////
-    //  TODO -> FALTA VALIDAR QUERY INCLUYENDO MODIFICAR SI VIENE EL STRING CON ESPACIOS  // 
-    // TAMBIÉN EN LA LÓGICA DE API
-    //////////////////////////////
-    //////////////////////////////
-
     return (async () => {
         const res = await fetch(`http://localhost:8000/api/users`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         const { status } = res
@@ -41,7 +41,6 @@ function searchBulletins(token, query) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ favs })
         })
 
         const { status: status2  } = res2

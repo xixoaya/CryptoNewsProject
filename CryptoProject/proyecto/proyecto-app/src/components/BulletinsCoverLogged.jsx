@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import {
-    // searchVehicles,
-    // toggleFavVehicle,
     retrieveLatestBulletinsLogued,
     toggleFavBulletin,
     toggleQueueBulletin
@@ -12,7 +10,6 @@ import BulletinLeadPanel from './BulletinLeadPanel'
 
 function BulletinsCoverLogged({ onItem, OnBackHome, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    //const [vehicles, setvehicles] = useState([]);
     const [bulletins, setbulletins] = useState([]);
 
     useEffect(async () => {
@@ -25,7 +22,6 @@ function BulletinsCoverLogged({ onItem, OnBackHome, OnStartFlow, OnEndFlow, OnSh
             setbulletins(bulletins)
 
             OnEndFlow()
-
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
@@ -82,21 +78,17 @@ function BulletinsCoverLogged({ onItem, OnBackHome, OnStartFlow, OnEndFlow, OnSh
         {bulletins.length ?
             <div className="home__results-list">
                 {
-                 bulletins.map( item => < BulletinLeadPanel 
-                    item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
-                    OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
-                    ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
-                    
-                    
+                    bulletins.map( item => < BulletinLeadPanel 
+
+                        item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
+                        OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
+                        ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
                     />)
-                    
                 }
             </div>
-
             :
             null
         }
-        {/* <button type='button' className='button' onClick={OnBackHome}>Back Home</button> */}
     </>
 }
 

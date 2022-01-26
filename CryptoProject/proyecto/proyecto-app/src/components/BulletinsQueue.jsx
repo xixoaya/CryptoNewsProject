@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
-    // searchVehicles,
-    // toggleFavVehicle,
-    retrieveLatestBulletinsLogued,
     toggleFavBulletin,
     toggleQueueBulletin,
-    retrieveFavBulletins,
     retrieveQueueBulletins
 } from '../logic'
 
@@ -14,7 +10,6 @@ import BulletinLeadPanel from './BulletinLeadPanel'
 
 function BulletinsQueue({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    //const [vehicles, setvehicles] = useState([]);
     const [bulletins, setbulletins] = useState([]);
 
     useEffect(async () => {
@@ -27,7 +22,6 @@ function BulletinsQueue({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowM
             setbulletins(bulletins)
 
             OnEndFlow()
-
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
@@ -46,7 +40,7 @@ function BulletinsQueue({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowM
                
                 setbulletins(bulletins.map(bulletin => {
                     if (bulletin.id === id) {
-                        return { ...bulletin, isQueue: !bulletin.isQueue }
+                        return {...bulletin, isFav: !bulletin.isFav }
                     }
                     return bulletin
                 }))
@@ -81,14 +75,11 @@ function BulletinsQueue({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowM
         {bulletins.length ?
             <div className="home__results-list">
                 {
-                 bulletins.map( item => < BulletinLeadPanel 
-                    item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
-                    OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
-                    ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
-                    
-                    
-                    />)
-                    
+                    bulletins.map( item => < BulletinLeadPanel 
+                        item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
+                        OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
+                        ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
+                    />)                   
                 }
             </div>
 

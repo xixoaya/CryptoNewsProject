@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react'
 import {
-    // searchVehicles,
-    // toggleFavVehicle,
-    retrieveLatestBulletinsLogued,
     toggleFavBulletin,
     toggleQueueBulletin,
     retrieveFavBulletins
@@ -13,7 +10,6 @@ import BulletinLeadPanel from './BulletinLeadPanel'
 
 function BulletinsFavs({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowModal }) {
 
-    //const [vehicles, setvehicles] = useState([]);
     const [bulletins, setbulletins] = useState([]);
 
     useEffect(async () => {
@@ -26,7 +22,6 @@ function BulletinsFavs({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowMo
             setbulletins(bulletins)
 
             OnEndFlow()
-
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
@@ -79,17 +74,13 @@ function BulletinsFavs({ onItem, OnBackProfile, OnStartFlow, OnEndFlow, OnShowMo
         {bulletins.length ?
             <div className="home__results-list">
                 {
-                 bulletins.map( item => < BulletinLeadPanel 
-                    item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
-                    OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
-                    ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
-                    
-                    
+                    bulletins.map( item => < BulletinLeadPanel 
+                        item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
+                        OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
+                        ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
                     />)
-                    
                 }
             </div>
-
             :
             null
         }

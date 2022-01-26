@@ -17,17 +17,13 @@ import * as React from 'react';
 
 function Profile({
     name,
-    OnBackHome,
     OnSignOut,
     OnDelete,
     OnStartFlow, OnEndFlow, OnShowModal
 }) {
-    // const [view, setView] = useState('home')
     const [view, setView] = useState('Profile')
     const [bulletinId, setbulletinId] = useState(null);
     const [bulletinQueue, setbulletinQueue] = useState(null);
-
-    //const backtoprofile = () => setView('Profile')
 
     const backtoprofile = () => {
         setView('Profile')
@@ -39,25 +35,15 @@ function Profile({
         setbulletinQueue(isQueue)
     }
 
-    const goToFavs = () => {
-        setView('Favorites')
-    }
+    const goToFavs = () => {setView('Favorites')}
 
-    const goToQueue = () => {
-        setView('Queue')
-    }
+    const goToQueue = () => {setView('Queue')}
 
-    const goToHistory = () => {
-        setView('History')
-    }
+    const goToHistory = () => {setView('History')}
 
-    const goToPassword = () => {
-        setView('Password')
-    }
+    const goToPassword = () => {setView('Password')}
 
-    const goToAccount = () => {
-        setView('Account')
-    }
+    const goToAccount = () => {setView('Account')}
 
 
     const changePassword = (oldpassword, password) => {
@@ -109,37 +95,48 @@ function Profile({
             history={goToHistory} password={goToPassword} account={goToAccount} OnSignOut={OnSignOut}
         />}
 
-        {view === 'Password' &&
-            <ChangePassword OnBackProfile={backtoprofile} OnUpdatePassword={changePassword} ></ChangePassword>}
+        {view === 'Password' && <ChangePassword OnBackProfile={backtoprofile} OnUpdatePassword={changePassword} />}
 
-        {view === 'Account' &&
-            <DeleteAccount OnBackProfile={backtoprofile} OnDeleteAccount={deleteAccount} ></DeleteAccount>}
+        {view === 'Account' && <DeleteAccount OnBackProfile={backtoprofile} OnDeleteAccount={deleteAccount} />}
 
         {view === 'Favorites' && <>
+
             {!bulletinId && <BulletinsFavs
                 OnBackProfile={backtoprofile} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal}
-                onItem={goToDetail}
+                onItem={goToDetail}></BulletinsFavs>
+            }
 
-            ></BulletinsFavs>}
-            {bulletinId && <Detail name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>}
+            {bulletinId && <Detail 
+                name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} 
+                OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>
+            }
         </>}
 
         {view === 'Queue' && <>
+
             {!bulletinId && <BulletinsQueue
                 OnBackProfile={backtoprofile} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal}
-                onItem={goToDetail}
+                onItem={goToDetail} ></BulletinsQueue>
+            }
 
-            ></BulletinsQueue>}
-            {bulletinId && <Detail name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>}
+            {bulletinId && <Detail 
+                name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} 
+                OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>
+            }
         </>}
 
         {view === 'History' && <>
+
             {!bulletinId && <BulletinsHistory
                 OnBackProfile={backtoprofile} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal}
-                onItem={goToDetail}
+                onItem={goToDetail}></BulletinsHistory>
+            }
 
-            ></BulletinsHistory>}
-            {bulletinId && <Detail name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>}
+            {bulletinId && <Detail 
+                name={name} itemid={bulletinId} itemQueue={bulletinQueue} OnBackList={() => setbulletinId(null)} 
+                OnStartFlow={OnStartFlow} OnEndFlow={OnEndFlow} OnShowModal={OnShowModal} ></Detail>
+            }
+
         </>}
 
     </div>

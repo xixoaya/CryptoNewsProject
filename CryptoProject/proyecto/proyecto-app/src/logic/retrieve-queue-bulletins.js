@@ -1,15 +1,8 @@
-//import context from './context'
-
 /**
- * Signs up a user in the application.
+ * retrieve bulletins that the user has in queue.
  * 
- * @param {string} name The full name of the user to be registered.
- * @param {string} username The username of the user to be registered.
- * @param {string} password The password of the user to be registered.
- * @param {function} callback The callback function to manage the response.
- * 
- * @throws {TypeError} When any of the arguments does not match the correct type.
- * @throws {Error} When any of the arguments does not contain the correct format.
+ * @param {string} token The that identifies the user in that session.
+ *
  */
 function retrieveQueueBulletins(token) {
     if (typeof token !== 'string') throw new TypeError(`${token} is not a string`)
@@ -21,7 +14,6 @@ function retrieveQueueBulletins(token) {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
-            //body: JSON.stringify({ username, password }) if its a post with body
         })
 
         const { status } = res
@@ -34,7 +26,7 @@ function retrieveQueueBulletins(token) {
             throw new Error('unknow error')
         }
 
-        const { queue = [] } = await res.json()
+        const { favs = [], queue = [] } = await res.json()
 
         if (queue.length) {
             const res2 = await fetch(`http://localhost:8000/api/bulletins`, {
@@ -57,7 +49,10 @@ function retrieveQueueBulletins(token) {
             }
 
             const queueBulletins =  await res2.json()
-            queueBulletins.forEach(bulletin => bulletin.isQueue = true)
+            queueBulletins.forEach(bulletin => {
+                bulletin.isQueue = true
+                bulletin.isFav = favs.includes(bulletin.id)
+            })
 
             return queueBulletins
 
@@ -66,14 +61,6 @@ function retrieveQueueBulletins(token) {
             return queue
         }
 
-
-        // if (status === 200) {
-        //     return await res.json()
-        // } else if (status === 401 || status === 404) {
-        //     const { error } = res.json()
-
-        //     throw new Error(error)
-        // } else throw new Error('unknow error')
     })()
 }
 

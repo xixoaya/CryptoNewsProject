@@ -37,9 +37,6 @@ function scrapeOBCover() {
 
         })
 
-        //await fs.writeFile("test-titles-ob.json", JSON.stringify(arrOBCover))
-
-
         await browser.close()
 
         const obCoverBulletins = arrOBCover.map(b => {
@@ -71,15 +68,10 @@ function scrapeOBCover() {
 
         const creates = insertions.map( async (element) => {
 
-
-            await Bulletin.create(element)
-                    
+            await Bulletin.create(element)                    
         })
 
         await Promise.all( creates )
-
-        debugger
-
 
     })()
 }

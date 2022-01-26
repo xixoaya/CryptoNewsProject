@@ -1,5 +1,6 @@
 /**
  * 
+ * @param {string} token The that identifies the user in that session.
  * @param {string} oldPassword The old password the user wants change
  * @param {string} password The new password the user wants to be registered.
  * @param {function} callback The callback function to manage the response.

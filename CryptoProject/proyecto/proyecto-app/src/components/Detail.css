@@ -2,8 +2,6 @@
     width: 400px;
     height: 500px;
     overflow-y: scroll;
-    /* background-color: whitesmoke; */
-    /* overflow: auto; */
     display : flex;
     flex-direction: column;
     margin-top: 30px;
@@ -11,8 +9,7 @@
 }
 
 .buttons-detail {
-    margin-top: 40px;
-    
+    margin-top: 40px;   
 }
 
 .container-detail {
@@ -22,8 +19,6 @@
     height: 100%;
     justify-content: space-around;
     margin-top: 20px;
-    
-    
 }
 
 .detail__tags span {
@@ -31,7 +26,6 @@
 }
 
 .detail__badge {
-    /* background-color: whitesmoke; */
     border-radius: 7px;
     font-size: 0.7rem;
     padding: 5px;
@@ -49,7 +43,6 @@
 
 .content__detail p {
     color: white;
-    /* background-color: rgb(158, 158, 158); */
 }
 
 .content__detail a {

@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
-    // searchVehicles,
-    // toggleFavVehicle,
-    retrieveLatestBulletinsLogued,
     toggleFavBulletin,
     toggleQueueBulletin,
-    retrieveFavBulletins,
     searchBulletins
 } from '../logic'
 
@@ -14,7 +10,6 @@ import BulletinLeadPanel from './BulletinLeadPanel'
 
 function BulletinsSearched({ onItem, cleanquery, OnStartFlow, OnEndFlow, OnShowModal, query }) {
 
-    //const [vehicles, setvehicles] = useState([]);
     const [bulletins, setbulletins] = useState([]);
 
     useEffect(async () => {
@@ -27,7 +22,6 @@ function BulletinsSearched({ onItem, cleanquery, OnStartFlow, OnEndFlow, OnShowM
             setbulletins(bulletins)
 
             OnEndFlow()
-
 
         } catch ({ message }) {
             OnShowModal(message, 'warn')
@@ -85,17 +79,13 @@ function BulletinsSearched({ onItem, cleanquery, OnStartFlow, OnEndFlow, OnShowM
         {bulletins.length ?
             <div className="home__results-list">
                 {
-                 bulletins.map( item => < BulletinLeadPanel 
-                    item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
-                    OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
-                    ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
-                    
-                    
-                    />)
-                    
+                    bulletins.map( item => < BulletinLeadPanel 
+                        item = { item } onItem = {onItem} OnStartFlow = {OnStartFlow} 
+                        OnEndFlow = {OnEndFlow} OnShowModal = {OnShowModal}
+                        ToggleFav = {ToggleFav} ToggleQueue = {ToggleQueue}
+                    />)                    
                 }
             </div>
-
             :
             null
         }
