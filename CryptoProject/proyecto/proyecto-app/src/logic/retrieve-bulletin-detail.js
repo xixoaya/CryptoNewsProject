@@ -15,7 +15,7 @@ function retrieveBulletinDetail(token, bulletinId) {
     if (!bulletinId.trim().length) throw new Error('id is empty or blank')
 
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/users`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/users`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -34,7 +34,7 @@ function retrieveBulletinDetail(token, bulletinId) {
 
         const { favs = [], queue = [] } = await res.json()
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins/detail/${bulletinId}`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins/detail/${bulletinId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

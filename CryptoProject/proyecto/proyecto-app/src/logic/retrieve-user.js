@@ -27,7 +27,7 @@
             callback(null, user)
         }
     }
-    xhr.open('GET', 'http://localhost:8000/api/users')
+    xhr.open('GET', 'https://stark-eyrie-48729.herokuapp.com/api/users')
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.send()
 }

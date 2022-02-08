@@ -14,7 +14,7 @@ function addQueueToBulletin(token, bulletinId) {
 
 
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/bulletins`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -42,7 +42,7 @@ function addQueueToBulletin(token, bulletinId) {
 
         //history.push(bulletinId)
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -60,11 +60,6 @@ function addQueueToBulletin(token, bulletinId) {
         } else if (status2 !== 401 && status2 !== 404 && status2 !== 201) {
             throw new Error('unknow error')
         }
-        
-        // const favBulletins = await res2.json()
-        // favBulletins.forEach(bulletin => bulletin.isFav = true)
-
-        // return favBulletins
 
     })()
 }

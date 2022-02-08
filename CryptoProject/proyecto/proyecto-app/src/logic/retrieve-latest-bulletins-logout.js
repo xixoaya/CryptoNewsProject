@@ -7,7 +7,7 @@ function retrieveLatestBulletinsNoLogued() {
 
     return (async () => {
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins/home`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins/home`, {
             method: 'GET',
         })
 

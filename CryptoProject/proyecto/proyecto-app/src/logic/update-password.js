@@ -41,7 +41,7 @@
         oldPassword: oldPassword,
         password: password
     }
-    xhr.open('PATCH', 'http://localhost:8000/api/users')
+    xhr.open('PATCH', 'https://stark-eyrie-48729.herokuapp.com/api/users')
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))

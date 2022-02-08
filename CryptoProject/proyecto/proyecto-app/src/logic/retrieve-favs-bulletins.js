@@ -9,7 +9,7 @@ function retrieveFavBulletins(token) {
     if (!/[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)$/.test(token)) throw new Error('invalid token')
 
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/users`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/users`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -29,7 +29,7 @@ function retrieveFavBulletins(token) {
         const { favs = [], queue = [] } = await res.json()
 
         if (favs.length) {
-            const res2 = await fetch(`http://localhost:8000/api/bulletins`, {
+            const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

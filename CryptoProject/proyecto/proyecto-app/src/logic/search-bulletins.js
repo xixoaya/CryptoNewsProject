@@ -17,7 +17,7 @@ function searchBulletins(token, query) {
     else { newquery = query}
 
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/users`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/users`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -36,7 +36,7 @@ function searchBulletins(token, query) {
 
         const { favs = [], queue = [] } = await res.json()
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins/search?q=${newquery}`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins/search?q=${newquery}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -55,7 +55,7 @@ function searchBulletins(token, query) {
 
         const bulletins = await res2.json()
 
-        const res3 = await fetch(`http://localhost:8000/api/bulletins`, {
+        const res3 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

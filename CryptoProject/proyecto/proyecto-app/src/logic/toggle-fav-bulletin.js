@@ -17,7 +17,7 @@ function toggleFavBulletin(token, bulletinId) {
 
 
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/users`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/users`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -44,7 +44,7 @@ function toggleFavBulletin(token, bulletinId) {
             }else
                 favs.splice(index, 1)
 
-        const res2 = await fetch(`http://localhost:8000/api/users`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/users`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,

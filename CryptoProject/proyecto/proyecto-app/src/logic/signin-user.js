@@ -41,7 +41,7 @@
         username: username,
         password: password
     }
-    xhr.open('POST', 'http://localhost:8000/api/users/auth')
+    xhr.open('POST', 'https://stark-eyrie-48729.herokuapp.com/api/users/auth')
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))
 }

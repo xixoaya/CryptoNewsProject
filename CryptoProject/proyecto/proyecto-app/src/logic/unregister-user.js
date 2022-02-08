@@ -33,7 +33,7 @@
         }  
     }
     var user = {password: password}
-    xhr.open('DELETE', 'http://localhost:8000/api/users/unregister')
+    xhr.open('DELETE', 'https://stark-eyrie-48729.herokuapp.com/api/users/unregister')
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(user))

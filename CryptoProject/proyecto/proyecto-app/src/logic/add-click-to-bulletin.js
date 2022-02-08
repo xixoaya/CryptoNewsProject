@@ -12,9 +12,9 @@ function addClickToBulletin(token, bulletinId) {
     if (typeof bulletinId !== 'string') throw new TypeError(`${bulletinId} is not a string`)
     if (!bulletinId.trim().length) throw new Error('id is empty or blank')
 
-
+    // `http://localhost:8000/api/bulletins`
     return (async () => {
-        const res = await fetch(`http://localhost:8000/api/bulletins`, {
+        const res = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -40,7 +40,7 @@ function addClickToBulletin(token, bulletinId) {
             id: bulletinId
         }
 
-        const res2 = await fetch(`http://localhost:8000/api/bulletins`, {
+        const res2 = await fetch(`https://stark-eyrie-48729.herokuapp.com/api/bulletins`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
